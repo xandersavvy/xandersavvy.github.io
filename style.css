@@ -1,0 +1,124 @@
+html.body {
+  scroll-behavior: smooth;
+  font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif !important;
+}
+.intro,
+.Whoami,
+.Contact,
+.Hobby,
+.Education,
+.Skills {
+  display: flex;
+  width: 70vw;
+  font-family: inherit;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100vh;
+  scroll-behavior: smooth;
+}
+p,
+a {
+  font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif !important;
+}
+.main {
+  display: flex;
+  flex-direction: column;
+  width: 99vw;
+  align-items: center;
+  justify-content: center;
+  color: rgba(41, 3, 77, 0.904);
+}
+li {
+  float: left;
+  list-style-type: none;
+  padding: 2%;
+}
+svg {
+  width: 15vw;
+  height: 16vh;
+  float: right;
+}
+.call {
+  position: fixed;
+  right: 2px;
+  background: inherit;
+  bottom: 0px;
+}
+.nav {
+  background: white;
+  width: 100vw;
+  padding: 20px;
+  top: 0;
+  position: fixed;
+}
+.nav a {
+  animation: em 3s infinite;
+  position: fixed;
+  top: 2%;
+  text-decoration: none;
+  scroll-behavior: smooth;
+}
+em {
+  animation: tween-color 10s infinite;
+}
+.main img {
+  width: 20vh;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 10px rgba(97, 96, 96, 0.089);
+}
+/* hovers */
+p:hover {
+  box-shadow: 0px 0px 10px 10px rgba(171, 33, 252, 0.5);
+  background-color: rgba(171, 33, 252, 0.5);
+  font-weight: bold;
+  color: black;
+}
+a:hover {
+  color: rgb(15, 14, 14);
+}
+.nav a:hover {
+  font-weight: bolder;
+  text-decoration: underline;
+}
+footer {
+  text-align: center;
+  font-size: small;
+}
+/* animation */
+@keyframes tween-color {
+  0% {
+    opacity: 100%;
+  }
+  25% {
+    opacity: 50%;
+  }
+  50% {
+    opacity: 10%;
+  }
+  25% {
+    opacity: 50%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+@keyframes em {
+  0% {
+    text-decoration: dashed underline;
+  }
+  25% {
+    text-decoration: dotted underline;
+  }
+  50% {
+    text-decoration: solid underline;
+  }
+  75% {
+    text-decoration: dotted underline;
+  }
+  100% {
+    text-decoration: dashed underline;
+  }
+}
+/* media queries */
