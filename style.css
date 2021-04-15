@@ -9,7 +9,7 @@ html.body {
 .Education,
 .Skills {
   display: flex;
-  width: 30ch;
+  width: 30vw;
   font:2ch;
   font-family: inherit;
   flex-direction: column;
