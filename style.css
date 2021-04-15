@@ -1,6 +1,11 @@
 html.body {
   scroll-behavior: smooth;
   font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0%;
+  min-height: 100vh;
 }
 .intro,
 .Whoami,
@@ -9,8 +14,7 @@ html.body {
 .Education,
 .Skills {
   display: flex;
-  width: 90vw;
-  font:2ch;
+  width: 70vw;
   font-family: inherit;
   flex-direction: column;
   align-items: center;
@@ -56,21 +60,6 @@ footer {
   background: inherit;
   bottom: 50vh;
 }
-.nav {
-  background: white;
-  width: 100vw;
-  padding: 20px;
-  top: 0;
-  position: fixed;
-}
-.nav a {
-  animation: menu 5s infinite;
-  position: fixed;
-  top: 2%;
-  font-weight: bolder;
-  text-decoration: none;
-  scroll-behavior: smooth;
-}
 em {
   display: inline-block;
   -moz-animation: flip 4s linear infinite;
@@ -80,6 +69,49 @@ em {
   width: 20vh;
   border-radius: 10px;
   box-shadow: 0px 0px 10px 10px rgba(97, 96, 96, 0.089);
+}
+/* hamburger css */
+button{
+  position: fixed;
+  top: 1vw;
+  right: 1vw;
+  padding: 1vw;
+  background-color:white;
+  color: rebeccapurple;
+  border: none;
+  transition: transform 1s ease-in;
+
+}
+nav{
+  height: 100vh;
+  top:0;
+  overflow: scroll;
+  left: 0vw;
+  width: 20ch;
+  right: 0;
+  background-color: rebeccapurple;
+  position: fixed;
+  transform: translateX(-100%);
+  transition: transform 1s ease-in;
+}
+nav.active{
+  transform: translateX(0%);
+}
+button.active{
+  color: black;
+  font-weight: bold;
+}
+nav ul{
+  padding: 0;
+  list-style-type: none;
+}
+nav ul li{
+  padding:2rem;
+}
+nav a {
+  font-weight: bolder;
+  color: white;
+  text-decoration: none;
 }
 /* hovers */
 p:hover {
@@ -96,26 +128,9 @@ a:hover {
   text-decoration: underline;
 }
 /* animation */
-@keyframes menu {
-  0% {
-    text-decoration: dotted underline;
-  }
-  25% {
-    text-decoration: dashed underline;
-  }
-  50% {
-    text-decoration: solid underline;
-  }
-  75% {
-    text-decoration: dashed underline;
-  }
-  100% {
-    text-decoration: dotted underline;
-  }
-}
 @keyframes fadein {
   from {
-    opacity: 0.5;
+    opacity: 0.8;
   }
   to {
     opacity: 1;
@@ -125,7 +140,7 @@ a:hover {
 /* Firefox < 16 */
 @-moz-keyframes fadein {
   from {
-    opacity: 0.5;
+    opacity: 0.8;
   }
   to {
     opacity: 1;
@@ -135,7 +150,7 @@ a:hover {
 /* Safari, Chrome and Opera > 12.1 */
 @-webkit-keyframes fadein {
   from {
-    opacity: 0.5;
+    opacity: 0.8;
   }
   to {
     opacity: 1;
@@ -145,7 +160,7 @@ a:hover {
 /* Internet Explorer */
 @-ms-keyframes fadein {
   from {
-    opacity: 0.5;
+    opacity: 0.8;
   }
   to {
     opacity: 1;
@@ -155,7 +170,7 @@ a:hover {
 /* Opera < 12.1 */
 @-o-keyframes fadein {
   from {
-    opacity: 0.5;
+    opacity: 0.8;
   }
   to {
     opacity: 1;

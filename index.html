@@ -8,9 +8,6 @@
       name="keyword"
       content="Software Developer at sodpur,kolkata,web developer at sodpur, kolkata , Computer teacher at sodpur kolkata, ML teacher sodpur kolkata,Science Sodpur kolkata"
     />
-    <meta http-equiv='cache-control' content='no-cache'> 
-    <meta http-equiv='expires' content='0'> 
-    <meta http-equiv='pragma' content='no-cache'>
     <meta
       name="description"
       content="Hi,I am Souvik Ghosh. I teach Concept of computer sciences and basic sciences.I also teach web Development, Python , C++,JAVA,C . My Team Artificial Brix provides Solution in various digital world solutions."
@@ -21,14 +18,25 @@
       Kolkata,WestBengal
     </title>
     <!-- js and css -->
+    
     <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
-    <div class="nav">
-      <a style="left: 12px" href="#intro">Home</a
-      ><a style="right: 12px" href="#whoami">Who Am I ?</a>
-    </div>
+    <!-- js -->
+    
+    <!-- js -->
+    <button id="btn" >☰ </button>
+    <nav id="nav">
+        <ul>
+            <li><a href="#intro">Home</a></li>
+            <li><a href="#whoami">Who am I?</a></li>
+            <li><a href="#education">My Education</a></li>
+            <li><a href="#skills">My Skills</a></li>
+            <li><a href="#hobby">My Hobby</a></li>
+            <li><a href="#contact">Contact Me</a></li>
+        </ul>
+    </nav>
     <div class="main">
       <!-- intro part -->
       <div class="intro" id="intro">
@@ -67,7 +75,7 @@
         </p>
       </div>
       <!-- Education part -->
-      <div class="Education panel">
+      <div class="Education" id="education">
         <p>
           As my kindergarden and nursery school , I went to Mukul Bithi (Sadly,
           my school doesn't exist anymore).
@@ -91,7 +99,7 @@
         </p>
       </div>
       <!-- Skill part -->
-      <div class="Skills">
+      <div class="Skills" id="skills">
         <p>I have some knowledge on Programming Languages Like</p>
         <p>
           || HTML , CSS , VanillaJS || NodeJS || Python || C,C++ || Java ||
@@ -109,7 +117,7 @@
         </p>
       </div>
       <!-- Hobby Part -->
-      <div class="Hobby">
+      <div class="Hobby" id="hobby">
         <p>
           I love capturing photos . See my
           <a href="https://www.pexels.com/@souvik-ghosh-33203210">Pexels</a>
@@ -328,6 +336,16 @@
         </a>
       </div>
     </div>
+
     <footer>Made with ❤️ in Kolkata by Souvik Ghosh</footer>
+    <!-- js for hamburger -->
+    <script>
+      const btn = document.getElementById("btn");
+      const nav = document.getElementById("nav");
+      btn.addEventListener('click',()=>{
+        nav.classList.toggle('active');
+        btn.classList.toggle('active');   
+      });
+    </script>
   </body>
 </html>
