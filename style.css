@@ -80,7 +80,7 @@ button{
   color: rebeccapurple;
   border: none;
   transition: transform 1s ease-in;
-
+  font-weight:bolder;
 }
 nav{
   height: 100vh;
@@ -98,8 +98,8 @@ nav.active{
   transform: translateX(0%);
 }
 button.active{
-  color: black;
-  font-weight: bold;
+  transform: rotate(90deg);
+    transition: transform 2s ease-in;
 }
 nav ul{
   padding: 0;
