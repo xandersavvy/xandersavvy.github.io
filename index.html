@@ -41,7 +41,7 @@
       <!-- intro part -->
       <div class="intro" id="intro">
         <img src="me.png" alt="Image of Souvik Ghosh" />
-        <h1>Hello, I am <em>Souvik Ghosh</em></h1>
+        <h1>Hello, I am <div id="name"></div></h1>
         <p>
           I am COO and Co-founder of
           <a href="https://artificialbrix.com/">Artificial Brix. </a>
@@ -346,6 +346,18 @@
         nav.classList.toggle('active');
         btn.classList.toggle('active');   
       });
+       // js for souvik ghosh 
+      const txt= 'Souvik Ghosh.';
+      const name = document.getElementById('name');
+      let index =0;
+      function writeText(){
+          name.innerText= txt.slice(0,index)+'|';
+          index++;
+          if(index == txt.length){
+             index=0;
+          }
+      }
+      setInterval(writeText,200);
     </script>
   </body>
 </html>
