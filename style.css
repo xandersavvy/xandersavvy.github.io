@@ -60,11 +60,6 @@ footer {
   background: inherit;
   bottom: 50vh;
 }
-em {
-  display: inline-block;
-  -moz-animation: flip 4s linear infinite;
-  animation: flip 4s linear infinite;
-}
 .main img {
   width: 20vh;
   border-radius: 10px;
@@ -174,42 +169,6 @@ a:hover {
   }
   to {
     opacity: 1;
-  }
-}
-@-moz-keyframes flip {
-  25% {
-    -moz-transform: rotateY(45deg);
-    transform: rotateY(45deg);
-  }
-  50% {
-    -moz-transform: rotateY(0deg);
-    transform: rotateY(0deg);
-  }
-  75% {
-    -moz-transform: rotateY(-45deg);
-    transform: rotateY(-45deg);
-  }
-  100% {
-    -moz-transform: rotateY(0deg);
-    transform: rotateY(0deg);
-  }
-}
-@keyframes flip {
-  25% {
-    -webkit-transform: rotateY(45deg);
-    transform: rotateY(45deg);
-  }
-  50% {
-    -webkit-transform: rotateY(0deg);
-    transform: rotateY(0deg);
-  }
-  75% {
-    -webkit-transform: rotateY(-45deg);
-    transform: rotateY(-45deg);
-  }
-  100% {
-    -webkit-transform: rotateY(0deg);
-    transform: rotateY(0deg);
   }
 }
 
