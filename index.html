@@ -12,11 +12,16 @@
       name="description"
       content="Hi,I am Souvik Ghosh. I teach Concept of computer sciences and basic sciences.I also teach web Development, Python , C++,JAVA,KoOTLIN ,C . My Team Artificial Brix provides Solution in various digital world solutions."
     />
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+    <link rel="icon" type="image/png" href="/me.png"/>
+
     <meta name="language" content="en">
      <meta name="url" content="https//www.xandersavvvy.github.io" />
     <meta name="identifier-URL" content="https//www.xandersavvvy.github.io">
     <meta name="author" content="Souvik Ghosh , xandersavy@gmail.com" />
     <title>
+
       Souvik Ghosh || Artificial Brix || Top Private Tutor At Sodpur,
       Kolkata,WestBengal
     </title>
@@ -33,27 +38,19 @@
         <h1>Hello, I am <div id="name"></div></h1>
         <p>
           I am COO and Co-founder of
-          <a href="https://artificialbrix.com/">Artificial Brix. </a>
-        </p>
-        <p>
-          I am a Private Tutor, who teach Computer and High school science .
-          <a href="#contact">Contact me now</a>
+          <a href="https://artificialbrix.com/">Artificial Brix. </a> . <br />
+          I am a Private Tutor, who teach Basic Science Subjects to High School
+          Students and also Basics of Programming Language and Computer
+          Softwares.
+          <a href="#contact">Contact me now for tutions</a> .
         </p>
       </div>
       <!-- Current occupaion and status part -->
       <div class="Whoami panel" id="whoami">
         <p>
-          I am a private tutor, who teach Basic Science Subjects to High School
-          Students and also Basics of Programming Language and Computer
-          Softwares Here. Want to get tutions from me ?
-          <a href="#contact">Contact me now</a>
-        </p>
-        <p>
           I am also a Web developer who worked on HTML , CSS , PHP , VanillaJS ,
           Mysql, Reactjs and Next js. My
           <a href="https://github.com/xandersavvy">Github</a> Profile.
-        </p>
-        <p>
           I Co-founded
           <a href="https://artificialbrix.com">Artificial Brix</a> and now
           working as Chief Executive Officer Here.
@@ -67,19 +64,12 @@
       <div class="Education" id="education">
         <p>
           As my kindergarden and nursery school , I went to Mukul Bithi (Sadly,
-          my school doesn't exist anymore).
-        </p>
-        <p>
+          my school doesn't exist anymore).<br />
           I completed my Secondary and High Secondary Education from
           <a href="http://www.sodepurhighschool.in/"> Sodepur High School</a>
           with star marks(in India,aggregate 75%+ is considered as star marks)
           in both of my Secondary and Higher Secondary Exams .I had Physics ,
           Chemistry , Math and Computer Science Subjects in my Higher Secondary.
-        </p>
-        <p>
-          I have Diploma in Web Development from
-          <a href="http://www.aismit.org/">Aismit</a> .Here,I learned vanillaJS
-          , mySql , Jquery , php.
         </p>
         <p>
           I am an Undergraduate Engineering Student of Electronics and
@@ -89,21 +79,14 @@
       </div>
       <!-- Skill part -->
       <div class="Skills" id="skills">
-        <p>I have some knowledge on Programming Languages Like</p>
-        <p>
+        <p>I have some knowledge on Programming Languages Like - 
           || HTML , CSS , VanillaJS || NodeJS || Python || C,C++ || Java,Kotlin ||
-          PHP,WORDPRESS ||
-        </p>
-        <p>
+          PHP,WORDPRESS || . <br />
           As an Electronics and instrumentation Engineer , I worked on various
           Electronics Components , Sensors and Microcontrollers
         </p>
         <p>I have experience of 5 years of teaching students</p>
-        <p>I also have worked on</p>
-        <p>
-          ||Microsoft Office || Google Docs || Adobe Photoshop || SEO and SEM ||
-          Social media marketing||
-        </p>
+        
       </div>
       <!-- Hobby Part -->
       <div class="Hobby" id="hobby">
@@ -128,7 +111,7 @@
       </div>
       <!-- Contact Part -->
       <div class="Contact" id="contact">
-        <h2 class="major">Contact Me</h2>
+        <h2 >Contact Me</h2>
         <p>
           I live in
           <a href="https://goo.gl/maps/2AjUrXrGRqiYkMRu7">Sodepur</a> , a small
@@ -168,7 +151,7 @@
             </a>
           </li>
           <li>
-            <a href="https://github.com/xandersavvy#" class="github">
+            <a href="https://github.com/xandersavvy" class="github">
               Github
             </a>
           </li>
@@ -326,5 +309,18 @@
       </div>
     </div>
     <footer>Made with ❤️ in Kolkata by Souvik Ghosh</footer>
+    <script>
+       const txt= 'Souvik Ghosh.';
+      const name = document.getElementById('name');
+      let index =0;
+      function writeText(timeOut){
+          name.innerText= txt.slice(0,index)+'|';
+          index++;
+          if(index == txt.length){
+             index=0;
+          }
+      }
+      setInterval(writeText,700);
+    </script>
   </body>
 </html>
