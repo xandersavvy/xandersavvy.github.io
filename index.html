@@ -10,9 +10,12 @@
     />
     <meta
       name="description"
-      content="Hi,I am Souvik Ghosh. I teach Concept of computer sciences and basic sciences.I also teach web Development, Python , C++,JAVA,C . My Team Artificial Brix provides Solution in various digital world solutions."
+      content="Hi,I am Souvik Ghosh. I teach Concept of computer sciences and basic sciences.I also teach web Development, Python , C++,JAVA,KoOTLIN ,C . My Team Artificial Brix provides Solution in various digital world solutions."
     />
-    <meta name="author" content="Souvik GHosh" />
+    <meta name="language" content="en">
+     <meta name="url" content="https//www.xandersavvvy.github.io" />
+    <meta name="identifier-URL" content="https//www.xandersavvvy.github.io">
+    <meta name="author" content="Souvik Ghosh , xandersavy@gmail.com" />
     <title>
       Souvik Ghosh || Artificial Brix || Top Private Tutor At Sodpur,
       Kolkata,WestBengal
@@ -23,20 +26,6 @@
   </head>
 
   <body>
-    <!-- js -->
-    
-    <!-- js -->
-    <button id="btn" >☰ </button>
-    <nav id="nav">
-        <ul>
-            <li><a href="#intro">Home</a></li>
-            <li><a href="#whoami">Who am I?</a></li>
-            <li><a href="#education">My Education</a></li>
-            <li><a href="#skills">My Skills</a></li>
-            <li><a href="#hobby">My Hobby</a></li>
-            <li><a href="#contact">Contact Me</a></li>
-        </ul>
-    </nav>
     <div class="main">
       <!-- intro part -->
       <div class="intro" id="intro">
@@ -336,33 +325,6 @@
         </a>
       </div>
     </div>
-
     <footer>Made with ❤️ in Kolkata by Souvik Ghosh</footer>
-    <!-- js for hamburger -->
-    <script>
-      const btn = document.getElementById("btn");
-      const nav = document.getElementById("nav");
-      btn.addEventListener('click',()=>{
-        nav.classList.toggle('active');
-        btn.classList.toggle('active');   
-      });
-       // js for souvik ghosh 
-      const txt= 'Souvik Ghosh.';
-      const name = document.getElementById('name');
-      let index =0;
-      function writeText(){
-          name.innerText= txt.slice(0,index)+'|';
-          index++;
-          if(index == txt.length){
-             index=0;
-          }
-      }
-      setInterval(writeText,400);
-      //scroll on top
-      const contact = document.getElementById("contact");
-       btn.addEventListener('scroll',()=>{
-         window.location.href = "#intro";
-      });
-    </script>
   </body>
 </html>
