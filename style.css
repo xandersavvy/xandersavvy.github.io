@@ -32,19 +32,20 @@ h1{
   scroll-behavior: smooth;
   
 }
-p,
-a {
-  background: transparent;
-  background-color: aliceblue;
-  font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif !important;
-}
 p{
+  font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif !important;
   padding: 5vh;
   border-radius: 47px;
   background: linear-gradient(145deg, #e6e4e4, #ffffff);
   box-shadow:  17px 17px 34px #696868,-17px -17px 34px #ffffff;
   text-shadow: -8px -8px 12px rgba(255,255,255,0.4), 8px 8px 12px rgba(0,0,0,0.08);
-  
+}
+p a{
+  text-shadow: -8px -8px 12px rgba(255,255,255,0.4), 8px 8px 12px rgba(0,0,0,0.08);
+  background-color: aliceblue;
+  color:  rgba(41, 3, 77, 0.904);
+  text-decoration: none;
+  font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif !important;
 }
 .main {
   display: flex;
@@ -55,27 +56,38 @@ p{
   color: rgba(41, 3, 77, 0.904);
 }
 li {
-  float: left;
   list-style-type: none;
-  padding: 2%;
 }
-svg {
-  width: 15vw;
-  height: 16vh;
-  float: right;
+p.contact a i{
+  width: 8vw;
+  height: 8 vh;
+
+}
+p.contact{
+  background: white !important;
+  width: 80vw;
+  align-content: center;
+  justify-content: center;
+  display: flex;
+  flex-direction:row;
+}
+p ul{
+  display: flex;
 }
 footer {
   text-align: center;
   font-size: small;
 }
-.call {
+.call a img{
+  padding: none;
   position: fixed;
   right: 0px;
-  background: inherit;
+  max-width: 50vw;
+  background: none;
   bottom: 50vh;
 }
 .main img {
-  width: 20vh;
+  width: 20vw;
   border-radius: 19px;
 background: linear-gradient(145deg, #ffffff, #e6e4e4);
 box-shadow:  12px 12px 14px #666565,
@@ -97,4 +109,13 @@ p:hover {
 }
 a:hover {
   color: rgb(15, 14, 14);
+}
+@media (max-width: 400px) {
+p.contact{
+  flex-direction: column;
+  background: white !important;
+  width: 50vw;
+  align-content: center;
+  justify-content: center;
+}
 }
