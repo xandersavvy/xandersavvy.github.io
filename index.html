@@ -35,26 +35,21 @@
     <div class="main">
       <!-- intro part -->
       <div class="intro" id="intro">
+       
         <img src="me.png" alt="Image of Souvik Ghosh" />
         <h1>Hello, I am <div id="name"></div></h1>
-        <p>
-          I am COO and Co-founder of
-          <a href="https://artificialbrix.com/">Artificial Brix. </a> . <br />
-          I am a Private Tutor, who teach Basic Science Subjects to High School
-          Students and also Basics of Programming Language and Computer
-          Softwares.
-          <a href="#contact">Contact me now for tutions</a> .
-        </p>
+        <p id="jokes"><b>A random dad joke</b> <br /></p>
       </div>
       <!-- Current occupaion and status part -->
       <div class="Whoami panel" id="whoami">
         <p>
-          I am also a Web developer who worked on HTML , CSS , PHP , VanillaJS ,
-          Mysql, Reactjs and Next js. My
-          <a href="https://github.com/xandersavvy">Github</a> Profile.
+          I am a Web developer who worked on Various Popular Web Stacks . My
+          <a href="https://github.com/xandersavvy">Github</a> Profile. to see my Projects
           I Co-founded
           <a href="https://artificialbrix.com">Artificial Brix</a> and now
           working as Chief Executive Officer Here.
+         <br />
+          <a href="#contact">Hire me </a> .
         </p>
         <p>
           I am an Undergrad Engineering Student of Electronics and
@@ -81,8 +76,7 @@
       <!-- Skill part -->
       <div class="Skills" id="skills">
         <p>I have some knowledge on Programming Languages Like - 
-          || HTML , CSS , VanillaJS || NodeJS || Python || C,C++ || Java,Kotlin ||
-          PHP,WORDPRESS || . <br />
+          || HTML , CSS || GOLANG || NodeJS || Python || C,C++ || Java,Kotlin . <br />
           As an Electronics and instrumentation Engineer , I worked on various
           Electronics Components , Sensors and Microcontrollers
         </p>
@@ -153,6 +147,12 @@
           }
       }
       setInterval(writeText,700);
+    //dad jokes API
+      fetch('https://icanhazdadjoke.com/', { method:"GET" ,headers: {
+         'Accept' : 'application/json'
+    } }).then(res =>  res.json())
+        .then(data => document.getElementById("jokes").innerText += data.joke)
+        .catch( err => console.warn('Something went wrong.', err))
     </script>
   </body>
 </html>
