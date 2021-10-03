@@ -14,6 +14,7 @@ html.body {
 }
 h1{
   background: transparent;
+  font-size: large;
 }
 .intro,
 .Whoami,
@@ -86,8 +87,24 @@ footer {
   background: none;
   bottom: 50vh;
 }
-.main img {
-  width: 20vw;
+#profile {
+  width: 15vw;
+  border-radius: 19px;
+background: linear-gradient(145deg, #ffffff, #e6e4e4);
+box-shadow:  12px 12px 14px #666565,
+             -22px -22px 44px #ffffff;
+}
+#twitter_follow {
+  width: 10vw;
+  border-radius: 19px;
+background: linear-gradient(145deg, #ffffff, #e6e4e4);
+box-shadow:  12px 12px 14px #666565,
+             -22px -22px 44px #ffffff;
+}
+
+
+.main .intro img {
+  width: 15vw;
   border-radius: 19px;
 background: linear-gradient(145deg, #ffffff, #e6e4e4);
 box-shadow:  12px 12px 14px #666565,
