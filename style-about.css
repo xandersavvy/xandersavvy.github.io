@@ -1,0 +1,42 @@
+*{
+  box-sizing: border-box;
+  color: aliceblue;
+}
+html,body{
+  margin: 0;
+  padding: 0;
+  top:0;
+  background-color: black !important;
+  color: right !important;
+  min-height: 100vh;
+  width: 96vw;
+}
+p,a{
+  word-wrap: break-word;
+  text-align: justify;
+  max-width: 98vw;
+  padding: 0.5vw;
+  font-size: 1.4rem;
+}
+a{
+  color: rgb(228, 218, 126);
+  text-decoration: none;
+}
+.contact>ul>li {
+  padding: 0.3rem;
+}
+footer{
+  heigh t: 5vh;
+  background-color: black;
+  color: white;
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 0.5vh;
+}
+
+@media screen and (max-width: 600px){
+  p img{
+    width: 100%;
+    height: auto;
+  }
+}
