@@ -2,7 +2,7 @@
   box-sizing:border-box;
 }
 html,body {
-  background : url("https://source.unsplash.com/random/?sig=1"), linear-gradient(180deg,#fffbfbda, rgba(250, 250, 250, 0.924)) ;
+  background : url("https://source.unsplash.com/random/?sig=1"), linear-gradient(180deg,#fffbfb63, rgba(250, 250, 250, 0.294)) ;
   background-size:cover;
   scroll-behavior: smooth;
   font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif !important;
