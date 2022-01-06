@@ -23,7 +23,7 @@
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
     <title>
-      Souvik Ghosh || Artificial Brix || Programmer Web Developer Kolkata
+      Souvik Ghosh || Programmer Web Developer Kolkata
     </title>
     <link rel="stylesheet" href="style.css" />
     <style>
@@ -34,23 +34,23 @@
   </head>
 
   <body>
-    <div class="intro main" id="intro">
+    <div class="profile_picture" id="intro">
       <img
         src="https://avatars.githubusercontent.com/xandersavvy"
         alt="Image of Souvik Ghosh"
         id="profile"
       />
-      <h1>
-        Hello, I am
-        <div id="name"></div>
-      </h1>
-      <p id="jokes">waiting for A random dad joke</p>
-      <a href="./about.html" class="back-to-top">
-        <p>click  to see about myself</p>
-      </a>
     </div>
-
-    <!-- Current occupaion and status part -->
+    <div class="txt">
+      <p>
+        Hello, I am Souvik Ghosh. I am a Programmer and tech hobbyist.
+      </p>
+      <p id="jokes">waiting for A random dad joke</p>
+      <button class="btn" onclick="aboutPage()">
+        About Me
+      </button>
+  
+    </div>
     <script>
       //
       onkeypress = function(e) {
@@ -58,16 +58,6 @@
           window.location.href = "./game.html";
         }
       };
-      const txt = "Souvik Ghosh.";
-      const name = document.getElementById("name");
-      let index = 0;
-      function writeText() {
-        name.innerText = txt.slice(0, index) + "|";
-        index++;
-        if (index == txt.length) {
-          index = 0;
-        }
-      }
       //dad jokes API
       function jokes() {
         const jokes = document.getElementById("jokes");
@@ -85,10 +75,11 @@
             jokes.innerText = "Error fetching dad jokes";
           });
       }
+      function aboutPage() {
+        window.location.href = "./about.html";
+      }
       jokes();
-      setInterval(writeText, 700);
-      setInterval(jokes, 20000);
-     
+
     </script>
   </body>
 </html>

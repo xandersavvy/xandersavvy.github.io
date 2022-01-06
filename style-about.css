@@ -1,15 +1,32 @@
 *{
   box-sizing: border-box;
-  color: aliceblue;
+  color: black
 }
-html,body{
+html{
   margin: 0;
   padding: 0;
-  top:0;
-  background-color: black !important;
-  color: right !important;
+  background: white;
+  font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif !important;
+  width: 100vw;
+  overflow-x: hidden;
   min-height: 100vh;
-  width: 96vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+body{
+  margin: 0;
+  top:0;
+  background-color: whitesmoke !important;
+  height: 90%;
+  width: 90%;
+  padding: 5%;
+  font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 p,a{
   word-wrap: break-word;
@@ -19,16 +36,14 @@ p,a{
   font-size: 1.4rem;
 }
 a{
-  color: rgb(228, 218, 126);
+  color: purple;
   text-decoration: none;
 }
 .contact>ul>li {
   padding: 0.3rem;
 }
 footer{
-  heigh t: 5vh;
-  background-color: black;
-  color: white;
+  height: 5vh;
   text-align: center;
   font-size: 1.2rem;
   padding: 0.5vh;
