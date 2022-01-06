@@ -52,6 +52,9 @@ img {
   box-shadow:  12px 12px 14px #666565,
              -22px -22px 44px #ffffff;
 }
+ol,li{
+  list-style-type: square;
+}
 button{
   cursor: pointer;
   background: purple;
@@ -61,6 +64,13 @@ button{
   padding: 3%;
   box-shadow:  12px 12px 14px #666565,
   -22px -22px 44px #ffffff;
+}
+button noscript a{
+  background: purple;
+  font-size: 1.3rem;
+  color: white;
+  text-decoration: dashed;
+  cursor: pointer; 
 }
 @media screen and (max-width: 600px){
   html,body{

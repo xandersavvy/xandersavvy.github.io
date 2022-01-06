@@ -40,14 +40,21 @@
       <p>
         Hello, I am Souvik Ghosh. I am a Programmer and tech hobbyist.
       </p>
-      <p id="jokes">waiting for A random dad joke</p>
-      <button class="btn" onclick="aboutPage()">
-        About Me
+      <p id="jokes">waiting for A random dad joke.
+        <noscript>Please enable Javascript for the Joke</noscript>
+      </p>
+      <button class="btn" id="btn" onclick="aboutPage()">
+        <noscript>
+          <a href="./about.html">
+            Click here to know more
+          </a>
+        </noscript>
+        About me
       </button>
   
     </div>
     <script>
-      //
+      //secret rickroll joke
       onkeypress = function(e) {
         console.log(e);
         if(e.key==='r'||e.key==='R'){
@@ -71,6 +78,7 @@
             jokes.innerText = "Error fetching dad jokes";
           });
       }
+      //button rediret to about page
       function aboutPage() {
         window.location.href = "./about.html";
       }

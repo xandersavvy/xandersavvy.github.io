@@ -40,7 +40,13 @@ a{
   text-decoration: none;
 }
 .contact>ul>li {
+  list-style:none;
   padding: 0.3rem;
+}
+.contact>ul>li::before{
+  content: "➡️";
+  color: purple;
+  font-size: 1.5rem;
 }
 footer{
   height: 5vh;
