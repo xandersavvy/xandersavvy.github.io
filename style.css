@@ -61,6 +61,7 @@ button{
   font-size: 1.3rem;
   color: white;
   border-radius: 19px;
+  margin: 4%;
   padding: 3%;
   box-shadow:  12px 12px 14px #666565,
   -22px -22px 44px #ffffff;
