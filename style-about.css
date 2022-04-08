@@ -5,7 +5,7 @@
 html{
   margin: 0;
   padding: 0;
-  background: white;
+  background: whitesmoke !important;
   font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif !important;
   width: 100vw;
   overflow-x: hidden;
@@ -16,24 +16,30 @@ html{
   align-items: center;
 }
 body{
-  margin: 0;
-  top:0;
-  background-color: whitesmoke !important;
-  height: 90%;
-  width: 90%;
-  padding: 5%;
+  margin-top: 2vh;
+  margin-bottom: 3vh;
+  margin-left: 2vw;
+  margin-right: 4vw;
+  overflow-x: hidden;
+  width: 90vw;
+  padding: 2vw;
   font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif !important;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  /* neumorphism */
+  border-radius: 45px;
+  background: #dcdbdb;
+  box-shadow:  28px 28px 56px #a5a4a4,
+             -28px -28px 56px #ffffff;
 }
 p,a{
   word-wrap: break-word;
   text-align: justify;
-  max-width: 98vw;
+  max-width: 78vw;
   padding: 0.5vw;
-  font-size: 1.4rem;
+  font-size: 1rem;
 }
 a{
   color: purple;

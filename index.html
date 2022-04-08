@@ -39,28 +39,12 @@
     <div class="txt">
       <p>
         Hello, I am Souvik Ghosh. I am a Programmer and tech hobbyist.
+        Check out <a href="https://github.com/xandersavvy">my projects and skills </a> or
+        learn  <a href="./about.html"> about me.</a>
       </p>
       <p id="jokes">waiting for A random dad joke.
         <noscript>Please enable Javascript for the Joke</noscript>
       </p>
-      <button class="btn" id="btn" onclick="aboutPage()">
-        <noscript>
-          <a href="./about.html">
-            Click here to know more
-          </a>
-        </noscript>
-        About me
-      </button>
-      <br />
-      <button class="btn" id="btn" onclick="githubPage()">
-        <noscript>
-          <a href="https://github.com/xandersavvy">
-            Click here to know more
-          </a>
-        </noscript>
-        About my projects and skills.
-      </button>
-  
     </div>
     <script>
       //secret rickroll joke
@@ -77,21 +61,12 @@
         myHeaders.append("Accept", "application/json");
         fetch(url, {
           headers: myHeaders,
-        })
-          .then((res) => res.json())
+        }).then((res) => res.json())
           .then((data) => {
             jokes.innerText = data.joke;
-          })
-          .catch((err) => {
+          }).catch((err) => {
             jokes.innerText = "Error fetching dad jokes";
           });
-      }
-      //button rediret to about page
-      function aboutPage() {
-        window.location.href = "./about.html";
-      }
-      function githubPage() {
-        window.location.href = "https://github.com/xandersavvy";
       }
       jokes();
 
