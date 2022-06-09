@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="keyword"
+      content="Souvik Ghosh, tech , technology , Artificial Brix, Xander Savvy , Software Developer at sodpur,kolkata,web developer at sodepur, Computer teacher , WBBSE , CBSE , ICSE"
+    />
+    <meta name="”geo.region”" content="”IN”" />
+    <link rel="icon" href="favicon.ico" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="language" content="en" />
+    <meta name="url" content="https//xandersavvy.github.io" />
+    <meta name="identifier-URL" content="https//xandersavvy.github.io" />
+    <meta name="author" content="Souvik Ghosh , xandersavy@gmail.com" />
+    <title>
+        Souvik Ghosh's Blogs powered by Hashnode || IBM || Top Private Freelancer web devoloper At Sodpur,
+      Kolkata,WestBengal
+    </title>
+    <link rel="stylesheet" href="style-blog.css">
+</head>
+<body>
+    <div id="container">
+        <h2>Wait while we fetch the details </h2>
+    </div>
+    <script>
+            const query = `
+    {
+    user(username: "xandersavvy") {
+        publication {
+        posts{
+            slug
+            title
+            brief
+            coverImage
+        }
+        }
+    }
+    }
+`;
+    fetch('https://api.hashnode.com', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+            },
+            body: JSON.stringify({ query }),
+        }).then(response => response.json()).then(data => idPost(data.data.user.publication.posts))
+        .catch(err => console.log(err));
+        
+        function idPost(posts) {
+            let div = document.createElement('div');
+            console.log(posts);
+            posts.forEach(post => {
+                let defaultImage = `https://images.unsplash.com/photo-1516387938699-a93567ec168e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80`;
+                div.innerHTML += `
+                <div class="card">
+                    
+                    <img src=${post.coverImage||defaultImage} alt=${post.title} />
+                    <h2>${post.title}</h2>
+                    <p>${post.brief.substring(0,100)}...
+                        <a href="https://xandersavvy.hashnode.dev/${post.slug}" >Read More</a>    
+                    </p>
+                    
+                </div>
+                `;
+            });
+            document.getElementById('container').innerHTML = div.innerHTML;
+            }
+            let vw =  window.innerWidth;
+                vw=parseInt(vw/420);
+                document.getElementById('container').style.gridTemplateColumns = `repeat(${vw}, 1fr)`;
+    </script>
+</body>
+</html>
