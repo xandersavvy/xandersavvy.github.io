@@ -1,5 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="style-blog.css">
+</head>
+<body>
+    <div class="loading">
+        Wait a minute, I am redirecting 
+    </div>
+    <noscript>
+        You probably don't have js enabled don't worry.
+    </noscript>
+    <a href="http://xandersavvy.hashnode.dev">Click here</a>
+    <script>
+        setTimeout(()=>window.location = "https://xandersavvy.hashnode.dev/",100)
+    </script>
+</body>
+</html>
+
+
+
+<!-- simplifying the page  -->
+
+<!-- <!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -54,24 +80,22 @@
             let div = document.createElement('div');
             console.log(posts);
             posts.forEach(post => {
-                let defaultImage = `https://images.unsplash.com/photo-1516387938699-a93567ec168e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80`;
+                // let defaultImage = `https://images.unsplash.com/photo-1516387938699-a93567ec168e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80`;
+                // <img src=${post.coverImage||defaultImage} alt=${post.title} />
                 div.innerHTML += `
                 <div class="card">
-                    
-                    <img src=${post.coverImage||defaultImage} alt=${post.title} />
-                    <h2>${post.title}</h2>
+                    <h2>${post.title.substring(0,250)}</h2>
                     <p>${post.brief.substring(0,100)}...
                         <a href="https://xandersavvy.hashnode.dev/${post.slug}" >Read More</a>    
                     </p>
-                    
                 </div>
                 `;
             });
             document.getElementById('container').innerHTML = div.innerHTML;
             }
-            let vw =  window.innerWidth;
-                vw=parseInt(vw/420);
-                document.getElementById('container').style.gridTemplateColumns = `repeat(${vw}, 1fr)`;
+                // let vw =  window.innerWidth;
+                // vw=parseInt(vw/320);
+                // document.getElementById('container').style.gridTemplateRows = `repeat(${vw}, 2fr)`;
     </script>
 </body>
-</html>
+</html> -->
