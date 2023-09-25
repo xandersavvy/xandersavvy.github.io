@@ -12,7 +12,9 @@
       content="Chromedriver,chrome driver after 114 , chrome driver selenium,selenium"
     />
     <title>
-      Download chrome driver after 114 links for selenium browser automation chrome for testing and chrome developer edition with ui and search functionality
+      Download chrome driver after 114 links for selenium browser automation
+      chrome for testing and chrome developer edition with ui and search
+      functionality
     </title>
     <link
       rel="stylesheet"
@@ -24,43 +26,49 @@
   </head>
   <body>
     <div class="container">
-      <br/>
-      <input type="search" name="" id="search" size="120" placeholder="Enter chrome version"/>
+      <br />
+      <input
+        type="search"
+        name=""
+        id="search"
+        size="120"
+        placeholder="Enter chrome version"
+      />
       <div id="container"></div>
     </div>
-    <script
-      src="https://code.jquery.com/jquery-3.7.1.slim.js"
-      integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc="
-      crossorigin="anonymous"
-    ></script>
     <script>
       let dt;
-      let url =
+      const url =
         "https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json";
       fetch(url)
         .then((res) => res.json())
-        .then((data) => generateHTML(data.versions))
+        .then((data) => {
+          dt = data.versions;
+          return generateHTML();
+        })
         .catch((err) => console.error(err));
-      function generateHTML(versions, val = "") {
-        dt = versions;
-        $("#container").html("");
-        versions.map((item) => {
+      function generateHTML(val = "") {
+        let m="";
+        dt.map((item) => {
           if (item.version.includes(val)) {
             let p = "<strong>Chrome:</strong>";
             item.downloads.chrome.map(
-              (ch) => (p += `&nbsp; <a href="${ch.url}">${ch.platform}</a> &nbsp;`)
+              (ch) =>
+                (p += `&nbsp; <a href="${ch.url}">${ch.platform}</a> &nbsp;`)
             );
             if (item.downloads.chromedriver) {
               p += "<br /><strong>Chrome Driver:</strong>";
               item.downloads.chromedriver.map(
-                (ch) => (p += `&nbsp; <a href="${ch.url}">${ch.platform}</a> &nbsp; `)
+                (ch) =>
+                  (p += `&nbsp; <a href="${ch.url}">${ch.platform}</a> &nbsp; `)
               );
             }
-            $("#container").append(`<hr /> <h5>${item.version}</h5> ${p}`);
+            m += `<hr /> <h5>${item.version}</h5> ${p}`;
           }
         });
+         document.getElementById("container").innerHTML = m;
       }
-      onkeyup=(e)=>   generateHTML(dt, `${$("#search").val()}`);
+      onkeyup = (e) => generateHTML(`${document.getElementById("search").value}`);
     </script>
   </body>
 </html>
