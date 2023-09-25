@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="chrome driver download link ui  for after 114 endpoint with search">
+    <title>Download chrome driver after 114 links for selenium browser automation</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"
+      integrity="sha512-5fsy+3xG8N/1PV5MIJz9ZsWpkltijBI48gBzQ/Z2eVATePGHOkMIn+xTDHIfTZFVb9GMpflF2wOWItqxAP2oLQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <input type="search" name="" id="search" />
+      <button id="btn" onclick="search()">Search</button>
+      <div id="container"></div>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.slim.js"
+      integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      let dt;
+      let url =
+        "https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json";
+      fetch(url)
+        .then((res) => res.json())
+        .then((data) => generateHTML(data.versions))
+        .catch((err) => console.error(err));
+      function generateHTML(versions, val = "") {
+        dt = versions;
+        $("#container").html("");
+        versions.map((item) => {
+          if (item.version.includes(val)) {
+            let p = "";
+            item.downloads.chrome.map(
+              (ch) => (p += `<a href="${ch.url}">${ch.platform}</a><br />`)
+            );
+            $("#container").append(`<h3>${item.version}</h3> ${p}`);
+          }
+        });
+      }
+      function search() {
+        generateHTML(dt, `${$("#search").val()}`);
+      }
+    </script>
+  </body>
+</html>
