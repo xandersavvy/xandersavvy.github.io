@@ -24,8 +24,8 @@
   </head>
   <body>
     <div class="container">
-      <p>Search here</p>
-      <input type="search" name="" id="search" />
+      <br/>
+      <input type="search" name="" id="search" size="120" placeholder="Enter chrome version"/>
       <div id="container"></div>
     </div>
     <script
@@ -46,17 +46,17 @@
         $("#container").html("");
         versions.map((item) => {
           if (item.version.includes(val)) {
-            let p = "<h3>Chrome-</h3>";
+            let p = "<strong>Chrome:</strong>";
             item.downloads.chrome.map(
-              (ch) => (p += `<a href="${ch.url}">${ch.platform}</a><br />`)
+              (ch) => (p += `&nbsp; <a href="${ch.url}">${ch.platform}</a> &nbsp;`)
             );
             if (item.downloads.chromedriver) {
-              p += "<h3>ChromeDriver-</h3>";
+              p += "<br /><strong>Chrome Driver:</strong>";
               item.downloads.chromedriver.map(
-                (ch) => (p += `<a href="${ch.url}">${ch.platform}</a><br />`)
+                (ch) => (p += `&nbsp; <a href="${ch.url}">${ch.platform}</a> &nbsp; `)
               );
             }
-            $("#container").append(`<h1>${item.version}</h1> ${p}`);
+            $("#container").append(`<hr /> <h5>${item.version}</h5> ${p}`);
           }
         });
       }
