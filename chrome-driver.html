@@ -3,8 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="chrome driver download link ui  for after 114 endpoint with search">
-    <title>Download chrome driver after 114 links for selenium browser automation</title>
+    <meta
+      name="description"
+      content="chrome driver download link ui  for after 114 endpoint with search"
+    />
+    <meta
+      name="keyword"
+      content="Chromedriver,chrome driver after 114 , chrome driver selenium,selenium"
+    />
+    <title>
+      Download chrome driver after 114 links for selenium browser automation chrome for testing and chrome developer edition with ui and search functionality
+    </title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"
@@ -16,7 +25,6 @@
   <body>
     <div class="container">
       <input type="search" name="" id="search" />
-      <button id="btn" onclick="search()">Search</button>
       <div id="container"></div>
     </div>
     <script
@@ -37,17 +45,21 @@
         $("#container").html("");
         versions.map((item) => {
           if (item.version.includes(val)) {
-            let p = "";
+            let p = "<h3>Chrome-</h3>";
             item.downloads.chrome.map(
               (ch) => (p += `<a href="${ch.url}">${ch.platform}</a><br />`)
             );
-            $("#container").append(`<h3>${item.version}</h3> ${p}`);
+            if (item.downloads.chromedriver) {
+              p += "<h3>ChromeDriver-</h3>";
+              item.downloads.chromedriver.map(
+                (ch) => (p += `<a href="${ch.url}">${ch.platform}</a><br />`)
+              );
+            }
+            $("#container").append(`<h1>${item.version}</h1> ${p}`);
           }
         });
       }
-      function search() {
-        generateHTML(dt, `${$("#search").val().trim()}`);
-      }
+      onkeyup=(e)=>   generateHTML(dt, `${$("#search").val()}`);
     </script>
   </body>
 </html>
