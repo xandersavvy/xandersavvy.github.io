@@ -3,7 +3,7 @@
   box-sizing:border-box;
 }
 html,body {
-  background: aliceblue !important;
+   background: aliceblue !important;
   scroll-behavior: smooth;
   font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif !important;
   display: flex;
@@ -36,8 +36,10 @@ p{
   text-shadow: -8px -8px 12px rgba(255,255,255,0.4), 8px 8px 12px rgba(0,0,0,0.08);
 }
 a{
+  cursor:pointer;
+
   text-shadow: -8px -8px 12px rgba(255,255,255,0.4), 8px 8px 12px rgba(0,0,0,0.08);
-  background: linear-gradient(145deg, #e6e4e4, #ffffff);
+  background: transparent;
   text-decoration: none;
   font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif !important;
 }
@@ -46,7 +48,8 @@ p,a{
   font-weight: 1000;
 }
 img { 
-  width: 15vw;
+  margin:5px;
+  width: 12vw;
   border-radius: 29px;
   background: linear-gradient(145deg, #ffffff, #e6e4e4);
   box-shadow:  12px 12px 14px #666565,
@@ -73,6 +76,11 @@ button noscript a{
   text-decoration: dashed;
   cursor: pointer; 
 }
+p:hover , img:hover{
+  box-shadow: none;
+  border:solid black 1px;
+}
+
 @media screen and (max-width: 600px){
   html,body{
     flex-direction: column;

@@ -60,7 +60,15 @@ footer{
   font-size: 1.2rem;
   padding: 0.5vh;
 }
-
+body:hover{
+  background:transparent;
+  box-shadow:none;
+  border:solid black 1px;
+}
+a:hover{
+  font-weight:550;
+  text-decoration:underline;
+}
 @media screen and (max-width: 600px){
   p img{
     width: 100%;

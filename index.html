@@ -19,58 +19,87 @@
     <meta name="url" content="https//xandersavvy.github.io" />
     <meta name="identifier-URL" content="https//xandersavvy.github.io" />
     <meta name="author" content="Souvik Ghosh , xandersavy@gmail.com" />
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta
+      http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate"
+    />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <title>
-      Souvik Ghosh || Programmer Web Developer Kolkata
-    </title>
+    <title>Souvik Ghosh || Programmer Web Developer Kolkata</title>
     <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
     <div class="profile_picture" id="intro">
       <img
-        src="https://avatars.githubusercontent.com/xandersavvy"
+        src="me_real.jpg"
         alt="Image of Souvik Ghosh"
         id="profile"
       />
+      <p id="jokeContainer">
+      <span id="jokes">
+        waiting for A random dad joke.
+        <noscript>Please enable Javascript for the Joke</noscript>
+      </span>
+      <br/>
+        <a id="clearJoke" style=" margin-top: 1rem; color: red;">Stop Dad jokes</a>
+      </p>
+
     </div>
     <div class="txt">
       <p>
-        Hello, I am Souvik Ghosh. I am a Programmer and tech hobbyist.
-        Check out <a href="https://github.com/xandersavvy">my projects and skills </a> or
-        learn  <a href="./about.html"> about me.</a>
-        You can check out <a href="./blogs.html" >my blogs</a> too.
-        Do you need my cv? you can see it <a href="https://docs.google.com/document/d/1nwwKt444YmrWjLJsmhGdV57YHxUaEKm0/edit?usp=sharing&ouid=106186566196550951617">here</a>
-      </p>
-      <p id="jokes">waiting for A random dad joke.
-        <noscript>Please enable Javascript for the Joke</noscript>
+        Hello! I'm Souvik, a Full Stack Automation Tester at IBM, stationed in
+        Bangalore but originally from Kolkata. With a year of diverse
+        experience, I'm equipped with skills in both testing and full stack web
+        development. Eager to explore new career avenues, I'm open to DevOps and
+        development roles. Explore more <a href="./about.html"> about me.</a> or connect
+        via <a href="./social.html">social media</a> for insights into my journey. Let's collaborate! 
+        </p>
+        <p>
+          Are you a recruiter ? 
+          <br/>
+          Check 
+        <a
+          href="https://docs.google.com/document/d/1nwwKt444YmrWjLJsmhGdV57YHxUaEKm0/edit?usp=sharing&ouid=106186566196550951617"
+          >My Resume</a
+        >
+        and 
+        <a href="./blogs.html">my blogs</a>
       </p>
     </div>
     <script>
       //secret rickroll joke
-      onkeypress = function(e) {
-        if(e.key==='r'||e.key==='R'){
+      onkeypress = function (e) {
+        if (e.key === "r" || e.key === "R") {
           window.location.href = "https://youtu.be/zL19uMsnpSU";
         }
       };
       //dad jokes API
-      function jokes() {
+      async function jokes() {
         const jokes = document.getElementById("jokes");
         const url = "https://icanhazdadjoke.com/";
         const myHeaders = new Headers();
         myHeaders.append("Accept", "application/json");
         fetch(url, {
           headers: myHeaders,
-        }).then((res) => res.json())
+        })
+          .then((res) => res.json())
           .then((data) => {
             jokes.innerText = data.joke;
-          }).catch((err) => {
+            
+          })
+          .catch((err) => {
             jokes.innerText = "Error fetching dad jokes";
           });
-      }
-      jokes();
+          jokes.innerHTML+=``
+        }
+        jokes()
+        setInterval(()=>jokes(),10000)
+        
+      document.getElementById('clearJoke').addEventListener("click",()=>{
+        document.getElementById("jokeContainer").remove();
+      })
+
 
     </script>
   </body>
