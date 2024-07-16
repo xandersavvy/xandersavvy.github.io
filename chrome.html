@@ -31,32 +31,43 @@
   <body>
     <div class="container">
       <br />
-      <p>Before Chrome version 115 , webdriver can be obtained via official website</p>
+      <p>Before Chrome version 115 , webdriver can be obtained via official website. Enter chrome version. First three digit is enough  </p>
       <input
         type="search"
         name=""
         id="search"
         size="120"
-        placeholder="Enter chrome version"
+        placeholder="Enter chrome version here "
       />
+      <button type="submit" onclick="generateHTML()">🔍Search</button>
       <div id="container"></div>
     </div>
     <script>
       let dt;
       const url =
         "https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json";
+      let container = document.getElementById("container")
       fetch(url)
         .then((res) => res.json())
-        .then((data) => {
-          dt = data.versions;
-          return generateHTML();
+        .then(({versions}) => {
+          dt = versions;
         })
         .catch((err) => console.error(err));
-      function generateHTML(val = "") {
+
+
+      function generateHTML() {
+        const val = document.getElementById("search").value;
+        if(val.length<1 || isNaN(val)){
+          container.innerHTML = "zzzzzzzzzz"
+          return ;
+        }
+        container.innerHTML = "<u>Loading ...Imagine a ball spinning here </u>"
         let m="";
         dt.map((item) => {
+          
           if (item.version.includes(val)) {
-            let p = "<strong>Chrome:</strong>";
+          
+            let p = "<strong>Chrome for testing :</strong>";
             item.downloads.chrome.map(
               (ch) =>
                 (p += `&nbsp; <a href="${ch.url}">${ch.platform}</a> &nbsp;`)
@@ -71,9 +82,9 @@
             m += `<hr /> <h5>${item.version}</h5> ${p}`;
           }
         });
-         document.getElementById("container").innerHTML = m;
+         container.innerHTML = m;
       }
-      onkeyup = (e) => generateHTML(`${document.getElementById("search").value}`);
+
     </script>
   </body>
 </html>
