@@ -60,8 +60,7 @@
     </section>
     <section>
         <h2>পেমেন্ট করুন</h2>
-        <a href="http://upi://pay?pa=ghoshudaykumar68@okhdfcbank&pn=UdayKumarGhosh" class="payment">এই লিঙ্ক</a>
-        বা
+        <a class="payment" id="upiLink"> লিঙ্ক</a>
         <a href="./QRCode.jpg" class="payment">QR code</a>
     </section>
     <section class="products">
@@ -90,5 +89,9 @@
     <div class="footer">&copy; 2025 Deluxe Orthopaedics. Serving Kolkata for over 20 years.<br/> 
         Made with 💝 By <a href="../about.html">Souvik </a>
     </div>
+    <script>
+        const URL = "upi://pay?pa=ghoshudaykumar68@okhdfcbank&pn=UdayKumarGhosh"
+        document.getElementById("upiLink").addEventListener("click",()=>window.location.href=URL)
+    </script>
 </body>
 </html>
