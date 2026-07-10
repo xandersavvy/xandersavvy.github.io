@@ -141,8 +141,8 @@
     initTerminal();
 
     /* ── 10. SECRET RICK-ROLL ────────────────────────────── */
-    document.addEventListener('keypress', function (e) {
-      if (e.key === 'r' || e.key === 'R') {
+    document.addEventListener('keydown', function (e) {
+      if (e.ctrlKey && e.key === 'c' && window.getSelection().toString() === '') {
         window.open('https://youtu.be/zL19uMsnpSU', '_blank', 'noopener');
       }
     });
