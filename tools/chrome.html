@@ -1,90 +1,283 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="chrome driver download link ui  for after 114 endpoint with search"
+      content="Find Chrome for Testing and ChromeDriver download links for version 115 and later."
     />
     <meta
-      name="keyword"
-      content="Chromedriver,chrome driver after 114 , chrome driver selenium,selenium"
+      name="keywords"
+      content="chromedriver, chrome for testing, selenium, webdriver, chrome download links"
     />
-    <meta
-      name="keyword"
-      content="Automation , webdriver,webdriver manager , selenium ,chrome, chromium " 
-    />
-    <title>
-      Download chrome driver after 114 links for selenium browser automation
-      chrome for testing and chrome developer edition with ui and search
-      functionality
-    </title>
+    <title>Chrome for Testing Download Finder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"
-      integrity="sha512-5fsy+3xG8N/1PV5MIJz9ZsWpkltijBI48gBzQ/Z2eVATePGHOkMIn+xTDHIfTZFVb9GMpflF2wOWItqxAP2oLQ=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
     />
-  </head>
-  <body>
-    <div class="container">
-      <br />
-      <p>Before Chrome version 115 , webdriver can be obtained via official website. Enter chrome version. First three digit is enough  </p>
-      <input
-        type="search"
-        name=""
-        id="search"
-        size="120"
-        placeholder="Enter chrome version here "
-      />
-      <button type="submit" onclick="generateHTML()">🔍Search</button>
-      <div id="container"></div>
-    </div>
-    <script>
-      let dt;
-      const url =
-        "https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json";
-      let container = document.getElementById("container")
-      fetch(url)
-        .then((res) => res.json())
-        .then(({versions}) => {
-          dt = versions;
-        })
-        .catch((err) => console.error(err));
-
-
-      function generateHTML() {
-        const val = document.getElementById("search").value;
-        if(val.length<1 || isNaN(val)){
-          container.innerHTML = "zzzzzzzzzz"
-          return ;
-        }
-        container.innerHTML = "<u>Loading ...Imagine a ball spinning here </u>"
-        let m="";
-        dt.map((item) => {
-          
-          if (item.version.includes(val)) {
-          
-            let p = "<strong>Chrome for testing :</strong>";
-            item.downloads.chrome.map(
-              (ch) =>
-                (p += `&nbsp; <a href="${ch.url}">${ch.platform}</a> &nbsp;`)
-            );
-            if (item.downloads.chromedriver) {
-              p += "<br /><strong>Chrome Driver:</strong>";
-              item.downloads.chromedriver.map(
-                (ch) =>
-                  (p += `&nbsp; <a href="${ch.url}">${ch.platform}</a> &nbsp; `)
-              );
-            }
-            m += `<hr /> <h5>${item.version}</h5> ${p}`;
-          }
-        });
-         container.innerHTML = m;
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <style>
+      main {
+        padding-top: 56px;
       }
 
+      .tool-shell {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 4rem 1.5rem 5rem;
+      }
+
+      .tool-hero,
+      .tool-card,
+      .result-card,
+      .info-card {
+        margin-bottom: 1.25rem;
+      }
+
+      .tool-card,
+      .result-card,
+      .info-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow);
+        padding: 1.4rem 1.5rem;
+      }
+
+      .search-row {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        margin-top: 1.2rem;
+      }
+
+      .search-input {
+        flex: 1 1 320px;
+        min-width: 0;
+        border: 1px solid var(--border);
+        background: var(--bg);
+        color: var(--text);
+        border-radius: 10px;
+        padding: 0.9rem 1rem;
+        font: inherit;
+        transition: border-color var(--transition), background var(--transition);
+      }
+
+      .search-input:focus {
+        outline: none;
+        border-color: var(--accent);
+        background: var(--surface);
+      }
+
+      .status-text,
+      .empty-state,
+      .info-card p,
+      .download-group a {
+        color: var(--text-muted);
+      }
+
+      .status-text,
+      .empty-state {
+        font-size: 0.9rem;
+      }
+
+      .result-list {
+        display: grid;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+
+      .result-card h2 {
+        font-size: 1.05rem;
+        margin-bottom: 1rem;
+      }
+
+      .download-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1rem;
+      }
+
+      .download-group {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1rem;
+      }
+
+      .download-group strong {
+        display: block;
+        margin-bottom: 0.75rem;
+        font-size: 0.88rem;
+      }
+
+      .download-group ul {
+        display: grid;
+        gap: 0.55rem;
+      }
+
+      .download-group a:hover {
+        color: var(--text);
+      }
+
+      .mono {
+        font-family: var(--mono);
+      }
+
+      @media (max-width: 640px) {
+        .search-row > * {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+         <svg id="bg-canvas" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"></svg>
+
+    <nav id="navbar" role="navigation" aria-label="Tool navigation">
+      <div class="nav-inner">
+        <a class="nav-logo" href="../index.html">Souvik <span>/ tools</span></a>
+        <div class="nav-actions">
+          <button id="btn-theme" class="btn-theme" aria-label="Toggle dark/light theme">
+            <span id="theme-icon" aria-hidden="true"></span>
+          </button>
+          <a href="../index.html#tools" class="btn-resume-nav">Back to portfolio</a>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <section class="tool-shell">
+        <div class="tool-hero">
+          <p class="section-label">Automation helper</p>
+          <h1 class="section-title">Chrome for Testing Download Finder</h1>
+          <p class="hero-summary">
+            Search Google Chrome for Testing versions and get direct download links for browser and ChromeDriver packages.
+          </p>
+        </div>
+
+        <div class="tool-card">
+          <p class="status-text">
+            For Chrome 115 and later, enter a full or partial version like <span class="mono">131</span> or <span class="mono">131.0.6778</span>.
+          </p>
+          <div class="search-row">
+            <input
+              class="search-input"
+              type="search"
+              id="search"
+              placeholder="Enter Chrome version"
+              autocomplete="off"
+            />
+            <button class="btn-primary" id="search-btn" type="button">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              Search
+            </button>
+          </div>
+          <p class="status-text" id="status">Loading version index…</p>
+        </div>
+
+        <div class="info-card">
+          <h2 class="timeline-title">How to use</h2>
+          <p>Search by the first few version segments, then open the platform-specific download you need for Selenium or local testing.</p>
+        </div>
+
+        <div class="result-list" id="results"></div>
+      </section>
+    </main>
+
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/bg.js"></script>
+    <script>
+      const url = 'https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json';
+      const searchInput = document.getElementById('search');
+      const searchButton = document.getElementById('search-btn');
+      const status = document.getElementById('status');
+      const results = document.getElementById('results');
+      let versions = [];
+
+      function setStatus(message) {
+        status.textContent = message;
+      }
+
+      function renderDownloadGroup(title, items) {
+        if (!items || !items.length) {
+          return '';
+        }
+
+        const links = items
+          .map((item) => `<li><a href="${item.url}" target="_blank" rel="noopener noreferrer">${item.platform}</a></li>`)
+          .join('');
+
+        return `
+          <div class="download-group">
+            <strong>${title}</strong>
+            <ul>${links}</ul>
+          </div>
+        `;
+      }
+
+      function renderResults(matches) {
+        if (!matches.length) {
+          results.innerHTML = '<div class="result-card empty-state">No matching versions found.</div>';
+          return;
+        }
+
+        results.innerHTML = matches
+          .map((item) => {
+            const chromeLinks = renderDownloadGroup('Chrome for Testing', item.downloads.chrome);
+            const driverLinks = renderDownloadGroup('ChromeDriver', item.downloads.chromedriver || []);
+
+            return `
+              <article class="result-card">
+                <h2 class="mono">${item.version}</h2>
+                <div class="download-grid">
+                  ${chromeLinks}
+                  ${driverLinks}
+                </div>
+              </article>
+            `;
+          })
+          .join('');
+      }
+
+      function searchVersions() {
+        const value = searchInput.value.trim();
+
+        if (!value || /[^\d.]/.test(value)) {
+          results.innerHTML = '<div class="result-card empty-state">Enter digits and dots only, for example 131 or 131.0.6778.</div>';
+          setStatus('Search query is invalid.');
+          return;
+        }
+
+        if (!versions.length) {
+          setStatus('Version index is still loading.');
+          return;
+        }
+
+        const matches = versions.filter((item) => item.version.includes(value)).slice(0, 25);
+        setStatus(`Found ${matches.length} matching version${matches.length === 1 ? '' : 's'}.`);
+        renderResults(matches);
+      }
+
+      fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+          versions = data.versions || [];
+          setStatus(`Loaded ${versions.length} versions. Search to view results.`);
+        })
+        .catch(() => {
+          setStatus('Could not load the version index right now.');
+        });
+
+      searchButton.addEventListener('click', searchVersions);
+      searchInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          searchVersions();
+        }
+      });
     </script>
   </body>
 </html>

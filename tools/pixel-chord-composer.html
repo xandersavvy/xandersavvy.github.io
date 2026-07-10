@@ -1,852 +1,767 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pixel Chord Composer - Advanced Musical Converter</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            margin: 0;
-            padding: 20px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Transform any image into a musical composition using colour and music theory." />
+  <meta name="keywords" content="pixel music, image to music, chord composer, web audio, music theory" />
+  <title>Pixel Chord Composer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <style>
+    main { padding-top: 56px; }
 
-        .container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            max-width: 900px;
-            width: 100%;
-            backdrop-filter: blur(10px);
-        }
+    .tool-shell {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem 5rem;
+    }
 
-        h1 {
-            text-align: center;
-            color: #4a4a4a;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
+    /* shared card surface */
+    .tool-card,
+    .upload-zone,
+    .ctrl-card,
+    .info-card,
+    .analysis-card,
+    .preview-card,
+    .audio-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      padding: 1.4rem 1.5rem;
+      margin-bottom: 1.25rem;
+    }
 
-        .subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 30px;
-            font-style: italic;
-        }
+    /* upload drop-zone */
+    .upload-zone {
+      border: 2px dashed var(--border);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 2rem 1.5rem;
+      transition: border-color var(--transition), background var(--transition);
+    }
+    .upload-zone:hover {
+      border-color: var(--text-muted);
+      background: var(--surface2);
+    }
+    .upload-zone p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
 
-        .upload-section {
-            border: 2px dashed #667eea;
-            border-radius: 10px;
-            padding: 30px;
-            text-align: center;
-            margin-bottom: 20px;
-            background: rgba(102, 126, 234, 0.05);
-            transition: all 0.3s ease;
-        }
+    /* file input */
+    input[type="file"] {
+      font: inherit;
+      color: var(--text);
+    }
 
-        .upload-section:hover {
-            background: rgba(102, 126, 234, 0.1);
-            transform: translateY(-2px);
-        }
+    /* controls grid */
+    .ctrl-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
 
-        .file-input {
-            margin: 10px 0;
-        }
+    .ctrl-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
 
-        button {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-            margin: 5px;
-        }
+    .ctrl-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+    }
 
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-        }
+    .ctrl-hint {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 0.15rem;
+    }
 
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
+    /* range input */
+    input[type="range"] {
+      width: 100%;
+      height: 5px;
+      border-radius: 3px;
+      background: var(--surface2);
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
 
-        .controls {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 20px;
-            margin: 20px 0;
-        }
+    /* select */
+    select {
+      width: 100%;
+      padding: 0.55rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+      color: var(--text);
+      font: inherit;
+      cursor: pointer;
+      transition: border-color var(--transition), background var(--transition);
+    }
+    select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
 
-        .control-group {
-            background: rgba(102, 126, 234, 0.05);
-            padding: 15px;
-            border-radius: 8px;
-        }
+    /* canvas preview */
+    .preview-card {
+      display: flex;
+      justify-content: center;
+      padding: 1.25rem;
+    }
+    canvas {
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      max-width: 100%;
+    }
 
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-            color: #4a4a4a;
-        }
+    /* action bar */
+    .action-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
 
-        input[type="range"] {
-            width: 100%;
-            margin: 10px 0;
-            -webkit-appearance: none;
-            appearance: none;
-            height: 6px;
-            border-radius: 3px;
-            background: linear-gradient(to right, #667eea, #764ba2);
-            outline: none;
-        }
+    /* progress bar */
+    .progress {
+      height: 6px;
+      background: var(--surface2);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 1.25rem;
+      display: none;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      background: var(--accent);
+      border-radius: 3px;
+      transition: width 0.25s ease;
+    }
 
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: white;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-            cursor: pointer;
-        }
+    /* audio player */
+    .audio-card h2 {
+      font-size: 1rem;
+      margin-bottom: 0.9rem;
+    }
+    audio {
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+    .audio-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
 
-        select {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            background: white;
-        }
-
-        .preview {
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        canvas {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            max-width: 100%;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .progress {
-            width: 100%;
-            height: 8px;
-            background: #f0f0f0;
-            border-radius: 4px;
-            overflow: hidden;
-            margin: 20px 0;
-            display: none;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
-        .audio-controls {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        audio {
-            width: 100%;
-            max-width: 400px;
-            margin: 10px 0;
-        }
-
-        .info {
-            background: rgba(102, 126, 234, 0.1);
-            border-left: 4px solid #667eea;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 0 8px 8px 0;
-        }
-
-        .scale-info {
-            font-size: 14px;
-            color: #666;
-            margin-top: 10px;
-        }
-
-        .advanced-controls {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .chord-theory {
-            background: rgba(102, 126, 234, 0.08);
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-        }
-    </style>
+    /* info / analysis */
+    .info-card h2,
+    .analysis-card h2 {
+      font-size: 1rem;
+      margin-bottom: 0.75rem;
+    }
+    .info-card p,
+    .analysis-card p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+    .analysis-card strong {
+      color: var(--text);
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🎼 Pixel Chord Composer</h1>
-        <p class="subtitle">Transform images into musical compositions with chord progressions and rhythmic patterns</p>
+       <svg id="bg-canvas" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"></svg>
 
-        <div class="upload-section">
-            <h3>Upload Your Image</h3>
-            <input type="file" class="file-input" accept="image/*" id="imageInput">
-            <p>Upload any image to generate musical chords and progressions</p>
-        </div>
-
-        <div class="controls">
-            <div class="control-group">
-                <label for="duration">Duration (seconds): <span id="durationValue">25</span></label>
-                <input type="range" id="duration" min="15" max="60" value="25">
-                <div class="scale-info">Extended time for chord progressions</div>
-            </div>
-
-            <div class="control-group">
-                <label for="key">Musical Key:</label>
-                <select id="key">
-                    <option value="C">C Major</option>
-                    <option value="G">G Major</option>
-                    <option value="D">D Major</option>
-                    <option value="A">A Major</option>
-                    <option value="E">E Major</option>
-                    <option value="F">F Major</option>
-                    <option value="Bb">Bb Major</option>
-                    <option value="Eb">Eb Major</option>
-                    <option value="Am">A Minor</option>
-                    <option value="Em">E Minor</option>
-                    <option value="Bm">B Minor</option>
-                    <option value="Dm">D Minor</option>
-                    <option value="Fm">F Minor</option>
-                </select>
-                <div class="scale-info">Key determines chord progressions</div>
-            </div>
-
-            <div class="control-group">
-                <label for="style">Musical Style:</label>
-                <select id="style">
-                    <option value="pop">Pop (I-V-vi-IV)</option>
-                    <option value="jazz">Jazz (ii-V-I)</option>
-                    <option value="blues">Blues (I-IV-V)</option>
-                    <option value="classical">Classical (I-vi-IV-V)</option>
-                    <option value="ambient">Ambient (Extended)</option>
-                    <option value="folk">Folk (I-IV-I-V)</option>
-                </select>
-                <div class="scale-info">Style affects chord progressions</div>
-            </div>
-
-            <div class="control-group">
-                <label for="tempo">Tempo (BPM): <span id="tempoValue">120</span></label>
-                <input type="range" id="tempo" min="60" max="200" value="120">
-                <div class="scale-info">Musical rhythm speed</div>
-            </div>
-
-            <div class="control-group">
-                <label for="complexity">Chord Complexity:</label>
-                <select id="complexity">
-                    <option value="triads">Triads (3 notes)</option>
-                    <option value="sevenths">7th Chords (4 notes)</option>
-                    <option value="extended">Extended (5+ notes)</option>
-                    <option value="jazzy">Jazz Extensions</option>
-                </select>
-                <div class="scale-info">How rich the chords sound</div>
-            </div>
-
-            <div class="control-group">
-                <label for="volume">Master Volume: <span id="volumeValue">0.4</span></label>
-                <input type="range" id="volume" min="0.1" max="0.8" step="0.1" value="0.4">
-                <div class="scale-info">Overall audio level</div>
-            </div>
-        </div>
-
-        <div class="advanced-controls">
-            <div class="control-group">
-                <label for="arpeggiation">Arpeggiation Pattern:</label>
-                <select id="arpeggiation">
-                    <option value="block">Block Chords</option>
-                    <option value="ascending">Ascending Arpeggio</option>
-                    <option value="descending">Descending Arpeggio</option>
-                    <option value="alternating">Alternating Pattern</option>
-                    <option value="broken">Broken Chord</option>
-                </select>
-            </div>
-
-            <div class="control-group">
-                <label for="rhythm">Rhythm Pattern:</label>
-                <select id="rhythm">
-                    <option value="steady">Steady Quarter Notes</option>
-                    <option value="syncopated">Syncopated</option>
-                    <option value="waltz">Waltz (3/4)</option>
-                    <option value="latin">Latin Rhythm</option>
-                    <option value="swing">Swing Feel</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="preview">
-            <canvas id="canvas" width="600" height="400"></canvas>
-        </div>
-
-        <div style="text-align: center; margin: 20px 0;">
-            <button id="convertBtn" onclick="convertImage()">🎵 Generate Musical Composition</button>
-            <button id="previewBtn" onclick="previewChords()" disabled>👂 Preview Chord Progression</button>
-        </div>
-
-        <div class="progress" id="progress">
-            <div class="progress-bar" id="progressBar"></div>
-        </div>
-
-        <div class="audio-controls" id="audioControls" style="display: none;">
-            <h3>Generated Musical Composition</h3>
-            <audio id="audioPlayer" controls></audio>
-            <br>
-            <button id="downloadBtn" onclick="downloadMP3()">💾 Download Audio</button>
-            <button id="analysisBtn" onclick="showAnalysis()">📊 Show Chord Analysis</button>
-        </div>
-
-        <div class="chord-theory" id="chordAnalysis" style="display: none;">
-            <h4>🎼 Musical Analysis</h4>
-            <div id="progressionDisplay"></div>
-            <div id="chordDetails"></div>
-        </div>
-
-        <div class="info">
-            <h4>Advanced Pixel-to-Music Algorithm:</h4>
-            <p><strong>Pixel Regions → Chords:</strong> Image regions map to complete chords using music theory progressions.</p>
-            <p><strong>Color Harmony → Chord Extensions:</strong> RGB values determine 7ths, 9ths, and other chord extensions.</p>
-            <p><strong>Brightness → Chord Inversions:</strong> Pixel brightness controls chord voicing and inversions.</p>
-            <p><strong>Position → Chord Progressions:</strong> Image flow generates musically coherent chord sequences.</p>
-            <p><strong>Musical Intelligence:</strong> Uses music theory to create authentic-sounding progressions that follow harmonic rules.</p>
-        </div>
+  <nav id="navbar" role="navigation" aria-label="Tool navigation">
+    <div class="nav-inner">
+      <a class="nav-logo" href="../index.html">Souvik <span>/ tools</span></a>
+      <div class="nav-actions">
+        <button id="btn-theme" class="btn-theme" aria-label="Toggle dark/light theme">
+          <span id="theme-icon" aria-hidden="true"></span>
+        </button>
+        <a href="../index.html#tools" class="btn-resume-nav">Back to portfolio</a>
+      </div>
     </div>
+  </nav>
 
-    <script>
-        // Enhanced chord and scale definitions
-        const CHORD_PROGRESSIONS = {
-            pop: ['I', 'V', 'vi', 'IV'],
-            jazz: ['ii', 'V', 'I', 'vi'],
-            blues: ['I', 'I', 'IV', 'I', 'V', 'IV', 'I', 'V'],
-            classical: ['I', 'vi', 'IV', 'V'],
-            ambient: ['I', 'iii', 'vi', 'ii', 'V', 'I'],
-            folk: ['I', 'IV', 'I', 'V']
-        };
+  <main>
+    <section class="tool-shell">
+      <!-- header -->
+      <div style="margin-bottom:2rem">
+        <p class="section-label">Creative tool</p>
+        <h1 class="section-title">Pixel Chord Composer</h1>
+        <p class="hero-summary">
+          Upload an image and transform its colours into a musical composition — chords, rhythm, and arpeggiation derived entirely from your pixels.
+        </p>
+      </div>
 
-        const SCALE_DEGREES = {
-            major: {
-                'I': [0, 4, 7],      // Major triad
-                'ii': [2, 5, 9],     // Minor triad
-                'iii': [4, 7, 11],   // Minor triad
-                'IV': [5, 9, 0],     // Major triad
-                'V': [7, 11, 2],     // Major triad
-                'vi': [9, 0, 4],     // Minor triad
-                'vii°': [11, 2, 5]   // Diminished triad
-            },
-            minor: {
-                'i': [0, 3, 7],      // Minor triad
-                'ii°': [2, 5, 8],    // Diminished triad
-                'III': [3, 7, 10],   // Major triad
-                'iv': [5, 8, 0],     // Minor triad
-                'V': [7, 11, 2],     // Major triad (harmonic minor)
-                'VI': [8, 0, 3],     // Major triad
-                'vii°': [11, 2, 5]   // Diminished triad
-            }
-        };
+      <!-- upload -->
+      <div class="upload-zone">
+        <p>Select or drop an image</p>
+        <input type="file" id="imageInput" accept="image/*" aria-label="Upload image" />
+        <p>JPG, PNG, GIF, WebP supported</p>
+      </div>
 
-        const KEY_SIGNATURES = {
-            'C': 0, 'G': 7, 'D': 2, 'A': 9, 'E': 4, 'F': 5, 'Bb': 10, 'Eb': 3,
-            'Am': 0, 'Em': 7, 'Bm': 2, 'Dm': 10, 'Fm': 8
-        };
+      <!-- canvas preview -->
+      <div class="preview-card" style="display:none" id="previewSection">
+        <canvas id="canvas" width="600" height="400" aria-label="Image preview"></canvas>
+      </div>
 
-        const CHORD_EXTENSIONS = {
-            triads: [],
-            sevenths: [10, 11], // Minor 7th, Major 7th
-            extended: [10, 2, 5], // 7th, 9th, 11th
-            jazzy: [10, 2, 5, 9] // 7th, 9th, 11th, 13th
-        };
+      <!-- controls -->
+      <div class="ctrl-grid">
+        <div class="ctrl-card">
+          <label class="ctrl-label" for="duration">Duration — <span id="durationValue">25</span>s</label>
+          <input type="range" id="duration" min="15" max="60" value="25" />
+          <p class="ctrl-hint">Length of the generated audio</p>
+        </div>
 
-        const ARPEGGIO_PATTERNS = {
-            block: [0, 1, 2], // All notes together
-            ascending: [0, 0.1, 0.2], // Ascending delay
-            descending: [0.2, 0.1, 0], // Descending delay
-            alternating: [0, 0.15, 0.05], // Alternating pattern
-            broken: [0, 0.1, 0.25] // Broken chord pattern
-        };
+        <div class="ctrl-card">
+          <label class="ctrl-label" for="tempo">Tempo — <span id="tempoValue">120</span> BPM</label>
+          <input type="range" id="tempo" min="60" max="200" value="120" />
+          <p class="ctrl-hint">Musical rhythm speed</p>
+        </div>
 
-        let imageData = null;
-        let audioContext = null;
-        let audioBuffer = null;
-        let currentChordProgression = [];
+        <div class="ctrl-card">
+          <label class="ctrl-label" for="volume">Volume — <span id="volumeValue">0.4</span></label>
+          <input type="range" id="volume" min="0.1" max="0.8" step="0.1" value="0.4" />
+          <p class="ctrl-hint">Master output level</p>
+        </div>
 
-        // Initialize audio context
-        function initAudioContext() {
-            if (!audioContext) {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            }
+        <div class="ctrl-card">
+          <label class="ctrl-label" for="key">Musical Key</label>
+          <select id="key">
+            <option value="C">C Major</option>
+            <option value="G">G Major</option>
+            <option value="D">D Major</option>
+            <option value="A">A Major</option>
+            <option value="E">E Major</option>
+            <option value="F">F Major</option>
+            <option value="Bb">Bb Major</option>
+            <option value="Eb">Eb Major</option>
+            <option value="Am">A Minor</option>
+            <option value="Em">E Minor</option>
+            <option value="Bm">B Minor</option>
+            <option value="Dm">D Minor</option>
+            <option value="Fm">F Minor</option>
+          </select>
+          <p class="ctrl-hint">Key determines chord progressions</p>
+        </div>
+
+        <div class="ctrl-card">
+          <label class="ctrl-label" for="style">Musical Style</label>
+          <select id="style">
+            <option value="pop">Pop (I-V-vi-IV)</option>
+            <option value="jazz">Jazz (ii-V-I)</option>
+            <option value="blues">Blues (I-IV-V)</option>
+            <option value="classical">Classical (I-vi-IV-V)</option>
+            <option value="ambient">Ambient (Extended)</option>
+            <option value="folk">Folk (I-IV-I-V)</option>
+          </select>
+          <p class="ctrl-hint">Affects chord progressions</p>
+        </div>
+
+        <div class="ctrl-card">
+          <label class="ctrl-label" for="complexity">Chord Complexity</label>
+          <select id="complexity">
+            <option value="triads">Triads (3 notes)</option>
+            <option value="sevenths">7th Chords (4 notes)</option>
+            <option value="extended">Extended (5+ notes)</option>
+            <option value="jazzy">Jazz Extensions</option>
+          </select>
+          <p class="ctrl-hint">How rich the chords sound</p>
+        </div>
+
+        <div class="ctrl-card">
+          <label class="ctrl-label" for="arpeggiation">Arpeggiation</label>
+          <select id="arpeggiation">
+            <option value="block">Block Chords</option>
+            <option value="ascending">Ascending Arpeggio</option>
+            <option value="descending">Descending Arpeggio</option>
+            <option value="alternating">Alternating Pattern</option>
+            <option value="broken">Broken Chord</option>
+          </select>
+        </div>
+
+        <div class="ctrl-card">
+          <label class="ctrl-label" for="rhythm">Rhythm Pattern</label>
+          <select id="rhythm">
+            <option value="steady">Steady Quarter Notes</option>
+            <option value="syncopated">Syncopated</option>
+            <option value="waltz">Waltz (3/4)</option>
+            <option value="latin">Latin Rhythm</option>
+            <option value="swing">Swing Feel</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- action bar -->
+      <div class="action-bar">
+        <button class="btn-primary" id="convertBtn" type="button" disabled>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Generate composition
+        </button>
+        <button class="btn-secondary" id="previewBtn" type="button" disabled>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          Preview chords
+        </button>
+      </div>
+
+      <!-- progress -->
+      <div class="progress" id="progress">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+      <!-- audio output -->
+      <div class="audio-card" id="audioControls" style="display:none">
+        <h2 class="timeline-title">Generated Composition</h2>
+        <audio id="audioPlayer" controls></audio>
+        <div class="audio-actions">
+          <button class="btn-primary" id="downloadBtn" type="button">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download audio
+          </button>
+          <button class="btn-secondary" id="analysisBtn" type="button">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><rect x="7" y="10" width="3" height="5"/><rect x="12" y="7" width="3" height="8"/><rect x="17" y="5" width="3" height="10"/></svg>
+            Show chord analysis
+          </button>
+        </div>
+      </div>
+
+      <!-- chord analysis (toggled) -->
+      <div class="analysis-card" id="chordAnalysis" style="display:none">
+        <h2 class="timeline-title">Musical Analysis</h2>
+        <div id="progressionDisplay"></div>
+        <div id="chordDetails"></div>
+      </div>
+
+      <!-- algorithm info -->
+      <div class="info-card">
+        <h2 class="timeline-title">How it works</h2>
+        <p><strong>Pixel regions → chords:</strong> Image regions map to complete chords using music theory progressions.</p>
+        <p><strong>Colour harmony → chord extensions:</strong> RGB values determine 7ths, 9ths, and other extensions.</p>
+        <p><strong>Brightness → inversions:</strong> Pixel brightness controls chord voicing and inversions.</p>
+        <p><strong>Position → progressions:</strong> Image flow generates musically coherent chord sequences that follow harmonic rules.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/bg.js"></script>
+  <script>
+    // ── Music theory data ──────────────────────────────────────
+    const CHORD_PROGRESSIONS = {
+      pop:       ['I', 'V', 'vi', 'IV'],
+      jazz:      ['ii', 'V', 'I', 'vi'],
+      blues:     ['I', 'I', 'IV', 'I', 'V', 'IV', 'I', 'V'],
+      classical: ['I', 'vi', 'IV', 'V'],
+      ambient:   ['I', 'iii', 'vi', 'ii', 'V', 'I'],
+      folk:      ['I', 'IV', 'I', 'V']
+    };
+
+    const SCALE_DEGREES = {
+      major: {
+        'I':    [0,  4,  7],
+        'ii':   [2,  5,  9],
+        'iii':  [4,  7, 11],
+        'IV':   [5,  9,  0],
+        'V':    [7, 11,  2],
+        'vi':   [9,  0,  4],
+        'vii°': [11, 2,  5]
+      },
+      minor: {
+        'i':    [0,  3,  7],
+        'ii°':  [2,  5,  8],
+        'III':  [3,  7, 10],
+        'iv':   [5,  8,  0],
+        'V':    [7, 11,  2],
+        'VI':   [8,  0,  3],
+        'vii°': [11, 2,  5]
+      }
+    };
+
+    const KEY_SIGNATURES = {
+      'C': 0,  'G': 7, 'D': 2, 'A': 9,  'E': 4,
+      'F': 5,  'Bb': 10, 'Eb': 3,
+      'Am': 0, 'Em': 7, 'Bm': 2, 'Dm': 10, 'Fm': 8
+    };
+
+    const CHORD_EXTENSIONS = {
+      triads:   [],
+      sevenths: [10, 11],
+      extended: [10, 2, 5],
+      jazzy:    [10, 2, 5, 9]
+    };
+
+    const ARPEGGIO_PATTERNS = {
+      block:       [0, 0.01, 0.02],
+      ascending:   [0, 0.1,  0.2],
+      descending:  [0.2, 0.1, 0],
+      alternating: [0, 0.15, 0.05],
+      broken:      [0, 0.1,  0.25]
+    };
+
+    // ── State ──────────────────────────────────────────────────
+    let imageData = null;
+    let audioContext = null;
+    let audioBuffer = null;
+    let currentChordProgression = [];
+
+    // ── Helpers ────────────────────────────────────────────────
+    function initAudioContext() {
+      if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    function updateProgress(percent) {
+      document.getElementById('progressBar').style.width = percent + '%';
+    }
+
+    // ── Range display listeners ────────────────────────────────
+    document.getElementById('duration').addEventListener('input', function () {
+      document.getElementById('durationValue').textContent = this.value;
+    });
+    document.getElementById('tempo').addEventListener('input', function () {
+      document.getElementById('tempoValue').textContent = this.value;
+    });
+    document.getElementById('volume').addEventListener('input', function () {
+      document.getElementById('volumeValue').textContent = this.value;
+    });
+
+    // ── Image upload ───────────────────────────────────────────
+    document.getElementById('imageInput').addEventListener('change', function (event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const img = new Image();
+        img.onload = function () { processImage(img); };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    function processImage(img) {
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = 600;
+      canvas.height = 400;
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+      document.getElementById('previewSection').style.display = 'flex';
+      document.getElementById('convertBtn').disabled = false;
+      document.getElementById('previewBtn').disabled = false;
+
+      analyzeImageForChords();
+    }
+
+    // ── Chord generation ───────────────────────────────────────
+    function analyzeImageForChords() {
+      if (!imageData) return;
+      const style = document.getElementById('style').value;
+      const key   = document.getElementById('key').value;
+      const baseProgression = CHORD_PROGRESSIONS[style];
+      const regions = analyzeImageRegions(imageData.data, imageData.width, imageData.height);
+      currentChordProgression = generateChordProgressionFromRegions(regions, baseProgression, key);
+    }
+
+    function analyzeImageRegions(pixels, width, height) {
+      const regions = [];
+      const rw = Math.floor(width / 8);
+      const rh = Math.floor(height / 4);
+      for (let y = 0; y < 4; y++) {
+        for (let x = 0; x < 8; x++) {
+          regions.push(analyzeRegion(pixels, width, height, x * rw, y * rh, rw, rh));
         }
+      }
+      return regions;
+    }
 
-        // Update display values
-        document.getElementById('duration').addEventListener('input', function() {
-            document.getElementById('durationValue').textContent = this.value;
+    function analyzeRegion(pixels, imageWidth, imageHeight, startX, startY, regionWidth, regionHeight) {
+      let totalR = 0, totalG = 0, totalB = 0, totalBrightness = 0, count = 0;
+      for (let y = startY; y < startY + regionHeight && y < imageHeight; y++) {
+        for (let x = startX; x < startX + regionWidth && x < imageWidth; x++) {
+          const i = (y * imageWidth + x) * 4;
+          const r = pixels[i], g = pixels[i + 1], b = pixels[i + 2];
+          totalR += r; totalG += g; totalB += b;
+          totalBrightness += (r + g + b) / 3;
+          count++;
+        }
+      }
+      return {
+        r: totalR / count / 255, g: totalG / count / 255, b: totalB / count / 255,
+        brightness: totalBrightness / count / 255,
+        x: startX / imageWidth, y: startY / imageHeight
+      };
+    }
+
+    function generateChordProgressionFromRegions(regions, baseProgression, key) {
+      const isMinor = key.includes('m');
+      const scaleType = isMinor ? 'minor' : 'major';
+      const rootNote  = KEY_SIGNATURES[key];
+      const sorted = regions.slice().sort((a, b) => (a.x + a.brightness) - (b.x + b.brightness));
+
+      return sorted.slice(0, 16).map((region) => {
+        const idx = Math.floor(region.brightness * baseProgression.length);
+        const symbol = baseProgression[idx % baseProgression.length];
+        return {
+          symbol,
+          notes:    generateChordNotes(symbol, rootNote, scaleType, region),
+          duration: 0.5 + region.brightness * 1.5,
+          region
+        };
+      });
+    }
+
+    function generateChordNotes(chordSymbol, rootNote, scaleType, region) {
+      const baseNotes  = SCALE_DEGREES[scaleType][chordSymbol] || SCALE_DEGREES[scaleType]['I'];
+      const complexity = document.getElementById('complexity').value;
+      const extensions = CHORD_EXTENSIONS[complexity];
+      let chordNotes = [...baseNotes];
+
+      if (extensions.length > 0) {
+        const extras = extensions.filter((ext, index) => {
+          const colorValue = [region.r, region.g, region.b][index % 3];
+          return colorValue > 0.6;
         });
+        chordNotes = [...chordNotes, ...extras];
+      }
 
-        document.getElementById('tempo').addEventListener('input', function() {
-            document.getElementById('tempoValue').textContent = this.value;
-        });
+      return chordNotes.map((note) => {
+        const midiNote = 57 + rootNote + note;
+        return 220 * Math.pow(2, (midiNote - 57) / 12);
+      });
+    }
 
-        document.getElementById('volume').addEventListener('input', function() {
-            document.getElementById('volumeValue').textContent = this.value;
-        });
+    // ── Audio generation ───────────────────────────────────────
+    document.getElementById('convertBtn').addEventListener('click', async function () {
+      if (!imageData) return;
+      initAudioContext();
 
-        // Handle image upload
-        document.getElementById('imageInput').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = new Image();
-                    img.onload = function() {
-                        processImage(img);
-                    };
-                    img.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
+      const duration = parseInt(document.getElementById('duration').value);
+      const tempo    = parseInt(document.getElementById('tempo').value);
+      const volume   = parseFloat(document.getElementById('volume').value);
 
-        // Process and resize image
-        function processImage(img) {
-            const canvas = document.getElementById('canvas');
-            const ctx = canvas.getContext('2d');
+      document.getElementById('progress').style.display = 'block';
+      this.disabled = true;
 
-            canvas.width = 600;
-            canvas.height = 400;
+      try {
+        audioBuffer = await generateChordBasedAudio(currentChordProgression, duration, tempo, volume);
+        displayAudioControls();
+        updateChordAnalysis();
+      } catch (error) {
+        console.error('Audio generation error:', error);
+      } finally {
+        document.getElementById('progress').style.display = 'none';
+        this.disabled = false;
+      }
+    });
 
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    async function generateChordBasedAudio(chordProgression, duration, tempo, volume) {
+      const sampleRate = 44100;
+      const numSamples = sampleRate * duration;
+      const buffer     = audioContext.createBuffer(2, numSamples, sampleRate);
+      const left       = buffer.getChannelData(0);
+      const right      = buffer.getChannelData(1);
 
-            document.getElementById('convertBtn').disabled = false;
-            document.getElementById('previewBtn').disabled = false;
+      const beatDuration  = 60 / tempo;
+      const arpeggiation  = document.getElementById('arpeggiation').value;
+      const rhythm        = document.getElementById('rhythm').value;
 
-            // Generate chord progression from image
-            analyzeImageForChords();
+      let currentTime = 0;
+      let progressionIndex = 0;
+
+      while (currentTime < duration && chordProgression.length > 0) {
+        const chord         = chordProgression[progressionIndex % chordProgression.length];
+        const chordDuration = chord.duration * beatDuration;
+
+        updateProgress((currentTime / duration) * 100);
+        await generateChordAudio(left, right, chord.notes, currentTime, chordDuration, sampleRate, volume, arpeggiation, rhythm);
+
+        currentTime += chordDuration;
+        progressionIndex++;
+      }
+
+      return buffer;
+    }
+
+    async function generateChordAudio(left, right, frequencies, startTime, duration, sampleRate, volume, arpeggiation, rhythm) {
+      const pattern = ARPEGGIO_PATTERNS[arpeggiation];
+
+      frequencies.forEach((frequency, noteIndex) => {
+        if (noteIndex >= pattern.length) return;
+
+        const noteStartTime   = startTime + pattern[noteIndex] * duration * 0.3;
+        const noteStartSample = Math.floor(noteStartTime * sampleRate);
+        const noteEndSample   = Math.min(noteStartSample + Math.floor(duration * sampleRate), left.length);
+
+        for (let sample = noteStartSample; sample < noteEndSample; sample++) {
+          const t        = sample / sampleRate;
+          const envelope = createChordEnvelope(t, noteStartTime, duration, rhythm);
+          if (envelope <= 0) continue;
+
+          let wave = Math.sin(2 * Math.PI * frequency * t) * 0.6;
+          wave    += Math.sin(2 * Math.PI * frequency * 2 * t) * 0.2;
+          wave    += Math.sin(2 * Math.PI * frequency * 3 * t) * 0.1;
+          wave    += Math.sin(2 * Math.PI * frequency * 4 * t) * 0.05;
+
+          const finalWave = wave * envelope * volume * 0.25;
+          const pan       = (noteIndex - frequencies.length / 2) / frequencies.length;
+          const leftGain  = Math.cos((pan + 1) * Math.PI / 4);
+          const rightGain = Math.sin((pan + 1) * Math.PI / 4);
+
+          left[sample]  = Math.max(-1, Math.min(1, left[sample]  + finalWave * leftGain));
+          right[sample] = Math.max(-1, Math.min(1, right[sample] + finalWave * rightGain));
         }
+      });
+    }
 
-        // Analyze image to generate chord progression
-        function analyzeImageForChords() {
-            if (!imageData) return;
+    function createChordEnvelope(currentTime, noteStartTime, duration, rhythm) {
+      const t = currentTime - noteStartTime;
+      if (t < 0 || t > duration) return 0;
+      const nt = t / duration;
+      switch (rhythm) {
+        case 'steady':      return 1 - Math.pow(nt, 2);
+        case 'syncopated':  return Math.sin(nt * Math.PI * 3) * (1 - nt);
+        case 'waltz':       return Math.sin(nt * Math.PI) * (1 - nt * 0.7);
+        case 'latin':       return (Math.sin(nt * Math.PI * 2) + 1) * 0.5 * (1 - nt);
+        case 'swing':       return Math.pow(Math.sin(nt * Math.PI), 0.7) * (1 - nt * 0.8);
+        default:            return Math.sin(nt * Math.PI) * (1 - nt);
+      }
+    }
 
-            const style = document.getElementById('style').value;
-            const key = document.getElementById('key').value;
-            const baseProgression = CHORD_PROGRESSIONS[style];
+    // ── Preview ────────────────────────────────────────────────
+    document.getElementById('previewBtn').addEventListener('click', function () {
+      if (!audioContext || currentChordProgression.length === 0) {
+        initAudioContext();
+        analyzeImageForChords();
+      }
+      playChordProgression(currentChordProgression.slice(0, 4), 0.3);
+    });
 
-            // Analyze image regions to modify progression
-            const width = imageData.width;
-            const height = imageData.height;
-            const pixels = imageData.data;
+    function playChordProgression(chords, volume) {
+      let startTime = audioContext.currentTime;
+      chords.forEach((chord, index) => {
+        playChord(chord.notes, startTime + index * 0.8, 0.6, volume);
+      });
+    }
 
-            const regions = analyzeImageRegions(pixels, width, height);
-            currentChordProgression = generateChordProgressionFromRegions(regions, baseProgression, key);
+    function playChord(frequencies, startTime, duration, volume) {
+      frequencies.forEach((frequency) => {
+        const oscillator = audioContext.createOscillator();
+        const gainNode   = audioContext.createGain();
 
-            console.log('Generated chord progression:', currentChordProgression);
+        oscillator.type = 'sine';
+        oscillator.frequency.setValueAtTime(frequency, startTime);
+
+        gainNode.gain.setValueAtTime(0, startTime);
+        gainNode.gain.linearRampToValueAtTime(volume * 0.5, startTime + 0.1);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + duration);
+
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        oscillator.start(startTime);
+        oscillator.stop(startTime + duration);
+      });
+    }
+
+    // ── Display helpers ────────────────────────────────────────
+    function displayAudioControls() {
+      const blob    = bufferToWav(audioBuffer);
+      const url     = URL.createObjectURL(blob);
+      const player  = document.getElementById('audioPlayer');
+      player.src    = url;
+      document.getElementById('audioControls').style.display = 'block';
+    }
+
+    function updateChordAnalysis() {
+      const progressionText = currentChordProgression.map((c) => c.symbol).join(' – ');
+      document.getElementById('progressionDisplay').innerHTML =
+        `<p><strong>Chord Progression:</strong> ${progressionText}</p>`;
+
+      const count      = currentChordProgression.length;
+      const avgDur     = currentChordProgression.reduce((s, c) => s + c.duration, 0) / count;
+      const key        = document.getElementById('key').value;
+      const style      = document.getElementById('style').value;
+
+      document.getElementById('chordDetails').innerHTML = `
+        <p><strong>Total Chords:</strong> ${count}</p>
+        <p><strong>Avg Duration:</strong> ${avgDur.toFixed(2)} beats</p>
+        <p><strong>Key:</strong> ${key}</p>
+        <p><strong>Style:</strong> ${style.charAt(0).toUpperCase() + style.slice(1)}</p>
+      `;
+    }
+
+    document.getElementById('analysisBtn').addEventListener('click', function () {
+      const el = document.getElementById('chordAnalysis');
+      el.style.display = el.style.display === 'none' ? 'block' : 'none';
+    });
+
+    document.getElementById('downloadBtn').addEventListener('click', function () {
+      if (!audioBuffer) return;
+      const blob = bufferToWav(audioBuffer);
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      a.href = url;
+      a.download = 'pixel-chord-composition.wav';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+
+    // ── WAV encoder ────────────────────────────────────────────
+    function bufferToWav(buffer) {
+      const length           = buffer.length;
+      const numberOfChannels = buffer.numberOfChannels;
+      const sampleRate       = buffer.sampleRate;
+      const bytesPerSample   = 2;
+      const blockAlign       = numberOfChannels * bytesPerSample;
+      const byteRate         = sampleRate * blockAlign;
+      const dataSize         = length * blockAlign;
+      const arrayBuffer      = new ArrayBuffer(44 + dataSize);
+      const view             = new DataView(arrayBuffer);
+
+      const write = (off, str) => {
+        for (let i = 0; i < str.length; i++) view.setUint8(off + i, str.charCodeAt(i));
+      };
+
+      write(0,  'RIFF');  view.setUint32(4,  36 + dataSize,      true);
+      write(8,  'WAVE');  write(12, 'fmt ');
+      view.setUint32(16, 16, true);
+      view.setUint16(20,  1,                  true);
+      view.setUint16(22, numberOfChannels,    true);
+      view.setUint32(24, sampleRate,          true);
+      view.setUint32(28, byteRate,            true);
+      view.setUint16(32, blockAlign,          true);
+      view.setUint16(34, 16,                  true);
+      write(36, 'data');  view.setUint32(40, dataSize, true);
+
+      let offset = 44;
+      for (let i = 0; i < length; i++) {
+        for (let ch = 0; ch < numberOfChannels; ch++) {
+          const sample = Math.max(-1, Math.min(1, buffer.getChannelData(ch)[i]));
+          view.setInt16(offset, sample * 0x7FFF, true);
+          offset += 2;
         }
-
-        // Analyze image regions for musical mapping
-        function analyzeImageRegions(pixels, width, height) {
-            const regions = [];
-            const regionWidth = Math.floor(width / 8); // 8 regions horizontally
-            const regionHeight = Math.floor(height / 4); // 4 regions vertically
-
-            for (let y = 0; y < 4; y++) {
-                for (let x = 0; x < 8; x++) {
-                    const region = analyzeRegion(pixels, width, height, 
-                        x * regionWidth, y * regionHeight, regionWidth, regionHeight);
-                    regions.push(region);
-                }
-            }
-
-            return regions;
-        }
-
-        // Analyze a specific region of the image
-        function analyzeRegion(pixels, imageWidth, imageHeight, startX, startY, regionWidth, regionHeight) {
-            let totalR = 0, totalG = 0, totalB = 0, totalBrightness = 0;
-            let pixelCount = 0;
-
-            for (let y = startY; y < startY + regionHeight && y < imageHeight; y++) {
-                for (let x = startX; x < startX + regionWidth && x < imageWidth; x++) {
-                    const pixelIndex = (y * imageWidth + x) * 4;
-                    const r = pixels[pixelIndex];
-                    const g = pixels[pixelIndex + 1];
-                    const b = pixels[pixelIndex + 2];
-
-                    totalR += r;
-                    totalG += g;
-                    totalB += b;
-                    totalBrightness += (r + g + b) / 3;
-                    pixelCount++;
-                }
-            }
-
-            return {
-                r: totalR / pixelCount / 255,
-                g: totalG / pixelCount / 255,
-                b: totalB / pixelCount / 255,
-                brightness: totalBrightness / pixelCount / 255,
-                x: startX / imageWidth,
-                y: startY / imageHeight
-            };
-        }
-
-        // Generate chord progression from image regions
-        function generateChordProgressionFromRegions(regions, baseProgression, key) {
-            const progression = [];
-            const isMinor = key.includes('m');
-            const scaleType = isMinor ? 'minor' : 'major';
-            const rootNote = KEY_SIGNATURES[key];
-
-            // Sort regions by brightness and position to create musical flow
-            const sortedRegions = regions.sort((a, b) => {
-                return (a.x + a.brightness) - (b.x + b.brightness);
-            });
-
-            // Map regions to chord progressions
-            for (let i = 0; i < Math.min(16, sortedRegions.length); i++) {
-                const region = sortedRegions[i];
-                const progressionIndex = Math.floor(region.brightness * baseProgression.length);
-                const chordSymbol = baseProgression[progressionIndex % baseProgression.length];
-
-                // Generate actual chord notes
-                const chordNotes = generateChordNotes(chordSymbol, rootNote, scaleType, region);
-                progression.push({
-                    symbol: chordSymbol,
-                    notes: chordNotes,
-                    duration: 0.5 + region.brightness * 1.5, // Duration based on brightness
-                    region: region
-                });
-            }
-
-            return progression;
-        }
-
-        // Generate actual chord notes from chord symbol
-        function generateChordNotes(chordSymbol, rootNote, scaleType, region) {
-            const scaleData = SCALE_DEGREES[scaleType];
-            const baseNotes = scaleData[chordSymbol] || scaleData['I'];
-
-            const complexity = document.getElementById('complexity').value;
-            const extensions = CHORD_EXTENSIONS[complexity];
-
-            // Create the chord with extensions
-            let chordNotes = [...baseNotes];
-
-            // Add extensions based on color information
-            if (extensions.length > 0) {
-                const colorExtensions = extensions.filter((ext, index) => {
-                    const colorValue = [region.r, region.g, region.b][index % 3];
-                    return colorValue > 0.6; // Only add extension if color is strong
-                });
-                chordNotes = [...chordNotes, ...colorExtensions];
-            }
-
-            // Convert to frequencies
-            const baseFreq = 220; // A3
-            return chordNotes.map(note => {
-                const midiNote = 57 + rootNote + note; // A3 = 57
-                return baseFreq * Math.pow(2, (midiNote - 57) / 12);
-            });
-        }
-
-        // Convert image to audio with chord-based approach
-        async function convertImage() {
-            if (!imageData) {
-                alert('Please upload an image first!');
-                return;
-            }
-
-            initAudioContext();
-
-            const duration = parseInt(document.getElementById('duration').value);
-            const tempo = parseInt(document.getElementById('tempo').value);
-            const volume = parseFloat(document.getElementById('volume').value);
-
-            document.getElementById('progress').style.display = 'block';
-            document.getElementById('convertBtn').disabled = true;
-
-            try {
-                audioBuffer = await generateChordBasedAudio(currentChordProgression, duration, tempo, volume);
-                displayAudioControls();
-                updateChordAnalysis();
-            } catch (error) {
-                alert('Error generating audio: ' + error.message);
-                console.error('Audio generation error:', error);
-            } finally {
-                document.getElementById('progress').style.display = 'none';
-                document.getElementById('convertBtn').disabled = false;
-            }
-        }
-
-        // Generate chord-based audio
-        async function generateChordBasedAudio(chordProgression, duration, tempo, volume) {
-            const sampleRate = 44100;
-            const numSamples = sampleRate * duration;
-            const buffer = audioContext.createBuffer(2, numSamples, sampleRate);
-
-            const leftChannel = buffer.getChannelData(0);
-            const rightChannel = buffer.getChannelData(1);
-
-            const beatDuration = 60 / tempo; // Duration of one beat in seconds
-            const arpeggiation = document.getElementById('arpeggiation').value;
-            const rhythm = document.getElementById('rhythm').value;
-
-            let currentTime = 0;
-            let progressionIndex = 0;
-
-            while (currentTime < duration && chordProgression.length > 0) {
-                const chord = chordProgression[progressionIndex % chordProgression.length];
-                const chordDuration = chord.duration * beatDuration;
-
-                updateProgress((currentTime / duration) * 100);
-
-                // Generate chord audio
-                await generateChordAudio(leftChannel, rightChannel, chord.notes, 
-                    currentTime, chordDuration, sampleRate, volume, arpeggiation, rhythm);
-
-                currentTime += chordDuration;
-                progressionIndex++;
-            }
-
-            return buffer;
-        }
-
-        // Generate audio for a single chord
-        async function generateChordAudio(leftChannel, rightChannel, frequencies, startTime, duration, sampleRate, volume, arpeggiation, rhythm) {
-            const startSample = Math.floor(startTime * sampleRate);
-            const durationSamples = Math.floor(duration * sampleRate);
-            const pattern = ARPEGGIO_PATTERNS[arpeggiation];
-
-            frequencies.forEach((frequency, noteIndex) => {
-                if (noteIndex >= pattern.length) return;
-
-                const noteStartTime = startTime + pattern[noteIndex] * duration * 0.3;
-                const noteStartSample = Math.floor(noteStartTime * sampleRate);
-                const noteEndSample = Math.min(noteStartSample + durationSamples, leftChannel.length);
-
-                for (let sample = noteStartSample; sample < noteEndSample; sample++) {
-                    const t = sample / sampleRate;
-                    const envelope = createChordEnvelope(t, noteStartTime, duration, rhythm);
-
-                    if (envelope > 0) {
-                        // Create rich harmonics for more musical sound
-                        let wave = Math.sin(2 * Math.PI * frequency * t) * 0.6; // Fundamental
-                        wave += Math.sin(2 * Math.PI * frequency * 2 * t) * 0.2; // Octave
-                        wave += Math.sin(2 * Math.PI * frequency * 3 * t) * 0.1; // Perfect fifth
-                        wave += Math.sin(2 * Math.PI * frequency * 4 * t) * 0.05; // Second octave
-
-                        const finalWave = wave * envelope * volume * 0.25; // Reduce volume for mixing
-
-                        // Stereo positioning based on note index
-                        const pan = (noteIndex - frequencies.length / 2) / frequencies.length;
-                        const leftGain = Math.cos((pan + 1) * Math.PI / 4);
-                        const rightGain = Math.sin((pan + 1) * Math.PI / 4);
-
-                        leftChannel[sample] += finalWave * leftGain;
-                        rightChannel[sample] += finalWave * rightGain;
-
-                        // Prevent clipping
-                        leftChannel[sample] = Math.max(-1, Math.min(1, leftChannel[sample]));
-                        rightChannel[sample] = Math.max(-1, Math.min(1, rightChannel[sample]));
-                    }
-                }
-            });
-        }
-
-        // Create envelope for chord with rhythm patterns
-        function createChordEnvelope(currentTime, noteStartTime, duration, rhythm) {
-            const t = currentTime - noteStartTime;
-            if (t < 0 || t > duration) return 0;
-
-            const normalizedTime = t / duration;
-
-            // Different envelope shapes for different rhythms
-            switch (rhythm) {
-                case 'steady':
-                    return 1 - Math.pow(normalizedTime, 2); // Quadratic decay
-                case 'syncopated':
-                    return Math.sin(normalizedTime * Math.PI * 3) * (1 - normalizedTime);
-                case 'waltz':
-                    return Math.sin(normalizedTime * Math.PI) * (1 - normalizedTime * 0.7);
-                case 'latin':
-                    return (Math.sin(normalizedTime * Math.PI * 2) + 1) * 0.5 * (1 - normalizedTime);
-                case 'swing':
-                    return Math.pow(Math.sin(normalizedTime * Math.PI), 0.7) * (1 - normalizedTime * 0.8);
-                default:
-                    return Math.sin(normalizedTime * Math.PI) * (1 - normalizedTime);
-            }
-        }
-
-        // Preview chord progression without full generation
-        function previewChords() {
-            if (!audioContext || currentChordProgression.length === 0) {
-                initAudioContext();
-                analyzeImageForChords();
-            }
-
-            // Play first few chords as preview
-            playChordProgression(currentChordProgression.slice(0, 4), 0.3);
-        }
-
-        // Play a chord progression
-        function playChordProgression(chords, volume = 0.3) {
-            let startTime = audioContext.currentTime;
-
-            chords.forEach((chord, index) => {
-                const chordTime = startTime + index * 0.8; // 0.8 seconds per chord
-                playChord(chord.notes, chordTime, 0.6, volume);
-            });
-        }
-
-        // Play a single chord
-        function playChord(frequencies, startTime, duration, volume) {
-            frequencies.forEach((frequency, index) => {
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-
-                oscillator.type = 'sine';
-                oscillator.frequency.setValueAtTime(frequency, startTime);
-
-                // Create envelope
-                gainNode.gain.setValueAtTime(0, startTime);
-                gainNode.gain.linearRampToValueAtTime(volume * 0.5, startTime + 0.1);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + duration);
-
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-
-                oscillator.start(startTime);
-                oscillator.stop(startTime + duration);
-            });
-        }
-
-        // Update progress bar
-        function updateProgress(percent) {
-            document.getElementById('progressBar').style.width = percent + '%';
-        }
-
-        // Display audio controls
-        function displayAudioControls() {
-            const audioPlayer = document.getElementById('audioPlayer');
-            const audioBlob = bufferToWav(audioBuffer);
-            const audioUrl = URL.createObjectURL(audioBlob);
-
-            audioPlayer.src = audioUrl;
-            document.getElementById('audioControls').style.display = 'block';
-        }
-
-        // Update chord analysis display
-        function updateChordAnalysis() {
-            const progressionText = currentChordProgression.map(chord => chord.symbol).join(' - ');
-            document.getElementById('progressionDisplay').innerHTML = 
-                `<strong>Chord Progression:</strong> ${progressionText}`;
-
-            const chordCount = currentChordProgression.length;
-            const avgDuration = currentChordProgression.reduce((sum, c) => sum + c.duration, 0) / chordCount;
-
-            document.getElementById('chordDetails').innerHTML = 
-                `<p><strong>Total Chords:</strong> ${chordCount}</p>
-                 <p><strong>Average Chord Duration:</strong> ${avgDuration.toFixed(2)} beats</p>
-                 <p><strong>Musical Key:</strong> ${document.getElementById('key').value}</p>
-                 <p><strong>Style:</strong> ${document.getElementById('style').value.charAt(0).toUpperCase() + document.getElementById('style').value.slice(1)}</p>`;
-        }
-
-        // Show chord analysis
-        function showAnalysis() {
-            const analysis = document.getElementById('chordAnalysis');
-            analysis.style.display = analysis.style.display === 'none' ? 'block' : 'none';
-        }
-
-        // Convert AudioBuffer to WAV
-        function bufferToWav(buffer) {
-            const length = buffer.length;
-            const numberOfChannels = buffer.numberOfChannels;
-            const sampleRate = buffer.sampleRate;
-            const bitsPerSample = 16;
-            const bytesPerSample = bitsPerSample / 8;
-            const blockAlign = numberOfChannels * bytesPerSample;
-            const byteRate = sampleRate * blockAlign;
-            const dataSize = length * blockAlign;
-            const bufferSize = 44 + dataSize;
-
-            const arrayBuffer = new ArrayBuffer(bufferSize);
-            const view = new DataView(arrayBuffer);
-
-            const writeString = (offset, string) => {
-                for (let i = 0; i < string.length; i++) {
-                    view.setUint8(offset + i, string.charCodeAt(i));
-                }
-            };
-
-            writeString(0, 'RIFF');
-            view.setUint32(4, bufferSize - 8, true);
-            writeString(8, 'WAVE');
-            writeString(12, 'fmt ');
-            view.setUint32(16, 16, true);
-            view.setUint16(20, 1, true);
-            view.setUint16(22, numberOfChannels, true);
-            view.setUint32(24, sampleRate, true);
-            view.setUint32(28, byteRate, true);
-            view.setUint16(32, blockAlign, true);
-            view.setUint16(34, bitsPerSample, true);
-            writeString(36, 'data');
-            view.setUint32(40, dataSize, true);
-
-            let offset = 44;
-            for (let i = 0; i < length; i++) {
-                for (let channel = 0; channel < numberOfChannels; channel++) {
-                    const sample = Math.max(-1, Math.min(1, buffer.getChannelData(channel)[i]));
-                    view.setInt16(offset, sample * 0x7FFF, true);
-                    offset += 2;
-                }
-            }
-
-            return new Blob([arrayBuffer], { type: 'audio/wav' });
-        }
-
-        // Download MP3 (actually WAV)
-        function downloadMP3() {
-            if (!audioBuffer) {
-                alert('No audio to download!');
-                return;
-            }
-
-            const wavBlob = bufferToWav(audioBuffer);
-            const url = URL.createObjectURL(wavBlob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'pixel-chord-composition.wav';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }
-    </script>
+      }
+
+      return new Blob([arrayBuffer], { type: 'audio/wav' });
+    }
+  </script>
 </body>
 </html>

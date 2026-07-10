@@ -1,27 +1,122 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
-    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="USA Real Address List for testing " />
+    <meta name="description" content="USA real address list for testing workflows." />
     <meta
-      name="keyword"
-      content="Real US address,USA Address , America Real address"
+      name="keywords"
+      content="USA test address, real US address, testing data, address copy tool"
     />
-    <meta
-      name="keyword"
-      content="Address,Test Address, REal Test Address , USA address"
-    />
-    <title>Real USA Address for testing purposes</title>
+    <title>USA Test Address List</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"
-      integrity="sha512-5fsy+3xG8N/1PV5MIJz9ZsWpkltijBI48gBzQ/Z2eVATePGHOkMIn+xTDHIfTZFVb9GMpflF2wOWItqxAP2oLQ=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
     />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <style>
+      main {
+        padding-top: 56px;
+      }
 
+      .tool-shell {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 4rem 1.5rem 5rem;
+      }
+
+      .tool-hero {
+        margin-bottom: 2rem;
+      }
+
+      .tool-card,
+      .address-item {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow);
+      }
+
+      .tool-card {
+        padding: 1.5rem;
+      }
+
+      .tool-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-top: 1.25rem;
+      }
+
+      .address-toolbar {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        align-items: center;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .address-count {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+      }
+
+      .address-list {
+        display: grid;
+        gap: 0.9rem;
+      }
+
+      .address-item {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        align-items: flex-start;
+        padding: 1rem 1.1rem;
+        transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+      }
+
+      .address-item:hover {
+        transform: translateY(-2px);
+        border-color: var(--text-muted);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .address-item button {
+        flex-shrink: 0;
+      }
+
+      .address-text {
+        font-size: 0.92rem;
+        line-height: 1.65;
+        color: var(--text);
+        word-break: break-word;
+      }
+
+      .status-text {
+        margin-top: 1rem;
+        min-height: 1.4rem;
+        font-size: 0.84rem;
+        color: var(--text-muted);
+      }
+
+      .status-text.success {
+        color: var(--accent);
+      }
+
+      @media (max-width: 640px) {
+        .address-item {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .address-item button {
+          width: 100%;
+        }
+      }
+    </style>
     <script>
       const addresses = [
         "777 Brockton Avenue, Abington MA 2351",
@@ -257,56 +352,108 @@
         "3501 20th Av, Valley AL 36854",
         "1300 Montgomery Highway, Vestavia Hills AL 35216",
         "4538 Us Hwy 231, Wetumpka AL 36092",
-        "2575 Us Hwy 43, Winfield AL 35594",
+        "2575 Us Hwy 43, Winfield AL 35594"
       ];
+    </script>
+  </head>
+  <body >
+     <svg id="bg-canvas" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"></svg>
+
+    <nav id="navbar" role="navigation" aria-label="Tool navigation">
+      <div class="nav-inner">
+        <a class="nav-logo" href="../index.html">Souvik <span>/ tools</span></a>
+        <div class="nav-actions">
+          <button id="btn-theme" class="btn-theme" aria-label="Toggle dark/light theme">
+            <span id="theme-icon" aria-hidden="true"></span>
+          </button>
+          <a href="../index.html#tools" class="btn-resume-nav">Back to portfolio</a>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <section class="tool-shell">
+        <div class="tool-hero">
+          <p class="section-label">Testing helper</p>
+          <h1 class="section-title">USA Test Address List</h1>
+          <p class="hero-summary">
+            Copy ready-to-use US addresses for forms and QA workflows. Click any item or use the random copy action.
+          </p>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-actions">
+            <button class="btn-primary" id="copy-random-btn" type="button">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Copy random address
+            </button>
+          </div>
+          <p class="status-text" id="status-text">Tip: if a system expects a 5-digit ZIP, prefix 0 for 4-digit entries.</p>
+        </div>
+
+        <div class="address-toolbar">
+          <h2 class="timeline-title">Available addresses</h2>
+          <p class="address-count"><span id="address-count"></span> entries</p>
+        </div>
+
+        <div class="address-list" id="address-list"></div>
+      </section>
+    </main>
+
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/bg.js"></script>
+
+    <script>
+      const addressList = document.getElementById('address-list');
+      const statusText = document.getElementById('status-text');
+      const addressCount = document.getElementById('address-count');
+      const randomButton = document.getElementById('copy-random-btn');
+
+      function setStatus(message, isSuccess) {
+        statusText.textContent = message;
+        statusText.classList.toggle('success', Boolean(isSuccess));
+      }
+
+      function copyText(text) {
+        navigator.clipboard.writeText(text).then(() => {
+          setStatus('Copied: ' + text, true);
+        });
+      }
 
       function copyAddress(index) {
-        navigator.clipboard.writeText(addresses[index]).then(() => {
-          alert("Address copied: " + addresses[index]);
-        });
+        copyText(addresses[index]);
       }
 
       function copyRandomAddress() {
         const randomIndex = Math.floor(Math.random() * addresses.length);
         copyAddress(randomIndex);
       }
-    </script>
-    <style>
-      .button {
-        display: none;
-      }
-      li:hover {
-        .button {
-          display: block;
-        }
-      }
-      li {
-        text-decoration: none;
-        list-style: none;
-        display: flex;
-        flex-direction: row;
-        cursor: copy;
-      }
-      li > * {
-        margin: 2rem;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1>Address List</h1>
-      <p>Use 0 infront of the 4 digit Pincode if required</p>
-      <button onclick="copyRandomAddress()">Copy Random Address</button>
-      <ul>
-        <script>
-          addresses.forEach((address, index) => {
-            document.write(
-              //` <hr/> <li onclick="copyAddress(${index})">${address}</li> <hr/>`
-              ` <hr/> <li >${address}</li> <hr/>`
-            );
+
+      function renderAddresses() {
+        addressCount.textContent = addresses.length;
+        addressList.innerHTML = addresses
+          .map((address, index) => {
+            return `
+              <article class="address-item">
+                <p class="address-text">${address}</p>
+                <button class="btn-secondary" type="button" data-index="${index}">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                  Copy
+                </button>
+              </article>
+            `;
+          })
+          .join('');
+
+        addressList.querySelectorAll('button[data-index]').forEach((button) => {
+          button.addEventListener('click', () => {
+            copyAddress(Number(button.dataset.index));
           });
-        </script>
-      </ul>
-    </div>
+        });
+      }
+
+      randomButton.addEventListener('click', copyRandomAddress);
+      renderAddresses();
+    </script>
   </body>
 </html>

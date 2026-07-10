@@ -1275,7 +1275,7 @@ footer a:hover { color: var(--text); }
 
 /* Tap hint label */
 .about-photo::after {
-  content: '👆 click to swap';
+  /* content: ' click to swap'; */
   position: absolute;
   bottom: -1.7rem;
   left: 0; right: 0;
