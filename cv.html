@@ -127,9 +127,52 @@
     #cv-content code { font-family: var(--mono); font-size: 0.82em; background: var(--tag-bg); padding: 0.1em 0.35em; border-radius: 4px; }
 
     @media print {
-      #cv-toolbar { display: none; }
-      #cv-body { padding: 1rem; max-width: 100%; }
-      body { background: #fff; color: #000; }
+      @page {
+        size: A4;
+        margin: 5mm 7mm;
+      }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      #cv-toolbar { display: none !important; }
+      #cv-body {
+        padding: 0;
+        max-width: 100%;
+        margin: 0;
+      }
+      body {
+        background: #fff !important;
+        color: #000 !important;
+        font-size: 9px;
+        line-height: 1.35;
+      }
+      /* Force black text & white background on everything */
+      #cv-content,
+      #cv-content *,
+      #cv-content h1,
+      #cv-content h2,
+      #cv-content h3,
+      #cv-content p,
+      #cv-content li,
+      #cv-content a,
+      #cv-content strong,
+      #cv-content code {
+        color: #000 !important;
+        background: transparent !important;
+        border-color: #000 !important;
+        text-decoration: none;
+      }
+      #cv-content h1 { font-size: 1.45rem; margin-bottom: 0.05rem; letter-spacing: -0.03em; }
+      #cv-content h2 {
+        font-size: 0.58rem;
+        letter-spacing: 0.08em;
+        padding-bottom: 0.15rem;
+        margin: 0.65rem 0 0.3rem;
+      }
+      #cv-content h3 { font-size: 0.75rem; margin: 0.35rem 0 0.08rem; }
+      #cv-content p  { font-size: 0.72rem; margin: 0.08rem 0; line-height: 1.35; }
+      #cv-content li { font-size: 0.71rem; margin: 0.05rem 0; line-height: 1.35; }
+      #cv-content ul { margin: 0.1rem 0 0.3rem; padding-left: 1rem; }
+      #cv-content hr { margin: 0.4rem 0; border-top-color: #aaa !important; }
+      #cv-content code { font-size: 0.7em; }
     }
     @media (max-width: 600px) {
       #cv-body { padding: 2rem 1rem 4rem; }
@@ -194,11 +237,8 @@
           document.getElementById('cv-loading').textContent = 'Failed to load CV: ' + err.message;
         });
 
-      // Download PDF via print dialog
-      document.getElementById('btn-print-cv').addEventListener('click', function () {
-        window.print();
-      });
     }());
   </script>
+  <script src="assets/js/cv-pdf.js"></script>
 </body>
 </html>
