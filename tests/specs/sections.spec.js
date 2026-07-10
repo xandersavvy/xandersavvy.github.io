@@ -127,10 +127,17 @@ test.describe('Certifications & Achievements section', () => {
   });
 
   test('credly badge images load without error', async ({ page }) => {
+    // Remove lazy loading so all badge images fetch immediately
+    await page.evaluate(() => {
+      document.querySelectorAll('.credly-badge img').forEach(img => img.removeAttribute('loading'));
+    });
+    await page.locator('#certs').scrollIntoViewIfNeeded();
+    await page.waitForLoadState('networkidle');
+
     const images = page.locator('.credly-badge img');
     const count = await images.count();
     for (let i = 0; i < count; i++) {
-      const naturalWidth = await images.nth(i).evaluate(img => /** @type {HTMLImageElement} */ (img).naturalWidth);
+      const naturalWidth = await images.nth(i).evaluate(el => /** @type {HTMLImageElement} */ (el).naturalWidth);
       expect(naturalWidth).toBeGreaterThan(0);
     }
   });

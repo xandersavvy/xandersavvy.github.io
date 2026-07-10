@@ -5,3 +5,7 @@ node_modules/
 tests/playwright-report/
 tests/test-results/
 tests/.playwright/
+tests/package-lock.json
+
+
+.playwright-mcp
