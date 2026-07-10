@@ -1,0 +1,17 @@
+{
+  "name": "xandersavvy-portfolio-tests",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Playwright E2E tests for xandersavvy.github.io",
+  "scripts": {
+    "test":         "playwright test",
+    "test:local":   "playwright test --project=local-chromium --project=local-firefox --project=local-mobile-chrome",
+    "test:prod":    "playwright test --project=prod-chromium --project=prod-firefox --project=prod-mobile-chrome",
+    "test:headed":  "playwright test --headed",
+    "test:ui":      "playwright test --ui",
+    "test:report":  "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1"
+  }
+}

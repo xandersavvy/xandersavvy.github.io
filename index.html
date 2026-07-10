@@ -1,106 +1,913 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE-edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="keyword"
-      content="Souvik Ghosh,  technology , Artificial Brix, Xander Savvy , Software Developer at sodpur,kolkata,web developer at sodepur, Computer teacher , WBBSE , CBSE , ICSE"
-    />
-    <meta name="”geo.region”" content="”IN”" />
-    <meta
-      name="description"
-      content="Hi,I am Souvik Ghosh. I am a  Programmer and tech hobbyist. My Team Artificial Brix provides Solution .This is my About Page."
-    />
-    <link rel="icon" href="favicon.ico" />
-    <meta name="theme-color" content="#ffffff" />
-    <meta name="language" content="en" />
-    <meta name="url" content="https//xandersavvy.github.io" />
-    <meta name="identifier-URL" content="https//xandersavvy.github.io" />
-    <meta name="author" content="Souvik Ghosh , xandersavy@gmail.com" />
-    <meta
-      http-equiv="Cache-Control"
-      content="no-cache, no-store, must-revalidate"
-    />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
-    <title>Souvik Ghosh || Programmer Web Developer Kolkata</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <body>
-    <div class="profile_picture" id="intro">
-      <img
-        src="me_real.jpg"
-        alt="Image of Souvik Ghosh"
-        id="profile"
-      />
-      <p id="jokeContainer">
-      <span id="jokes">
-        waiting for A random dad joke.
-        <noscript>Please enable Javascript for the Joke</noscript>
-      </span>
-      <br/>
-        <a id="clearJoke" style=" margin-top: 1rem; color: red;">Stop Dad jokes</a>
-      </p>
+  <!-- ── SEO / Open Graph ────────────────────────────────── -->
+  <title>Souvik Ghosh — SDET & Automation Engineer | IBM Consulting</title>
+  <meta name="description" content="Souvik Ghosh is a Software Development Engineer in Test (SDET) at IBM Consulting with 3+ years building enterprise test automation frameworks using Playwright, Selenium, Java, and CI/CD pipelines. Based in Bangalore, India." />
+  <meta name="keywords" content="Souvik Ghosh, SDET, automation engineer, IBM Consulting, Playwright, Selenium, Java, test automation, QA engineer, REST Assured, Cucumber, TestNG, xandersavvy, xandersavy, Kolkata, Bangalore, portfolio" />
+  <meta name="author" content="Souvik Ghosh" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#f5f0e8" />
+  <link rel="canonical" href="https://xandersavvy.github.io/" />
 
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://xandersavvy.github.io/" />
+  <meta property="og:title"       content="Souvik Ghosh — SDET & Automation Engineer | IBM Consulting" />
+  <meta property="og:description" content="3+ years building enterprise test automation frameworks. Playwright, Selenium, Java, CI/CD. Available for exciting opportunities." />
+  <meta property="og:image"       content="https://xandersavvy.github.io/assets/img/me_real.jpg" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:site"        content="@xandersouvik" />
+  <meta name="twitter:title"       content="Souvik Ghosh — SDET & Automation Engineer" />
+  <meta name="twitter:description" content="3+ years building enterprise test automation frameworks at IBM Consulting." />
+  <meta name="twitter:image"       content="https://xandersavvy.github.io/assets/img/me_real.jpg" />
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Souvik Ghosh",
+    "url": "https://xandersavvy.github.io/",
+    "image": "https://xandersavvy.github.io/assets/img/me_real.jpg",
+    "jobTitle": "SDET – Full Stack Automation Engineer",
+    "worksFor": { "@type": "Organization", "name": "IBM Consulting" },
+    "alumniOf": { "@type": "CollegeOrUniversity", "name": "Narula Institute of Technology" },
+    "email": "xandersavy@gmail.com",
+    "sameAs": [
+      "https://github.com/xandersavvy",
+      "https://www.linkedin.com/in/souvik-g-4ba0a7190/",
+      "https://twitter.com/xandersouvik",
+      "https://xandersavvy.hashnode.dev/"
+    ],
+    "knowsAbout": ["Playwright", "Selenium", "Java", "Test Automation", "CI/CD", "Salesforce", "REST API Testing"]
+  }
+  </script>
+
+  <link rel="icon" href="favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+</head>
+
+<body>
+
+  <!-- SVG Background -->
+  <svg id="bg-canvas" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"></svg>
+
+  <!-- Reading progress bar -->
+  <div id="reading-bar" aria-hidden="true"></div>
+
+  <!-- ══════════════════════════════════════════════════════
+       NAVIGATION
+  ═══════════════════════════════════════════════════════ -->
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a class="nav-logo" href="#hero" data-scroll="hero">Souvik</a>
+
+      <div class="nav-links" role="menubar">
+        <a href="#about"      data-scroll="about"      role="menuitem">About</a>
+        <a href="#skills"     data-scroll="skills"     role="menuitem">Skills</a>
+        <a href="#experience" data-scroll="experience" role="menuitem">Experience</a>
+        <a href="#projects"   data-scroll="projects"   role="menuitem">Projects</a>
+        <a href="#cv"         data-scroll="cv"         role="menuitem">CV</a>
+        <a href="#contact"    data-scroll="contact"    role="menuitem">Contact</a>
+        <a href="#tools"      data-scroll="tools"      role="menuitem">Tools</a>
+      </div>
+
+      <div class="nav-actions">
+        <button id="btn-theme" class="btn-theme" aria-label="Toggle dark/light theme">
+          <span id="theme-icon" aria-hidden="true"></span>
+        </button>
+        <a href="#cv" data-scroll="cv" class="btn-resume-nav">Download CV</a>
+        <button id="nav-hamburger" class="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
-    <div class="txt">
-      <p>
-        Hello! I'm Souvik, a Full Stack Automation Tester at IBM, stationed in
-        Bangalore but originally from Kolkata. With a year of diverse
-        experience, I'm equipped with skills in both testing and full stack web
-        development. Eager to explore new career avenues, I'm open to DevOps and
-        development roles. Explore more <a href="./about.html"> about me.</a> or connect
-        via <a href="./social.html">social media</a> for insights into my journey. Let's collaborate! 
+
+    <!-- Mobile drawer -->
+    <div id="nav-drawer" class="nav-drawer" role="menu">
+      <a href="#about"      data-scroll="about"      role="menuitem">About</a>
+      <a href="#skills"     data-scroll="skills"     role="menuitem">Skills</a>
+      <a href="#experience" data-scroll="experience" role="menuitem">Experience</a>
+      <a href="#projects"   data-scroll="projects"   role="menuitem">Projects</a>
+      <a href="#cv"         data-scroll="cv"         role="menuitem">CV</a>
+      <a href="#contact"    data-scroll="contact"    role="menuitem">Contact</a>
+      <a href="#tools"      data-scroll="tools"      role="menuitem">Tools</a>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════════════
+       MAIN CONTENT
+  ═══════════════════════════════════════════════════════ -->
+  <main id="main-content">
+
+    <!-- ── HERO ─────────────────────────────────────────── -->
+    <section id="hero" aria-label="Introduction">
+      <div class="hero-layout">
+        <div class="hero-text">
+          <div class="hero-eyebrow anim-fade-in delay-1">
+            <span class="hero-dot" aria-hidden="true"></span>
+            <span class="hero-eyebrow-text">Available for new opportunities</span>
+          </div>
+
+          <h1 class="hero-name anim-fade-up delay-1">Souvik<br>Ghosh</h1>
+
+          <p class="hero-role anim-fade-up delay-2">
+            <strong>SDET · Full-Stack Automation Engineer</strong> at IBM Consulting<br>
+            Playwright · Selenium · Java · CI/CD · Salesforce
+          </p>
+
+          <p class="hero-summary anim-fade-up delay-3">
+            3+ years at IBM Consulting building enterprise test automation frameworks from scratch for
+            <strong>Johnson &amp; Johnson</strong> (Salesforce Health Cloud) and <strong>AT&amp;T</strong> (microservices).
+            Delivered 250+ E2E tests, led Selenium → Playwright migrations, and cut regression time by 60%.
+            Previously a founding member of <strong>Dilsay Care</strong> — deployed apps, led teams, and engaged directly with clients.
+            Based in Bangalore — originally from Kolkata.
+          </p>
+
+          <div class="hero-cta anim-fade-up delay-3">
+            <a href="#about" data-scroll="about" class="btn-primary">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+              About me
+            </a>
+            <a href="#contact" data-scroll="contact" class="btn-secondary">Get in touch</a>
+          </div>
+
+          <div class="hero-social anim-fade-in delay-4">
+            <a href="https://github.com/xandersavvy" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836a9.59 9.59 0 012.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+              GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/souvik-g-4ba0a7190/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              LinkedIn
+            </a>
+            <a href="https://xandersavvy.hashnode.dev/" target="_blank" rel="noopener noreferrer" aria-label="Blog">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+              Blog
+            </a>
+            <a href="mailto:xandersavy@gmail.com" aria-label="Email">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              xandersavy@gmail.com
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero terminal -->
+        <div class="hero-terminal anim-fade-in delay-2">
+          <div id="terminal-game" role="region" aria-label="Interactive terminal">
+            <div class="terminal-bar">
+              <span class="terminal-dot td-r" aria-hidden="true"></span>
+              <span class="terminal-dot td-y" aria-hidden="true"></span>
+              <span class="terminal-dot td-g" aria-hidden="true"></span>
+              <span class="terminal-title">souvik@portfolio ~ </span>
+            </div>
+            <div class="terminal-body" id="terminal-output" aria-live="polite"></div>
+            <div class="terminal-input-row">
+              <span class="ps1" aria-hidden="true">➜</span>
+              <input id="terminal-input" type="text" placeholder='type a command…' autocomplete="off" aria-label="Terminal command input" spellcheck="false" />
+            </div>
+          </div>
+          <p class="hero-terminal-hint">
+            <code>help</code> · <code>whoami</code> · <code>skills</code> · <code>hire</code>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── ABOUT ─────────────────────────────────────────── -->
+    <section id="about" class="section" aria-label="About me">
+      <p class="section-label">Who I am</p>
+      <h2 class="section-title">About Me</h2>
+
+      <div class="about-layout">
+        <div class="about-photo">
+          <img
+            src="assets/img/me_real.jpg"
+            alt="Souvik Ghosh"
+            width="260"
+            height="320"
+            loading="lazy"
+          />
+          <img
+            src="https://github.com/xandersavvy.png"
+            alt="Souvik Ghosh GitHub avatar"
+            class="about-gh-avatar"
+            width="56"
+            height="56"
+            loading="lazy"
+            onerror="this.style.display='none'"
+          />
+        </div>
+        <div class="about-body">
+          <p class="about-para">
+            Hey, I'm Souvik — an Automation QA Engineer at <strong>IBM Consulting</strong> with 3+ years of experience building enterprise-grade test automation frameworks from the ground up. I thrive at the intersection of quality engineering and software development.
+          </p>
+          <p class="about-para">
+            I've worked on large-scale engagements for <strong>Johnson &amp; Johnson</strong> (Salesforce Health Cloud) and <strong>AT&amp;T</strong> (Spring Boot microservices), leading framework migrations, CI/CD pipelines, and helping teams ship with confidence.
+          </p>
+          <p class="about-para">
+            Outside work I cook Bengali recipes from Bong Eats, rewatch Marvel movies, and read on weekends. Originally from <strong>Sodepur, Kolkata</strong> — currently based in <strong>Bangalore</strong>.
+          </p>
+          <div class="about-stats">
+            <div class="about-stat">
+              <span class="about-stat-num">3+</span>
+              <span class="about-stat-label">Years at IBM</span>
+            </div>
+            <div class="about-stat">
+              <span class="about-stat-num">250+</span>
+              <span class="about-stat-label">E2E Tests</span>
+            </div>
+            <div class="about-stat">
+              <span class="about-stat-num">60%</span>
+              <span class="about-stat-label">Faster regression</span>
+            </div>
+            <div class="about-stat">
+              <span class="about-stat-num">2</span>
+              <span class="about-stat-label">IBM Awards</span>
+            </div>
+            <div class="about-stat">
+              <span class="about-stat-num">33</span>
+              <span class="about-stat-label">Credly Badges</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── SKILLS ─────────────────────────────────────────── -->
+    <section id="skills" class="section" aria-label="Technical skills">
+      <p class="section-label">What I work with</p>
+      <h2 class="section-title">Technical Skills</h2>
+
+      <div class="skill-group">
+        <p class="skill-group-label">Programming</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Java</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">TypeScript</span>
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">SQL</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <p class="skill-group-label">Test Automation</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Playwright</span>
+          <span class="skill-tag">Selenium WebDriver</span>
+          <span class="skill-tag">REST Assured</span>
+          <span class="skill-tag">TestNG</span>
+          <span class="skill-tag">Cucumber</span>
+          <span class="skill-tag">JUnit</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <p class="skill-group-label">API &amp; Protocols</p>
+        <div class="skill-tags">
+          <span class="skill-tag">REST APIs</span>
+          <span class="skill-tag">SOAP / WSDL</span>
+          <span class="skill-tag">GraphQL</span>
+          <span class="skill-tag">Postman</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <p class="skill-group-label">CI/CD &amp; DevOps</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Jenkins</span>
+          <span class="skill-tag">GitHub Actions</span>
+          <span class="skill-tag">Maven</span>
+          <span class="skill-tag">Docker</span>
+          <span class="skill-tag">Podman</span>
+          <span class="skill-tag">Git</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <p class="skill-group-label">Cloud &amp; Enterprise</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Salesforce</span>
+          <span class="skill-tag">Experience Cloud</span>
+          <span class="skill-tag">Lightning Web Components</span>
+          <span class="skill-tag">SOQL / SOSL</span>
+          <span class="skill-tag">Kubernetes</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <p class="skill-group-label">Databases &amp; Tools</p>
+        <div class="skill-tags">
+          <span class="skill-tag">MySQL</span>
+          <span class="skill-tag">MongoDB</span>
+          <span class="skill-tag">JMeter</span>
+          <span class="skill-tag">Jira</span>
+          <span class="skill-tag">Linux</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <p class="skill-group-label">Methodologies</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Agile / Scrum</span>
+          <span class="skill-tag">SDLC</span>
+          <span class="skill-tag">STLC</span>
+          <span class="skill-tag">Test Strategy</span>
+          <span class="skill-tag">Cross-Browser Testing</span>
+          <span class="skill-tag">Parallel Execution</span>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── EXPERIENCE ────────────────────────────────────── -->
+    <section id="experience" class="section" aria-label="Professional experience">
+      <p class="section-label">Career</p>
+      <h2 class="section-title">Professional Experience</h2>
+
+      <div class="timeline">
+
+        <!-- IBM -->
+        <div class="timeline-item">
+          <div class="timeline-dot" aria-hidden="true"></div>
+          <div class="timeline-meta">
+            <span class="timeline-company">IBM Consulting</span>
+            <span class="timeline-period">Apr 2023 – Present</span>
+          </div>
+          <h3 class="timeline-title">SDET – Full Stack Automation</h3>
+
+          <!-- J&J -->
+          <div style="margin-bottom:1.5rem;">
+            <p style="font-size:0.78rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.6rem;">Client: Johnson &amp; Johnson — Salesforce Experience Cloud &amp; Health Cloud</p>
+            <ul class="timeline-list">
+              <li>Designed and built an end-to-end automation framework from scratch using <strong>Java, Playwright, Selenium, TestNG, Cucumber, and REST Assured</strong>.</li>
+              <li>Led migration of UI automation from Selenium to Playwright — improving speed, stability, and maintainability.</li>
+              <li>Automated <strong>250+ end-to-end test cases</strong> covering Salesforce Experience Cloud and Health Cloud workflows.</li>
+              <li>Reduced regression execution time by <strong>~60%</strong> via framework optimisation, reusable components, and parallel execution.</li>
+              <li>Built Salesforce utilities: <strong>SOQL/SOSL helpers</strong>, auth modules, synchronisation libraries, and custom Word report generation.</li>
+              <li>Automated enterprise integrations across <strong>payers</strong>, and scheduled Batch Jobs.</li>
+              <li>Contributed to <strong>Lightning Web Components (LWC)</strong> — bug fixes and feature enhancements.</li>
+              <li>Integrated regression suites into <strong>Jenkins and GitHub Actions</strong> CI/CD pipelines.</li>
+            </ul>
+          </div>
+
+          <!-- AT&T -->
+          <div>
+            <p style="font-size:0.78rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.6rem;">Client: AT&amp;T Business — Spring Boot Microservices</p>
+            <ul class="timeline-list">
+              <li>Automated <strong>100+ production defect fixes and regression scenarios</strong> across enterprise telecom microservices.</li>
+              <li>Designed automation for <strong>REST, SOAP (WSDL), and GraphQL APIs</strong> using Java, TestNG, and REST Assured.</li>
+              <li>Configured and maintained <strong>Jenkins CI/CD pipelines</strong> for non-production environments.</li>
+              <li>Assisted in migrating Spring Boot microservices to newer <strong>Java and MongoDB</strong> versions.</li>
+              <li>Investigated production issues using Linux and <strong>Kubernetes logs</strong>; collaborated on root cause analysis.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Artificial Brix / Dilsay Care -->
+        <div class="timeline-item">
+          <div class="timeline-dot" aria-hidden="true"></div>
+          <div class="timeline-meta">
+            <span class="timeline-company">Artificial Brix <span style="font-size:0.75rem;color:var(--text-muted);font-weight:400;">(now Dilsay Care)</span></span>
+            <span class="timeline-period">Nov 2021 – Jun 2022</span>
+          </div>
+          <h3 class="timeline-title">Founding Member — Full Stack &amp; Product</h3>
+          <ul class="timeline-list">
+            <li>Joined as a <strong>founding member</strong> of an early-stage healthtech startup (now operating as <strong>Dilsay Care</strong> — a mental health &amp; wellness platform).</li>
+            <li>Deployed and managed web applications end-to-end — from development to production environments.</li>
+            <li>Led a small cross-functional team, coordinating engineering, design, and content workstreams.</li>
+            <li>Engaged directly with clients and early users to gather feedback, define requirements, and iterate on product features.</li>
+            <li>Contributed to full-stack development — frontend interfaces, backend APIs, and cloud infrastructure setup.</li>
+            <li>Worked in a zero-to-one environment while completing final years of B.Tech — balancing academics and startup responsibilities.</li>
+          </ul>
+        </div>
+
+        <!-- Education -->
+        <div class="timeline-item">
+          <div class="timeline-dot" aria-hidden="true"></div>
+          <div class="timeline-meta">
+            <span class="timeline-company">Narula Institute of Technology</span>
+            <span class="timeline-period">2018 – 2022</span>
+          </div>
+          <h3 class="timeline-title">B.Tech — Electronics &amp; Instrumentation Engineering</h3>
+          <ul class="timeline-list">
+            <li>Graduated 2022. Developed strong foundations in electronics, sensors, and microcontrollers.</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── PROJECTS ───────────────────────────────────────── -->
+    <section id="projects" class="section" aria-label="Projects">
+      <p class="section-label">Built things</p>
+      <h2 class="section-title">Projects</h2>
+      <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:1.5rem;">Click any card to flip it 👆</p>
+
+      <div class="project-grid">
+
+        <!-- 1. AI-Powered Playwright -->
+        <div class="project-card" role="button" tabindex="0" aria-label="AI-Powered Playwright Automation — click to flip">
+          <div class="project-card-inner">
+            <div class="project-card-front">
+              <div class="project-header">
+                <span class="project-icon" aria-hidden="true">🤖</span>
+              </div>
+              <h3 class="project-title">AI-Powered Playwright Automation</h3>
+              <p class="project-desc">IBM BOB + Playwright via MCP. AI-driven test generation, self-healing locators — enterprise client POC.</p>
+              <div class="project-tags">
+                <span class="project-tag">Playwright</span>
+                <span class="project-tag">IBM BOB</span>
+                <span class="project-tag">MCP</span>
+                <span class="project-tag">AI Testing</span>
+              </div>
+              <span class="project-flip-hint">click to see more ↩</span>
+            </div>
+            <div class="project-card-back">
+              <span class="project-back-icon" aria-hidden="true">🤖</span>
+              <p class="project-back-title">AI-Powered Playwright Automation</p>
+              <p class="project-back-desc">Integrated IBM BOB with Playwright via Model Context Protocol (MCP). Enabled automatic test generation, self-healing locators, and reduced manual scripting effort for enterprise testing.</p>
+              <div class="project-back-links">
+                <span class="project-back-link" style="opacity:0.6;cursor:default;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                  Internal POC
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. TestResultMaker -->
+        <div class="project-card" role="button" tabindex="0" aria-label="TestResultMaker — click to flip">
+          <div class="project-card-inner">
+            <div class="project-card-front">
+              <div class="project-header">
+                <span class="project-icon" aria-hidden="true">📄</span>
+              </div>
+              <h3 class="project-title">TestResultMaker</h3>
+              <p class="project-desc">Desktop app that generates professional QA execution reports from manual test data. Reduced reporting overhead for QA teams.</p>
+              <div class="project-tags">
+                <span class="project-tag">Desktop App</span>
+                <span class="project-tag">QA Reporting</span>
+                <span class="project-tag">Automation</span>
+              </div>
+              <span class="project-flip-hint">click to see more ↩</span>
+            </div>
+            <div class="project-card-back">
+              <span class="project-back-icon" aria-hidden="true">📄</span>
+              <p class="project-back-title">TestResultMaker</p>
+              <p class="project-back-desc">Desktop application generating professional QA execution reports. Automated document generation for manual testing teams — significantly reduced reporting effort.</p>
+              <div class="project-back-links">
+                <a href="https://github.com/xandersavvy/TestResultMaker" target="_blank" rel="noopener noreferrer" class="project-back-link">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836a9.59 9.59 0 012.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Personal Portfolio -->
+        <div class="project-card" role="button" tabindex="0" aria-label="Personal Portfolio — click to flip">
+          <div class="project-card-inner">
+            <div class="project-card-front">
+              <div class="project-header">
+                <span class="project-icon" aria-hidden="true">🌐</span>
+              </div>
+              <h3 class="project-title">Personal Portfolio</h3>
+              <p class="project-desc">This very site — responsive, minimalist SPA. Dark/light theme, animated SVG background, real-time CV PDF generation.</p>
+              <div class="project-tags">
+                <span class="project-tag">HTML</span>
+                <span class="project-tag">CSS</span>
+                <span class="project-tag">Vanilla JS</span>
+                <span class="project-tag">GitHub Pages</span>
+              </div>
+              <span class="project-flip-hint">click to see more ↩</span>
+            </div>
+            <div class="project-card-back">
+              <span class="project-back-icon" aria-hidden="true">🌐</span>
+              <p class="project-back-title">Personal Portfolio</p>
+              <p class="project-back-desc">Fully responsive minimalist SPA built with vanilla HTML, CSS &amp; JS. Features dark/light theme, animated SVG canvas, interactive terminal, and live CV generation.</p>
+              <div class="project-back-links">
+                <a href="https://xandersavvy.github.io/" target="_blank" rel="noopener noreferrer" class="project-back-link">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  Live Site
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. E-Commerce Platform (serious, pre-AI) -->
+        <div class="project-card" role="button" tabindex="0" aria-label="E-Commerce Platform — click to flip">
+          <div class="project-card-inner">
+            <div class="project-card-front">
+              <div class="project-header">
+                <span class="project-icon" aria-hidden="true">🛒</span>
+              </div>
+              <h3 class="project-title">E-Commerce Platform</h3>
+              <p class="project-desc">Full-stack e-commerce web app with product listings, cart, checkout, and order management. Built pre-AI tools, ~5–6 years ago.</p>
+              <div class="project-tags">
+                <span class="project-tag">Full Stack</span>
+                <span class="project-tag">E-Commerce</span>
+                <span class="project-tag">Pre-AI Era</span>
+              </div>
+              <span class="project-flip-hint">click to see more ↩</span>
+            </div>
+            <div class="project-card-back">
+              <span class="project-back-icon" aria-hidden="true">🛒</span>
+              <p class="project-back-title">E-Commerce Platform</p>
+              <p class="project-back-desc">A complete e-commerce web application built from scratch — product catalogue, cart, checkout &amp; order management. Written entirely without AI tools, 5–6 years ago. Pure hustle.</p>
+              <div class="project-back-links">
+                <a href="https://github.com/xandersavvy/ECommerce-platform" target="_blank" rel="noopener noreferrer" class="project-back-link">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836a9.59 9.59 0 012.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Db Movie App .NET (serious, pre-AI) -->
+        <div class="project-card" role="button" tabindex="0" aria-label="Movie Database App (.NET) — click to flip">
+          <div class="project-card-inner">
+            <div class="project-card-front">
+              <div class="project-header">
+                <span class="project-icon" aria-hidden="true">🎬</span>
+              </div>
+              <h3 class="project-title">Movie Database App — .NET</h3>
+              <p class="project-desc">A .NET / ASP.NET movie database application with CRUD operations, search, and movie browsing. Built pre-AI, ~5–6 years ago.</p>
+              <div class="project-tags">
+                <span class="project-tag">.NET</span>
+                <span class="project-tag">C#</span>
+                <span class="project-tag">ASP.NET</span>
+                <span class="project-tag">Pre-AI Era</span>
+              </div>
+              <span class="project-flip-hint">click to see more ↩</span>
+            </div>
+            <div class="project-card-back">
+              <span class="project-back-icon" aria-hidden="true">🎬</span>
+              <p class="project-back-title">Movie Database App — .NET</p>
+              <p class="project-back-desc">A full-featured movie browsing app built with ASP.NET — CRUD, search, and listing. Solid backend work built entirely without AI tools, 5–6 years ago.</p>
+              <div class="project-back-links">
+                <a href="https://github.com/xandersavvy/Db-Movie-App-DotNet/tree/master" target="_blank" rel="noopener noreferrer" class="project-back-link">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836a9.59 9.59 0 012.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Soulmate.com (fun) -->
+        <div class="project-card" role="button" tabindex="0" aria-label="Soulmate.com — click to flip">
+          <div class="project-card-inner">
+            <div class="project-card-front">
+              <div class="project-header">
+                <span class="project-icon" aria-hidden="true">💘</span>
+              </div>
+              <h3 class="project-title">Soulmate.com</h3>
+              <p class="project-desc">A fun side project — a matchmaking / personality quiz web app. Light-hearted experiment in interactive UX and web development.</p>
+              <div class="project-tags">
+                <span class="project-tag">Fun Project</span>
+                <span class="project-tag">Web App</span>
+                <span class="project-tag">Pre-AI Era</span>
+              </div>
+              <span class="project-flip-hint">click to see more ↩</span>
+            </div>
+            <div class="project-card-back">
+              <span class="project-back-icon" aria-hidden="true">💘</span>
+              <p class="project-back-title">Soulmate.com</p>
+              <p class="project-back-desc">A fun matchmaking quiz web app built for laughs. Personality-based pairing logic, interactive UI — a creative experiment built without any AI tools.</p>
+              <div class="project-back-links">
+                <a href="https://github.com/xandersavvy/soulmate.com" target="_blank" rel="noopener noreferrer" class="project-back-link">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836a9.59 9.59 0 012.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. Send-this-to-your-crush (funny, 7 years ago) -->
+        <div class="project-card" role="button" tabindex="0" aria-label="Send This To Your Crush — click to flip">
+          <div class="project-card-inner">
+            <div class="project-card-front">
+              <div class="project-header">
+                <span class="project-icon" aria-hidden="true">💌</span>
+              </div>
+              <h3 class="project-title">Send This To Your Crush</h3>
+              <p class="project-desc">The most unhinged project from 7 years ago. A tiny web page you'd send to your crush. We don't talk about it. But it worked.</p>
+              <div class="project-tags">
+                <span class="project-tag">Fun</span>
+                <span class="project-tag">7 Years Ago</span>
+                <span class="project-tag">Legendary</span>
+              </div>
+              <span class="project-flip-hint">click to see more ↩</span>
+            </div>
+            <div class="project-card-back">
+              <span class="project-back-icon" aria-hidden="true">💌</span>
+              <p class="project-back-title">Send This To Your Crush</p>
+              <p class="project-back-desc">Made 7 years ago — before AI, before Stack Overflow guilt, before judgment. A funny little webpage to send to your crush. Proof that the best code comes from the heart.</p>
+              <div class="project-back-links">
+                <a href="https://github.com/xandersavvy/Send-this-to-your-crush" target="_blank" rel="noopener noreferrer" class="project-back-link">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836a9.59 9.59 0 012.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── CERTIFICATIONS & ACHIEVEMENTS ─────────────────── -->
+    <section id="certs" class="section" aria-label="Certifications and achievements">
+      <p class="section-label">Recognition</p>
+      <h2 class="section-title">Certifications &amp; Achievements</h2>
+
+      <div style="margin-bottom:2rem;">
+        <p class="skill-group-label">Certifications</p>
+        <div class="cert-grid">
+          <div class="cert-card">ISTQB Certified Tester — Foundation Level (CTFL)</div>
+          <div class="cert-card">IBM Automation — Intermediate</div>
+          <div class="cert-card">IBM Business Operations (BOB) — Intermediate</div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:2rem;">
+        <p class="skill-group-label">Achievements</p>
+        <div class="achieve-list">
+          <div class="achieve-item">IBM Growth Award</div>
+          <div class="achieve-item">Successful Deal Signing Award</div>
+          <div class="achieve-item">Built automation framework from scratch for Johnson &amp; Johnson enterprise apps.</div>
+          <div class="achieve-item">Reduced regression execution time by over <strong>50%</strong> across engagements.</div>
+          <div class="achieve-item">Improved automation maintainability through reusable framework components and design patterns.</div>
+        </div>
+      </div>
+
+      <div>
+        <p class="skill-group-label">
+          Credly Badges
+          <a href="https://www.credly.com/users/souvik-ghosh.d7cdcc98" target="_blank" rel="noopener noreferrer" class="credly-all-link" aria-label="View all badges on Credly">View all ↗</a>
         </p>
-        <p>
-          Are you a recruiter ? 
-          <br/>
-          Check 
-        <a
-          href="https://docs.google.com/document/d/1nwwKt444YmrWjLJsmhGdV57YHxUaEKm0/edit?usp=sharing&ouid=106186566196550951617"
-          >My Resume</a
-        >
-        and 
-        <a href="./blogs.html">my blogs</a>
+        <div class="credly-grid">
+
+          <a class="credly-badge" href="https://www.credly.com/users/souvik-ghosh.d7cdcc98/badges" target="_blank" rel="noopener noreferrer" aria-label="IBM Quality Engineering Foundations">
+            <img src="https://images.credly.com/images/5f14cf1d-5efd-4045-bdb7-3e86d37fee0b/image.png" alt="IBM Quality Engineering Foundations" loading="lazy" width="72" height="72" />
+            <span>IBM Quality Engineering Foundations</span>
+          </a>
+
+          <a class="credly-badge" href="https://www.credly.com/users/souvik-ghosh.d7cdcc98/badges" target="_blank" rel="noopener noreferrer" aria-label="IBM Generative &amp; Agentic AI Foundation">
+            <img src="https://images.credly.com/images/95ae9d80-bc45-40fa-84a1-45cba63bd44b/IBM-Generative-and-Agentic-AI-Foundation.png" alt="IBM Generative &amp; Agentic AI Foundation" loading="lazy" width="72" height="72" />
+            <span>IBM Generative &amp; Agentic AI Foundation</span>
+          </a>
+
+          <a class="credly-badge" href="https://www.credly.com/users/souvik-ghosh.d7cdcc98/badges" target="_blank" rel="noopener noreferrer" aria-label="IBM Garage Foundation">
+            <img src="https://images.credly.com/images/9beccf39-df2f-4025-b971-3a7ec6dfdbfa/image.png" alt="IBM Garage Foundation" loading="lazy" width="72" height="72" />
+            <span>IBM Garage Foundation</span>
+          </a>
+
+          <a class="credly-badge" href="https://www.credly.com/users/souvik-ghosh.d7cdcc98/badges" target="_blank" rel="noopener noreferrer" aria-label="IBM Agile Explorer">
+            <img src="https://images.credly.com/images/a972f054-be07-4845-85c7-95c8d11852f5/IBM-Agile-Explorer.png" alt="IBM Agile Explorer" loading="lazy" width="72" height="72" />
+            <span>IBM Agile Explorer</span>
+          </a>
+
+          <a class="credly-badge" href="https://www.credly.com/users/souvik-ghosh.d7cdcc98/badges" target="_blank" rel="noopener noreferrer" aria-label="Enterprise Design Thinking Practitioner">
+            <img src="https://images.credly.com/images/bc08972c-3c7d-4b99-82a0-c94bcca36674/Badges_v8-07_Practitioner.png" alt="Enterprise Design Thinking Practitioner" loading="lazy" width="72" height="72" />
+            <span>Enterprise Design Thinking Practitioner</span>
+          </a>
+
+          <a class="credly-badge" href="https://www.credly.com/users/souvik-ghosh.d7cdcc98/badges" target="_blank" rel="noopener noreferrer" aria-label="IBM Automation: Compass">
+            <img src="https://images.credly.com/images/34d550f8-8478-4b71-b7ab-91dd3642932e/image.png" alt="IBM Automation: Compass" loading="lazy" width="72" height="72" />
+            <span>IBM Automation: Compass</span>
+          </a>
+
+          <a class="credly-badge" href="https://www.credly.com/users/souvik-ghosh.d7cdcc98/badges" target="_blank" rel="noopener noreferrer" aria-label="IBM watsonx Essentials">
+            <img src="https://images.credly.com/images/47a15e48-3fd7-4c36-8f7e-639a65945ad8/image.png" alt="IBM watsonx Essentials" loading="lazy" width="72" height="72" />
+            <span>IBM watsonx Essentials</span>
+          </a>
+
+          <a class="credly-badge" href="https://www.credly.com/users/souvik-ghosh.d7cdcc98/badges" target="_blank" rel="noopener noreferrer" aria-label="Docker Essentials: A Developer Introduction">
+            <img src="https://images.credly.com/images/b0c5445a-72a2-46ce-a599-96147e210efb/blob" alt="Docker Essentials: A Developer Introduction" loading="lazy" width="72" height="72" />
+            <span>Docker Essentials</span>
+          </a>
+
+          <a class="credly-badge" href="https://www.credly.com/users/souvik-ghosh.d7cdcc98/badges" target="_blank" rel="noopener noreferrer" aria-label="Cybersecurity Fundamentals">
+            <img src="https://images.credly.com/images/50b96632-6cbb-40b7-ac0e-b83f49ff7f94/image.png" alt="Cybersecurity Fundamentals" loading="lazy" width="72" height="72" />
+            <span>Cybersecurity Fundamentals</span>
+          </a>
+
+          <a class="credly-badge" href="https://www.credly.com/users/souvik-ghosh.d7cdcc98/badges" target="_blank" rel="noopener noreferrer" aria-label="AWS Knowledge: Cloud Essentials">
+            <img src="https://images.credly.com/images/7cf036b0-c609-4378-a7be-9969e1dea7ab/blob" alt="AWS Knowledge: Cloud Essentials" loading="lazy" width="72" height="72" />
+            <span>AWS Cloud Essentials</span>
+          </a>
+
+          <a class="credly-badge" href="https://www.credly.com/users/souvik-ghosh.d7cdcc98/badges" target="_blank" rel="noopener noreferrer" aria-label="Think Like a Hacker">
+            <img src="https://images.credly.com/images/fb49de32-6a4c-4850-97cc-942b638ae4c3/Think-LIke-a-Hacker.png" alt="Think Like a Hacker" loading="lazy" width="72" height="72" />
+            <span>Think Like a Hacker</span>
+          </a>
+
+          <a class="credly-badge" href="https://www.credly.com/users/souvik-ghosh.d7cdcc98/badges" target="_blank" rel="noopener noreferrer" aria-label="IBM Bob Intermediate">
+            <img src="https://images.credly.com/images/df4fe6f4-2060-45d4-9a09-160688785dbc/IBM_Bob_TS_Intermediate.png" alt="IBM Bob Intermediate" loading="lazy" width="72" height="72" />
+            <span>IBM Bob Intermediate</span>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── CV ────────────────────────────────────────────── -->
+    <section id="cv" class="section" aria-label="CV">
+      <div id="cv-card">
+        <div class="cv-icon" aria-hidden="true">📄</div>
+        <h2>My CV</h2>
+        <p>Always up to date.</p>
+        <div class="cv-buttons">
+          <button id="btn-download-cv" class="btn-primary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download PDF
+          </button>
+          <a href="cv.html" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            Preview CV
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── CONTACT ────────────────────────────────────────── -->
+    <section id="contact" class="section" aria-label="Contact">
+      <p class="section-label">Get in touch</p>
+      <h2 class="section-title">Let's Connect</h2>
+      <p style="color:var(--text-muted);font-size:0.92rem;margin-bottom:2rem;max-width:480px;line-height:1.7;">
+        Open to new opportunities, interesting projects, and conversations about test automation and software quality.
       </p>
-    </div>
-    <script>
-      //secret rickroll joke
-      onkeypress = function (e) {
-        if (e.key === "r" || e.key === "R") {
-          window.location.href = "https://youtu.be/zL19uMsnpSU";
-        }
-      };
-      //dad jokes API
-      async function jokes() {
-        const jokes = document.getElementById("jokes");
-        const url = "https://icanhazdadjoke.com/";
-        const myHeaders = new Headers();
-        myHeaders.append("Accept", "application/json");
-        fetch(url, {
-          headers: myHeaders,
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            jokes.innerText = data.joke;
-            
-          })
-          .catch((err) => {
-            jokes.innerText = "Error fetching dad jokes";
-          });
-          jokes.innerHTML+=``
-        }
-        jokes()
-        setInterval(()=>jokes(),10000)
-        
-      document.getElementById('clearJoke').addEventListener("click",()=>{
-        document.getElementById("jokeContainer").remove();
-      })
 
+      <div class="contact-grid">
+        <a href="mailto:xandersavy@gmail.com" class="contact-link" aria-label="Send email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          xandersavy@gmail.com
+        </a>
+        <a href="https://www.linkedin.com/in/souvik-g-4ba0a7190/" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="LinkedIn profile">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn
+        </a>
+        <a href="https://github.com/xandersavvy" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="GitHub profile">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836a9.59 9.59 0 012.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+          GitHub
+        </a>
+        <a href="https://twitter.com/xandersouvik" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="Twitter profile">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+          Twitter / X
+        </a>
+        <a href="https://www.credly.com/users/souvik-ghosh.d7cdcc98" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="Credly badges">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+          Credly Badges
+        </a>
+        <a href="https://www.instagram.com/souvik_ghosted/" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          Instagram
+        </a>
+      </div>
+    </section>
 
-    </script>
-  </body>
+    <hr class="section-divider" />
+
+    <!-- ── TOOLS ─────────────────────────────────────────── -->
+    <section id="tools" class="section" aria-label="Developer tools">
+      <p class="section-label">I built these</p>
+      <h2 class="section-title">Tools &amp; Fun</h2>
+
+      <div class="tools-grid">
+
+        <a href="tools/chrome.html" class="tool-card" aria-label="ChromeDriver Finder tool">
+          <span class="tool-emoji" aria-hidden="true">🌐</span>
+          <div class="tool-info">
+            <h3>ChromeDriver Finder</h3>
+            <p>Search and download ChromeDriver / Chrome-for-Testing binaries for any version after Chrome 115. Useful for Selenium setup.</p>
+            <span class="tool-badge">Selenium · QA</span>
+          </div>
+        </a>
+
+        <a href="tools/address.html" class="tool-card" aria-label="USA Test Address Generator tool">
+          <span class="tool-emoji" aria-hidden="true">📍</span>
+          <div class="tool-info">
+            <h3>USA Test Addresses</h3>
+            <p>Real US postal addresses across MA, NY, CT, AL — filter, search, and copy with one click. Great for form-fill automation testing.</p>
+            <span class="tool-badge">Testing · Automation</span>
+          </div>
+        </a>
+
+        <a href="tools/pixel-chord-composer.html" class="tool-card" aria-label="Pixel Chord Composer tool">
+          <span class="tool-emoji" aria-hidden="true">🎼</span>
+          <div class="tool-info">
+            <h3>Pixel Chord Composer</h3>
+            <p>Upload any image and transform its pixel data into musical chord progressions. Choose key, style, tempo, and export as WAV.</p>
+            <span class="tool-badge">Creative · Audio · WebAPI</span>
+          </div>
+        </a>
+
+        <div class="tool-card" style="flex-direction:column;gap:0.9rem;cursor:default;" aria-label="Dad Jokes widget">
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <span class="tool-emoji" aria-hidden="true">😄</span>
+            <div class="tool-info">
+              <h3>Dad Joke Generator</h3>
+              <p style="margin-bottom:0;">Because every good dev needs a laugh.</p>
+            </div>
+          </div>
+          <div id="joke-display" style="font-style:italic;font-size:0.85rem;color:var(--text-muted);line-height:1.6;min-height:3rem;" aria-live="polite">
+            Fetching a joke…
+          </div>
+          <button id="joke-btn" style="align-self:flex-start;">Next joke →</button>
+        </div>
+
+        <a href="https://xandersavvy.hashnode.dev/" target="_blank" rel="noopener noreferrer" class="tool-card" aria-label="Blog on Hashnode">
+          <span class="tool-emoji" aria-hidden="true">✍️</span>
+          <div class="tool-info">
+            <h3>Blog — Hashnode</h3>
+            <p>Technical articles on test automation, QA engineering, and software development best practices.</p>
+            <span class="tool-badge">Writing · QA · Dev</span>
+          </div>
+        </a>
+
+        <a href="tution/index.html" class="tool-card" aria-label="Maa Monsa Coaching Centre">
+          <span class="tool-emoji" aria-hidden="true">📚</span>
+          <div class="tool-info">
+            <h3>Maa Monsa Coaching</h3>
+            <p>Landing page for a private tuition centre in Sodepur — Bengali medium, Arts subjects, Class 5–12 and college level.</p>
+            <span class="tool-badge">Bengali · Education</span>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── FOOTER ──────────────────────────────────────────── -->
+  <footer role="contentinfo">
+    <p>
+      Built with 💖 and 🤖 by
+      <a href="#hero" data-scroll="hero">Souvik Ghosh</a> ·
+      <a href="https://github.com/xandersavvy/xandersavvy.github.io" target="_blank" rel="noopener noreferrer">Source on GitHub</a>
+    </p>
+    <p style="margin-top:0.4rem;">Kolkata &amp; Bangalore, India · xandersavy@gmail.com</p>
+  </footer>
+
+  <!-- Scroll to top -->
+  <button id="scroll-top" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
+  <!-- Scripts -->
+  <script src="assets/js/bg.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/cv-pdf.js"></script>
+
+  <script>
+    /* ── Dad jokes ─────────────────────────────────────── */
+    (function() {
+      const display = document.getElementById('joke-display');
+      const btn     = document.getElementById('joke-btn');
+      async function loadJoke() {
+        if (display) display.textContent = 'Fetching…';
+        try {
+          const r = await fetch('https://official-joke-api.appspot.com/random_joke');
+          const d = await r.json();
+          if (display) display.textContent = d.setup + ' — ' + d.punchline;
+        } catch(_) {
+          if (display) display.textContent = 'Why do programmers prefer dark mode? Because light attracts bugs.';
+        }
+      }
+      loadJoke();
+      if (btn) btn.addEventListener('click', loadJoke);
+    }());
+
+  </script>
+
+</body>
 </html>
