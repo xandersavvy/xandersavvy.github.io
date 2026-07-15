@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Virtual Music Studio with Piano, Drums, and EDM pads powered by the Web Audio API." />
+  <meta name="keywords" content="virtual piano, drum machine, EDM pads, web audio, music studio" />
+  <title>Music Studio — Souvik Ghosh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <style>
+    main { padding-top: 56px; }
+
+    /* ── Shell ──────────────────────────────────────────── */
+    .studio-shell {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 3rem 1.25rem 5rem;
+    }
+
+    .studio-shell h1 {
+      font-size: 1.75rem;
+      font-weight: 800;
+      margin-bottom: 0.35rem;
+    }
+    .studio-shell .subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    /* ── Tab bar ────────────────────────────────────────── */
+    .tab-bar {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.75rem;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 0;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      padding: 0.55rem 1.1rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: color 0.18s, border-color 0.18s;
+      border-radius: 0;
+      font-family: inherit;
+    }
+    .tab-btn.active {
+      color: var(--text);
+      border-bottom-color: var(--text);
+    }
+    .tab-btn:hover:not(.active) {
+      color: var(--text);
+    }
+
+    /* ── Panel surface ───────────────────────────────────── */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .panel-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    /* ── Shared controls row ─────────────────────────────── */
+    .ctrl-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .ctrl-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .ctrl-group label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .ctrl-group input[type="range"] {
+      width: 120px;
+      accent-color: var(--text);
+    }
+    .ctrl-group select {
+      font-family: inherit;
+      font-size: 0.82rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.3rem 0.55rem;
+      color: var(--text);
+    }
+
+    /* ── Piano ───────────────────────────────────────────── */
+    #piano-keyboard {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      position: relative;
+      height: 160px;
+      user-select: none;
+      gap: 0;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
+
+    .piano-key {
+      position: relative;
+      border-radius: 0 0 4px 4px;
+      cursor: pointer;
+      transition: background 0.06s;
+      flex-shrink: 0;
+      border: 1px solid #999;
+    }
+
+    .piano-key.white {
+      width: 38px;
+      height: 140px;
+      background: #fff;
+      z-index: 1;
+      border-color: #888;
+    }
+    .piano-key.white:hover,
+    .piano-key.white.pressed {
+      background: #dde8ff;
+    }
+
+    .piano-key.black {
+      width: 24px;
+      height: 90px;
+      background: #1e1e2e;
+      margin-left: -13px;
+      margin-right: -11px;
+      z-index: 2;
+      border-color: #111;
+    }
+    .piano-key.black:hover,
+    .piano-key.black.pressed {
+      background: #3b3b5c;
+    }
+
+    .key-label {
+      position: absolute;
+      bottom: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.6rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: #888;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .piano-key.black .key-label { color: #aaa; bottom: 4px; }
+
+    .piano-octave-label {
+      position: absolute;
+      bottom: -1.6rem;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      left: 0;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ── Drum machine ────────────────────────────────────── */
+    .drum-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.85rem;
+    }
+
+    .drum-pad {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.1rem 0.75rem;
+      cursor: pointer;
+      text-align: center;
+      user-select: none;
+      transition: background 0.08s, border-color 0.08s, transform 0.08s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .drum-pad:hover { border-color: var(--text-muted); }
+    .drum-pad.hit {
+      background: #e8eeff;
+      border-color: #6366f1;
+      transform: scale(0.96);
+    }
+    [data-theme="dark"] .drum-pad.hit {
+      background: #2a2a4a;
+      border-color: #818cf8;
+    }
+    .drum-pad .drum-icon { font-size: 1.8rem; }
+    .drum-pad .drum-name {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .drum-pad .drum-key {
+      font-size: 0.65rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.05rem 0.35rem;
+    }
+
+    /* ── Sequencer ───────────────────────────────────────── */
+    .sequencer-grid {
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
+    .seq-row {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-bottom: 0.45rem;
+    }
+    .seq-row-label {
+      width: 60px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .seq-step {
+      width: 28px;
+      height: 28px;
+      border-radius: 4px;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      cursor: pointer;
+      transition: background 0.1s, border-color 0.1s;
+      flex-shrink: 0;
+    }
+    .seq-step.on {
+      background: #6366f1;
+      border-color: #4f46e5;
+    }
+    [data-theme="dark"] .seq-step.on {
+      background: #818cf8;
+      border-color: #6366f1;
+    }
+    .seq-step.cursor {
+      outline: 2px solid #f59e0b;
+      outline-offset: 1px;
+    }
+
+    .seq-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.1rem;
+    }
+    .seq-controls button {
+      font-size: 0.82rem;
+      padding: 0.38rem 1rem;
+    }
+
+    /* ── EDM Pads ────────────────────────────────────────── */
+    .edm-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.85rem;
+    }
+    .edm-pad {
+      border: none;
+      border-radius: var(--radius-lg);
+      padding: 1.2rem 0.5rem;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: inherit;
+      transition: filter 0.08s, transform 0.08s;
+      user-select: none;
+    }
+    .edm-pad:hover { filter: brightness(1.12); }
+    .edm-pad.hit {
+      transform: scale(0.94);
+      filter: brightness(1.3);
+    }
+    .edm-pad .pad-icon  { font-size: 1.8rem; }
+    .edm-pad .pad-name  { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+    .edm-pad .pad-key   { font-size: 0.65rem; font-family: 'JetBrains Mono', monospace; opacity: 0.75; }
+
+    /* EDM colour palette per row */
+    .edm-pad.c0 { background: #6366f1; color: #fff; }
+    .edm-pad.c1 { background: #ec4899; color: #fff; }
+    .edm-pad.c2 { background: #f59e0b; color: #fff; }
+    .edm-pad.c3 { background: #10b981; color: #fff; }
+    .edm-pad.c4 { background: #3b82f6; color: #fff; }
+    .edm-pad.c5 { background: #8b5cf6; color: #fff; }
+    .edm-pad.c6 { background: #ef4444; color: #fff; }
+    .edm-pad.c7 { background: #14b8a6; color: #fff; }
+    .edm-pad.c8 { background: #f97316; color: #fff; }
+    .edm-pad.c9 { background: #a855f7; color: #fff; }
+    .edm-pad.c10{ background: #0ea5e9; color: #fff; }
+    .edm-pad.c11{ background: #84cc16; color: #fff; }
+    .edm-pad.c12{ background: #e11d48; color: #fff; }
+    .edm-pad.c13{ background: #d97706; color: #fff; }
+    .edm-pad.c14{ background: #06b6d4; color: #fff; }
+    .edm-pad.c15{ background: #7c3aed; color: #fff; }
+
+    /* ── Visualizer ─────────────────────────────────────── */
+    #vis-canvas {
+      width: 100%;
+      height: 80px;
+      display: block;
+      border-radius: var(--radius);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      margin-top: 1rem;
+    }
+
+    /* ── Playback bar (piano) ───────────────────────────── */
+    .playback-hint {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+      line-height: 1.6;
+    }
+
+    /* ── Responsive ──────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .drum-grid, .edm-grid { grid-template-columns: repeat(2, 1fr); }
+      .ctrl-row { gap: 0.75rem 1rem; }
+      .piano-key.white { width: 32px; }
+      .piano-key.black { width: 20px; margin-left: -11px; margin-right: -9px; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ── Navbar (minimal back-link) ───────────────────────── -->
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a class="nav-logo" href="../index.html">← Souvik</a>
+      <div class="nav-links">
+        <a href="../index.html#tools">Tools</a>
+      </div>
+      <div class="nav-actions">
+        <button id="btn-theme" class="btn-theme" aria-label="Toggle dark/light theme">
+          <span id="theme-icon" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="studio-shell">
+      <p class="section-label">Browser-native · No install</p>
+      <h1>🎹 Music Studio</h1>
+      <p class="subtitle">Virtual Piano · Drum Machine + Sequencer · EDM Pads — all powered by the Web Audio API</p>
+
+      <!-- Tab bar -->
+      <div class="tab-bar" role="tablist" aria-label="Instruments">
+        <button class="tab-btn active" role="tab" aria-selected="true"  data-tab="piano" >🎹 Piano</button>
+        <button class="tab-btn"        role="tab" aria-selected="false" data-tab="drums" >🥁 Drums</button>
+        <button class="tab-btn"        role="tab" aria-selected="false" data-tab="edm"   >⚡ EDM</button>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════
+           PIANO
+      ═══════════════════════════════════════════════════ -->
+      <div id="tab-piano" class="tab-panel active" role="tabpanel">
+        <div class="panel-card">
+          <div class="ctrl-row">
+            <div class="ctrl-group">
+              <label for="piano-octave">Octave</label>
+              <select id="piano-octave">
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4" selected>4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+              </select>
+            </div>
+            <div class="ctrl-group">
+              <label for="piano-wave">Timbre</label>
+              <select id="piano-wave">
+                <option value="sine">Sine (soft)</option>
+                <option value="triangle">Triangle (warm)</option>
+                <option value="sawtooth" selected>Sawtooth (bright)</option>
+                <option value="square">Square (retro)</option>
+              </select>
+            </div>
+            <div class="ctrl-group">
+              <label for="piano-vol">Volume</label>
+              <input type="range" id="piano-vol" min="0" max="1" step="0.01" value="0.65" />
+            </div>
+            <div class="ctrl-group">
+              <label for="piano-reverb">Reverb</label>
+              <input type="range" id="piano-reverb" min="0" max="1" step="0.01" value="0.3" />
+            </div>
+          </div>
+
+          <div id="piano-keyboard" role="group" aria-label="Piano keyboard"></div>
+
+          <p class="playback-hint">
+            Click keys or use keyboard: <kbd>A S D F G H J K L</kbd> = white keys from C · <kbd>W E T Y U O P</kbd> = black keys · <kbd>Z</kbd>/<kbd>X</kbd> shift octave
+          </p>
+        </div>
+
+        <canvas id="vis-canvas" aria-label="Audio visualizer"></canvas>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════
+           DRUMS
+      ═══════════════════════════════════════════════════ -->
+      <div id="tab-drums" class="tab-panel" role="tabpanel">
+        <div class="panel-card">
+          <!-- Live pads -->
+          <h3 style="font-size:0.82rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:1rem;">Hit Pads</h3>
+          <div class="drum-grid" id="drum-pad-grid"></div>
+        </div>
+
+        <div class="panel-card">
+          <h3 style="font-size:0.82rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:1rem;">Step Sequencer (16 steps)</h3>
+          <div class="seq-controls">
+            <button id="seq-play">▶ Play</button>
+            <button id="seq-stop">■ Stop</button>
+            <button id="seq-clear">✕ Clear</button>
+            <div class="ctrl-group" style="flex-direction:row;align-items:center;gap:0.5rem;">
+              <label for="seq-bpm" style="white-space:nowrap;">BPM</label>
+              <input type="range" id="seq-bpm" min="60" max="200" step="1" value="120" style="width:90px;" />
+              <span id="seq-bpm-val" style="font-size:0.8rem;font-family:'JetBrains Mono',monospace;width:2.5rem;">120</span>
+            </div>
+          </div>
+          <div class="sequencer-grid" id="sequencer-grid"></div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════
+           EDM PADS
+      ═══════════════════════════════════════════════════ -->
+      <div id="tab-edm" class="tab-panel" role="tabpanel">
+        <div class="panel-card">
+          <div class="ctrl-row">
+            <div class="ctrl-group">
+              <label for="edm-scale">Scale</label>
+              <select id="edm-scale">
+                <option value="minor">Minor</option>
+                <option value="major">Major</option>
+                <option value="pentatonic">Pentatonic</option>
+                <option value="blues">Blues</option>
+                <option value="dorian">Dorian</option>
+              </select>
+            </div>
+            <div class="ctrl-group">
+              <label for="edm-root">Root</label>
+              <select id="edm-root">
+                <option>C</option><option>C#</option><option>D</option>
+                <option>D#</option><option>E</option><option>F</option>
+                <option>F#</option><option selected>G</option><option>G#</option>
+                <option>A</option><option>A#</option><option>B</option>
+              </select>
+            </div>
+            <div class="ctrl-group">
+              <label for="edm-vol">Volume</label>
+              <input type="range" id="edm-vol" min="0" max="1" step="0.01" value="0.7" />
+            </div>
+            <div class="ctrl-group">
+              <label for="edm-atk">Attack</label>
+              <input type="range" id="edm-atk" min="0.001" max="0.5" step="0.001" value="0.01" />
+            </div>
+            <div class="ctrl-group">
+              <label for="edm-rel">Release</label>
+              <input type="range" id="edm-rel" min="0.05" max="3" step="0.05" value="0.6" />
+            </div>
+          </div>
+          <div class="edm-grid" id="edm-pad-grid"></div>
+          <p class="playback-hint" style="margin-top:1rem;">
+            Click pads or use keyboard: <kbd>1 2 3 4 5 6 7 8 9 0 - =</kbd> (top row) · <kbd>Q W E R</kbd> (second row)
+          </p>
+        </div>
+        <canvas id="vis-canvas-edm" style="width:100%;height:80px;display:block;border-radius:var(--radius);background:var(--bg);border:1px solid var(--border);margin-top:0;" aria-label="EDM visualizer"></canvas>
+      </div>
+
+    </div><!-- /studio-shell -->
+  </main>
+
+  <script src="../assets/js/bg.js"></script>
+  <script src="../assets/js/main.js"></script>
+
+  <script>
+  (() => {
+    /* ══════════════════════════════════════════════════════════
+       AUDIO CONTEXT (lazy init on first interaction)
+    ══════════════════════════════════════════════════════════ */
+    let ctx = null;
+    let analyser = null;
+    let masterGain = null;
+
+    function ensureCtx() {
+      if (ctx) return;
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+      analyser = ctx.createAnalyser();
+      analyser.fftSize = 512;
+      masterGain = ctx.createGain();
+      masterGain.gain.value = 1;
+      masterGain.connect(analyser);
+      analyser.connect(ctx.destination);
+      startVis();
+    }
+
+    /* ── Convolver (reverb) ──────────────────────────────── */
+    let reverbNode = null;
+    let reverbGain = null;
+    let dryGain    = null;
+    function ensureReverb() {
+      if (reverbNode) return;
+      // impulse response: white noise decay
+      const sr   = ctx.sampleRate;
+      const len  = sr * 1.5;
+      const buf  = ctx.createBuffer(2, len, sr);
+      for (let ch = 0; ch < 2; ch++) {
+        const data = buf.getChannelData(ch);
+        for (let i = 0; i < len; i++) {
+          data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.5);
+        }
+      }
+      reverbNode = ctx.createConvolver();
+      reverbNode.buffer = buf;
+      reverbGain = ctx.createGain();
+      dryGain    = ctx.createGain();
+      reverbGain.gain.value = 0.3;
+      dryGain.gain.value    = 0.7;
+      reverbNode.connect(reverbGain);
+      reverbGain.connect(masterGain);
+      dryGain.connect(masterGain);
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       VISUALIZER
+    ══════════════════════════════════════════════════════════ */
+    function startVis() {
+      const canvases = [
+        document.getElementById('vis-canvas'),
+        document.getElementById('vis-canvas-edm')
+      ];
+      const data = new Uint8Array(analyser.frequencyBinCount);
+
+      function draw() {
+        requestAnimationFrame(draw);
+        analyser.getByteFrequencyData(data);
+        canvases.forEach(canvas => {
+          if (!canvas) return;
+          const W = canvas.offsetWidth;
+          const H = canvas.offsetHeight;
+          if (canvas.width !== W) canvas.width  = W || 600;
+          if (canvas.height !== H) canvas.height = H || 80;
+          const c = canvas.getContext('2d');
+          c.clearRect(0, 0, canvas.width, canvas.height);
+          const barW = canvas.width / data.length * 2;
+          for (let i = 0; i < data.length; i++) {
+            const v = data[i] / 255;
+            const h = v * canvas.height;
+            const hue = 240 - v * 160;
+            c.fillStyle = `hsl(${hue},70%,55%)`;
+            c.fillRect(i * barW, canvas.height - h, Math.max(1, barW - 1), h);
+          }
+        });
+      }
+      draw();
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       PIANO
+    ══════════════════════════════════════════════════════════ */
+    const NOTE_NAMES  = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+    const WHITE_NOTES = ['C','D','E','F','G','A','B'];
+    const BLACK_NOTES = ['C#','D#',null,'F#','G#','A#',null];
+
+    // keyboard → note mapping (relative to current octave)
+    const KB_WHITE = ['a','s','d','f','g','h','j','k','l'];
+    const KB_BLACK = ['w','e', 't','y','u', 'o','p'];
+
+    const pianoOctaveEl = document.getElementById('piano-octave');
+    const pianoWaveEl   = document.getElementById('piano-wave');
+    const pianoVolEl    = document.getElementById('piano-vol');
+    const pianoRevEl    = document.getElementById('piano-reverb');
+
+    let pianoOctave = 4;
+    pianoOctaveEl.addEventListener('change', () => {
+      pianoOctave = parseInt(pianoOctaveEl.value);
+    });
+
+    // Map note+octave → freq
+    function noteFreq(note, octave) {
+      const idx  = NOTE_NAMES.indexOf(note);
+      const midi = (octave + 1) * 12 + idx;
+      return 440 * Math.pow(2, (midi - 69) / 12);
+    }
+
+    // Active piano oscillators: key → {osc, gainNode}
+    const activePianoNotes = new Map();
+
+    function pianoNoteOn(note, octave) {
+      const key = note + octave;
+      if (activePianoNotes.has(key)) return;
+      ensureCtx();
+      ensureReverb();
+
+      const freq   = noteFreq(note, octave);
+      const vol    = parseFloat(pianoVolEl.value);
+      const revAmt = parseFloat(pianoRevEl.value);
+
+      reverbGain.gain.setTargetAtTime(revAmt,       ctx.currentTime, 0.01);
+      dryGain.gain.setTargetAtTime(1 - revAmt * 0.5, ctx.currentTime, 0.01);
+
+      const osc  = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type      = pianoWaveEl.value;
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0, ctx.currentTime);
+      gain.gain.linearRampToValueAtTime(vol, ctx.currentTime + 0.01);
+
+      osc.connect(gain);
+      gain.connect(dryGain);
+      gain.connect(reverbNode);
+      osc.start();
+
+      activePianoNotes.set(key, { osc, gain });
+
+      // visual feedback
+      document.querySelectorAll(`[data-note="${note}"][data-oct="${octave}"]`)
+        .forEach(el => el.classList.add('pressed'));
+    }
+
+    function pianoNoteOff(note, octave) {
+      const key = note + octave;
+      const n   = activePianoNotes.get(key);
+      if (!n) return;
+      const { osc, gain } = n;
+      gain.gain.setTargetAtTime(0, ctx.currentTime, 0.12);
+      osc.stop(ctx.currentTime + 0.6);
+      activePianoNotes.delete(key);
+
+      document.querySelectorAll(`[data-note="${note}"][data-oct="${octave}"]`)
+        .forEach(el => el.classList.remove('pressed'));
+    }
+
+    // Build keyboard DOM (2 octaves: current & current+1)
+    function buildPiano() {
+      const kb = document.getElementById('piano-keyboard');
+      kb.innerHTML = '';
+
+      for (let o = pianoOctave; o <= pianoOctave + 1; o++) {
+        for (let wi = 0; wi < WHITE_NOTES.length; wi++) {
+          const note  = WHITE_NOTES[wi];
+          const black = BLACK_NOTES[wi];
+
+          // White key
+          const wEl = document.createElement('div');
+          wEl.className = 'piano-key white';
+          wEl.dataset.note = note;
+          wEl.dataset.oct  = o;
+          wEl.setAttribute('role', 'button');
+          wEl.setAttribute('aria-label', `${note}${o}`);
+          wEl.setAttribute('tabindex', '0');
+
+          // kb hint on first octave only
+          const kbHint = (o === pianoOctave && wi < KB_WHITE.length)
+            ? KB_WHITE[wi].toUpperCase() : '';
+          if (kbHint) {
+            const lbl = document.createElement('span');
+            lbl.className = 'key-label';
+            lbl.textContent = kbHint;
+            wEl.appendChild(lbl);
+          }
+
+          wEl.addEventListener('pointerdown', e => {
+            e.preventDefault();
+            pianoNoteOn(note, o);
+          });
+          wEl.addEventListener('pointerup',   () => pianoNoteOff(note, o));
+          wEl.addEventListener('pointerleave',() => pianoNoteOff(note, o));
+          kb.appendChild(wEl);
+
+          // Black key
+          if (black) {
+            const bEl = document.createElement('div');
+            bEl.className = 'piano-key black';
+            bEl.dataset.note = black;
+            bEl.dataset.oct  = o;
+            bEl.setAttribute('role', 'button');
+            bEl.setAttribute('aria-label', `${black}${o}`);
+            bEl.setAttribute('tabindex', '0');
+
+            const bwi = NOTE_NAMES.indexOf(black) - NOTE_NAMES.indexOf(note) - 1 + wi;
+            const bHint = (o === pianoOctave && wi < KB_BLACK.length && KB_BLACK[wi])
+              ? KB_BLACK[wi].toUpperCase() : '';
+            if (bHint) {
+              const lbl = document.createElement('span');
+              lbl.className = 'key-label';
+              lbl.textContent = bHint;
+              bEl.appendChild(lbl);
+            }
+
+            bEl.addEventListener('pointerdown', e => {
+              e.preventDefault();
+              pianoNoteOn(black, o);
+            });
+            bEl.addEventListener('pointerup',   () => pianoNoteOff(black, o));
+            bEl.addEventListener('pointerleave',() => pianoNoteOff(black, o));
+            kb.appendChild(bEl);
+          }
+        }
+      }
+    }
+    buildPiano();
+    pianoOctaveEl.addEventListener('change', buildPiano);
+
+    // Keyboard shortcuts (piano)
+    const pianoKbDown = new Set();
+    document.addEventListener('keydown', e => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+      const k = e.key.toLowerCase();
+      if (pianoKbDown.has(k)) return;
+      pianoKbDown.add(k);
+
+      if (k === 'z') { pianoOctave = Math.max(1, pianoOctave - 1); pianoOctaveEl.value = pianoOctave; buildPiano(); return; }
+      if (k === 'x') { pianoOctave = Math.min(6, pianoOctave + 1); pianoOctaveEl.value = pianoOctave; buildPiano(); return; }
+
+      const wi = KB_WHITE.indexOf(k);
+      const bi = KB_BLACK.indexOf(k);
+      if (wi !== -1 && wi < WHITE_NOTES.length) pianoNoteOn(WHITE_NOTES[wi], pianoOctave);
+      if (bi !== -1 && BLACK_NOTES[bi])         pianoNoteOn(BLACK_NOTES[bi], pianoOctave);
+    });
+    document.addEventListener('keyup', e => {
+      const k = e.key.toLowerCase();
+      pianoKbDown.delete(k);
+      const wi = KB_WHITE.indexOf(k);
+      const bi = KB_BLACK.indexOf(k);
+      if (wi !== -1 && wi < WHITE_NOTES.length) pianoNoteOff(WHITE_NOTES[wi], pianoOctave);
+      if (bi !== -1 && BLACK_NOTES[bi])         pianoNoteOff(BLACK_NOTES[bi], pianoOctave);
+    });
+
+    /* ══════════════════════════════════════════════════════════
+       DRUM MACHINE
+    ══════════════════════════════════════════════════════════ */
+    const DRUMS = [
+      { name:'Kick',     emoji:'🥁', key:'q',  fn: synthKick    },
+      { name:'Snare',    emoji:'🪘', key:'w',  fn: synthSnare   },
+      { name:'Hi-Hat C', emoji:'🎩', key:'e',  fn: synthHiHatC  },
+      { name:'Hi-Hat O', emoji:'🎩', key:'r',  fn: synthHiHatO  },
+      { name:'Clap',     emoji:'👏', key:'t',  fn: synthClap    },
+      { name:'Tom',      emoji:'🥁', key:'y',  fn: synthTom     },
+      { name:'Rim',      emoji:'🎵', key:'u',  fn: synthRim     },
+      { name:'Crash',    emoji:'💥', key:'i',  fn: synthCrash   },
+    ];
+
+    function synthKick() {
+      const t  = ctx.currentTime;
+      const os = ctx.createOscillator();
+      const gn = ctx.createGain();
+      os.frequency.setValueAtTime(160, t);
+      os.frequency.exponentialRampToValueAtTime(40, t + 0.35);
+      gn.gain.setValueAtTime(1, t);
+      gn.gain.exponentialRampToValueAtTime(0.001, t + 0.4);
+      os.connect(gn); gn.connect(masterGain);
+      os.start(t); os.stop(t + 0.45);
+    }
+    function synthSnare() {
+      const t  = ctx.currentTime;
+      const buf = ctx.createBuffer(1, ctx.sampleRate * 0.2, ctx.sampleRate);
+      const d   = buf.getChannelData(0);
+      for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+      const noise = ctx.createBufferSource();
+      noise.buffer = buf;
+      const filter = ctx.createBiquadFilter();
+      filter.type = 'bandpass'; filter.frequency.value = 2000;
+      const gn = ctx.createGain();
+      gn.gain.setValueAtTime(0.6, t);
+      gn.gain.exponentialRampToValueAtTime(0.001, t + 0.25);
+      noise.connect(filter); filter.connect(gn); gn.connect(masterGain);
+      noise.start(t);
+    }
+    function synthHiHatC() {
+      const t   = ctx.currentTime;
+      const buf = ctx.createBuffer(1, ctx.sampleRate * 0.05, ctx.sampleRate);
+      const d   = buf.getChannelData(0);
+      for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+      const noise = ctx.createBufferSource();
+      noise.buffer = buf;
+      const filt = ctx.createBiquadFilter();
+      filt.type = 'highpass'; filt.frequency.value = 8000;
+      const gn = ctx.createGain();
+      gn.gain.setValueAtTime(0.4, t);
+      gn.gain.exponentialRampToValueAtTime(0.001, t + 0.06);
+      noise.connect(filt); filt.connect(gn); gn.connect(masterGain);
+      noise.start(t);
+    }
+    function synthHiHatO() {
+      const t   = ctx.currentTime;
+      const buf = ctx.createBuffer(1, ctx.sampleRate * 0.35, ctx.sampleRate);
+      const d   = buf.getChannelData(0);
+      for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+      const noise = ctx.createBufferSource();
+      noise.buffer = buf;
+      const filt = ctx.createBiquadFilter();
+      filt.type = 'highpass'; filt.frequency.value = 7500;
+      const gn = ctx.createGain();
+      gn.gain.setValueAtTime(0.35, t);
+      gn.gain.exponentialRampToValueAtTime(0.001, t + 0.4);
+      noise.connect(filt); filt.connect(gn); gn.connect(masterGain);
+      noise.start(t);
+    }
+    function synthClap() {
+      for (let rep = 0; rep < 3; rep++) {
+        const t   = ctx.currentTime + rep * 0.012;
+        const buf = ctx.createBuffer(1, ctx.sampleRate * 0.08, ctx.sampleRate);
+        const d   = buf.getChannelData(0);
+        for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+        const noise = ctx.createBufferSource();
+        noise.buffer = buf;
+        const filt = ctx.createBiquadFilter();
+        filt.type = 'bandpass'; filt.frequency.value = 1200;
+        const gn = ctx.createGain();
+        gn.gain.setValueAtTime(0.5, t);
+        gn.gain.exponentialRampToValueAtTime(0.001, t + 0.1);
+        noise.connect(filt); filt.connect(gn); gn.connect(masterGain);
+        noise.start(t);
+      }
+    }
+    function synthTom(freq = 100) {
+      const t  = ctx.currentTime;
+      const os = ctx.createOscillator();
+      const gn = ctx.createGain();
+      os.frequency.setValueAtTime(freq, t);
+      os.frequency.exponentialRampToValueAtTime(freq * 0.5, t + 0.25);
+      gn.gain.setValueAtTime(0.7, t);
+      gn.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
+      os.connect(gn); gn.connect(masterGain);
+      os.start(t); os.stop(t + 0.35);
+    }
+    function synthRim() {
+      const t  = ctx.currentTime;
+      const os = ctx.createOscillator();
+      const gn = ctx.createGain();
+      os.type = 'square'; os.frequency.value = 1600;
+      gn.gain.setValueAtTime(0.45, t);
+      gn.gain.exponentialRampToValueAtTime(0.001, t + 0.06);
+      os.connect(gn); gn.connect(masterGain);
+      os.start(t); os.stop(t + 0.07);
+    }
+    function synthCrash() {
+      const t   = ctx.currentTime;
+      const buf = ctx.createBuffer(1, ctx.sampleRate * 1.2, ctx.sampleRate);
+      const d   = buf.getChannelData(0);
+      for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+      const noise = ctx.createBufferSource();
+      noise.buffer = buf;
+      const filt = ctx.createBiquadFilter();
+      filt.type = 'highpass'; filt.frequency.value = 5000;
+      const gn = ctx.createGain();
+      gn.gain.setValueAtTime(0.4, t);
+      gn.gain.exponentialRampToValueAtTime(0.001, t + 1.3);
+      noise.connect(filt); filt.connect(gn); gn.connect(masterGain);
+      noise.start(t);
+    }
+
+    // Build drum pad DOM
+    const drumPadGrid = document.getElementById('drum-pad-grid');
+    DRUMS.forEach((d, i) => {
+      const el = document.createElement('div');
+      el.className = 'drum-pad';
+      el.setAttribute('role', 'button');
+      el.setAttribute('aria-label', `${d.name} drum pad`);
+      el.setAttribute('tabindex', '0');
+      el.innerHTML = `
+        <span class="drum-icon" aria-hidden="true">${d.emoji}</span>
+        <span class="drum-name">${d.name}</span>
+        <span class="drum-key">${d.key.toUpperCase()}</span>`;
+      el.addEventListener('pointerdown', e => { e.preventDefault(); triggerDrum(i); });
+      drumPadGrid.appendChild(el);
+    });
+
+    function triggerDrum(i) {
+      ensureCtx();
+      DRUMS[i].fn();
+      const pad = drumPadGrid.children[i];
+      pad.classList.add('hit');
+      setTimeout(() => pad.classList.remove('hit'), 130);
+    }
+
+    // Keyboard shortcuts for drums
+    document.addEventListener('keydown', e => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+      if (document.getElementById('tab-drums').classList.contains('active')) {
+        const idx = DRUMS.findIndex(d => d.key === e.key.toLowerCase());
+        if (idx !== -1) triggerDrum(idx);
+      }
+    });
+
+    /* ── Step Sequencer ──────────────────────────────────── */
+    const SEQ_STEPS = 16;
+    const SEQ_ROWS  = DRUMS.length;
+    const seqState  = Array.from({ length: SEQ_ROWS }, () => new Array(SEQ_STEPS).fill(false));
+    let   seqStep   = 0;
+    let   seqTimer  = null;
+    let   seqPlaying= false;
+
+    const seqGrid = document.getElementById('sequencer-grid');
+    const seqBpmEl    = document.getElementById('seq-bpm');
+    const seqBpmVal   = document.getElementById('seq-bpm-val');
+    seqBpmEl.addEventListener('input', () => {
+      seqBpmVal.textContent = seqBpmEl.value;
+      if (seqPlaying) { stopSeq(); startSeq(); }
+    });
+
+    // Build sequencer rows
+    DRUMS.forEach((d, ri) => {
+      const row = document.createElement('div');
+      row.className = 'seq-row';
+      const lbl = document.createElement('span');
+      lbl.className = 'seq-row-label';
+      lbl.textContent = d.name.slice(0, 6);
+      row.appendChild(lbl);
+      for (let si = 0; si < SEQ_STEPS; si++) {
+        const cell = document.createElement('div');
+        cell.className = 'seq-step';
+        cell.dataset.row  = ri;
+        cell.dataset.step = si;
+        cell.addEventListener('click', () => {
+          seqState[ri][si] = !seqState[ri][si];
+          cell.classList.toggle('on', seqState[ri][si]);
+        });
+        row.appendChild(cell);
+      }
+      seqGrid.appendChild(row);
+    });
+
+    function seqTick() {
+      // clear old cursor
+      document.querySelectorAll('.seq-step.cursor').forEach(e => e.classList.remove('cursor'));
+      // highlight current step
+      for (let ri = 0; ri < SEQ_ROWS; ri++) {
+        const row = seqGrid.children[ri];
+        const cell = row.children[seqStep + 1]; // +1 for label
+        cell.classList.add('cursor');
+        if (seqState[ri][seqStep]) triggerDrum(ri);
+      }
+      seqStep = (seqStep + 1) % SEQ_STEPS;
+    }
+
+    function startSeq() {
+      seqPlaying = true;
+      const bpm       = parseInt(seqBpmEl.value);
+      const interval  = (60 / bpm / 4) * 1000;
+      seqTimer = setInterval(seqTick, interval);
+    }
+    function stopSeq() {
+      clearInterval(seqTimer);
+      seqPlaying = false;
+      document.querySelectorAll('.seq-step.cursor').forEach(e => e.classList.remove('cursor'));
+      seqStep = 0;
+    }
+
+    document.getElementById('seq-play').addEventListener('click', () => {
+      ensureCtx();
+      if (!seqPlaying) startSeq();
+    });
+    document.getElementById('seq-stop').addEventListener('click', stopSeq);
+    document.getElementById('seq-clear').addEventListener('click', () => {
+      for (let ri = 0; ri < SEQ_ROWS; ri++)
+        for (let si = 0; si < SEQ_STEPS; si++) {
+          seqState[ri][si] = false;
+          const cell = seqGrid.children[ri].children[si + 1];
+          cell.classList.remove('on');
+        }
+    });
+
+    /* ══════════════════════════════════════════════════════════
+       EDM PADS
+    ══════════════════════════════════════════════════════════ */
+    const SCALES = {
+      minor:      [0,2,3,5,7,8,10],
+      major:      [0,2,4,5,7,9,11],
+      pentatonic: [0,2,4,7,9],
+      blues:      [0,3,5,6,7,10],
+      dorian:     [0,2,3,5,7,9,10],
+    };
+    const ROOT_MIDI = { C:60,'C#':61,D:62,'D#':63,E:64,F:65,'F#':66,G:67,'G#':68,A:69,'A#':70,B:71 };
+    const EDM_KEYS  = ['1','2','3','4','5','6','7','8','9','0','-','=','q','w','e','r'];
+    const EDM_ICONS = ['🔥','✨','⚡','🌊','💜','🎆','🎇','🌈','💎','🚀','🌀','⚙️','🎸','🎹','🔊','🎛️'];
+    const EDM_LABELS= ['Synth 1','Synth 2','Bass 1','Lead','Pad 1','Arp','Pulse','Pluck',
+                       'Sub','Stab','Wobble','Rise','Chord 1','Chord 2','Drop','Sweep'];
+
+    const edmVolEl  = document.getElementById('edm-vol');
+    const edmAtkEl  = document.getElementById('edm-atk');
+    const edmRelEl  = document.getElementById('edm-rel');
+    const edmScaleEl= document.getElementById('edm-scale');
+    const edmRootEl = document.getElementById('edm-root');
+    const edmGrid   = document.getElementById('edm-pad-grid');
+
+    // Build 16 pads
+    for (let i = 0; i < 16; i++) {
+      const el = document.createElement('button');
+      el.className = `edm-pad c${i}`;
+      el.setAttribute('aria-label', EDM_LABELS[i]);
+      el.innerHTML = `
+        <span class="pad-icon" aria-hidden="true">${EDM_ICONS[i]}</span>
+        <span class="pad-name">${EDM_LABELS[i]}</span>
+        <span class="pad-key">${EDM_KEYS[i]}</span>`;
+      el.addEventListener('pointerdown', e => { e.preventDefault(); triggerEdm(i); });
+      edmGrid.appendChild(el);
+    }
+
+    function getEdmFreq(padIndex) {
+      const scale    = SCALES[edmScaleEl.value] || SCALES.minor;
+      const rootMidi = ROOT_MIDI[edmRootEl.value] || 67;
+      const octShift = Math.floor(padIndex / scale.length);
+      const degree   = padIndex % scale.length;
+      const midi     = rootMidi + scale[degree] + octShift * 12;
+      return 440 * Math.pow(2, (midi - 69) / 12);
+    }
+
+    function triggerEdm(i) {
+      ensureCtx();
+      const vol  = parseFloat(edmVolEl.value);
+      const atk  = parseFloat(edmAtkEl.value);
+      const rel  = parseFloat(edmRelEl.value);
+      const freq = getEdmFreq(i);
+      const t    = ctx.currentTime;
+
+      // Choose synth character by index group
+      const type = ['sawtooth','square','sine','triangle'][i % 4];
+
+      const osc1 = ctx.createOscillator();
+      const osc2 = ctx.createOscillator(); // slight detune for thickness
+      const gn   = ctx.createGain();
+      const filt = ctx.createBiquadFilter();
+      filt.type  = 'lowpass';
+      filt.frequency.setValueAtTime(800, t);
+      filt.frequency.exponentialRampToValueAtTime(4000, t + atk);
+      filt.frequency.exponentialRampToValueAtTime(300,  t + atk + rel);
+
+      osc1.type = type; osc1.frequency.value = freq;
+      osc2.type = type; osc2.frequency.value = freq * 1.005; // slight detune
+      gn.gain.setValueAtTime(0, t);
+      gn.gain.linearRampToValueAtTime(vol * 0.65, t + atk);
+      gn.gain.setTargetAtTime(0, t + atk + 0.02, rel * 0.3);
+
+      osc1.connect(filt); osc2.connect(filt);
+      filt.connect(gn);
+      gn.connect(masterGain);
+      osc1.start(t); osc2.start(t);
+      osc1.stop(t + atk + rel + 0.5);
+      osc2.stop(t + atk + rel + 0.5);
+
+      // visual hit
+      const pad = edmGrid.children[i];
+      pad.classList.add('hit');
+      setTimeout(() => pad.classList.remove('hit'), 200);
+    }
+
+    // Keyboard shortcut for EDM pads
+    document.addEventListener('keydown', e => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+      if (document.getElementById('tab-edm').classList.contains('active')) {
+        const idx = EDM_KEYS.indexOf(e.key.toLowerCase());
+        if (idx !== -1) triggerEdm(idx);
+      }
+    });
+
+    /* ══════════════════════════════════════════════════════════
+       TABS
+    ══════════════════════════════════════════════════════════ */
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tab = btn.dataset.tab;
+        document.querySelectorAll('.tab-btn').forEach(b => {
+          b.classList.toggle('active', b === btn);
+          b.setAttribute('aria-selected', b === btn ? 'true' : 'false');
+        });
+        document.querySelectorAll('.tab-panel').forEach(p => {
+          p.classList.toggle('active', p.id === `tab-${tab}`);
+        });
+      });
+    });
+
+  })();
+  </script>
+</body>
+</html>
