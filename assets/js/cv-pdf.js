@@ -204,7 +204,7 @@ async function generatePDF(mdText) {
     width: 190mm;
     padding: 6mm 7mm;
     font-family: Segoe UI, Arial, sans-serif;
-    font-size: 7.8pt;
+    font-size: 7.5pt;
     line-height: 1.32;
     color: #000;
     background: #fff;

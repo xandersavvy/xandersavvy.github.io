@@ -45,7 +45,6 @@ Automation QA Engineer with over 3 years of experience in designing and developi
 * Built internal engineering tools and Python utilities for referential integrity validation, execution summary generation, custom Microsoft Word report generation, and automation workflow improvements.
 * Contributed to **Lightning Web Components (LWC)** development by implementing bug fixes and supporting feature enhancements.
 * Integrated automated regression suites into Jenkins and GitHub Actions CI/CD pipelines.
-* Collaborated with software engineers, product owners, and business analysts to deliver high-quality enterprise releases.
 
 ### AT&T Business (Spring Boot Microservices)
 
@@ -57,13 +56,6 @@ Automation QA Engineer with over 3 years of experience in designing and developi
 * Executed and validated scheduled batch jobs supporting downstream business workflows.
 * Investigated production issues using **Linux** environments and **Kubernetes** logs, collaborating with developers on root cause analysis.
 
-### Artificial Brix (now Dilsay Care)
-
-**Founding Member — Full Stack & Product** | November 2021 – June 2022
-
-* Joined as a founding member of an early-stage healthtech startup, now operating as **Dilsay Care** — a mental health and wellness platform.
-* Led a small cross-functional team, coordinating engineering, design, and content workstreams in a zero-to-one startup environment.
-* Engaged directly with clients and early users to gather requirements, present product demos, and iterate on features based on feedback.
 
 
 ## PROJECTS
@@ -85,11 +77,11 @@ GitHub: https://github.com/xandersavvy/TestResultMaker
 
 
 
-## CERTIFICATIONS
+## CERTIFICATIONS & BADGES
 
 * ISTQB Certified Tester Foundation Level (CTFL)
 * IBM Automation Intermediate
-* IBM Business Operations (BOB) Intermediate
+* IBM Generative & Agentic AI QA - Intermediate
 
 
 ## ACHIEVEMENTS
