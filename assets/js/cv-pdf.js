@@ -109,90 +109,120 @@
     });
   }
 
-  /* ── Core: render HTML → PDF download ──────────────────── */
-  async function generatePDF (mdText) {
-    // Load libraries
-    await loadScript('https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js');
-    await loadScript('https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js');
+  // /* ── Core: render HTML → PDF download ──────────────────── */
+  // async function generatePDF (mdText) {
+  //   // Load libraries
+  //   await loadScript('https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js');
+  //   await loadScript('https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js');
 
-    const { jsPDF } = window.jspdf;
+  //   const { jsPDF } = window.jspdf;
 
-    // Build off-screen render container
-    const container = document.createElement('div');
-    container.id = 'cv-print-root';
-    container.style.cssText = [
-      'position:fixed',
-      'left:-9999px',
-      'top:0',
-      'width:190mm',
-      'background:#fff',
-      'padding:6mm 7mm',
-      'font-family:Segoe UI,Arial,sans-serif',
-      'font-size:7.8pt',
-      'line-height:1.32',
-      'color:#000',
-    ].join(';');
+  //   // Build off-screen render container
+  //   const container = document.createElement('div');
+  //   container.id = 'cv-print-root';
+  //   container.style.cssText = [
+  //     'position:fixed',
+  //     'left:-9999px',
+  //     'top:0',
+  //     'width:190mm',
+  //     'background:#fff',
+  //     'padding:6mm 7mm',
+  //     'font-family:Segoe UI,Arial,sans-serif',
+  //     'font-size:7.8pt',
+  //     'line-height:1.32',
+  //     'color:#000',
+  //   ].join(';');
 
-    // Inject scoped styles
-    const style = document.createElement('style');
-    style.textContent = CV_CSS;
-    container.appendChild(style);
+  //   // Inject scoped styles
+  //   const style = document.createElement('style');
+  //   style.textContent = CV_CSS;
+  //   container.appendChild(style);
 
-    // Inject content
-    const content = document.createElement('div');
-    content.innerHTML = mdToHtml(mdText);
-    container.appendChild(content);
+  //   // Inject content
+  //   const content = document.createElement('div');
+  //   content.innerHTML = mdToHtml(mdText);
+  //   container.appendChild(content);
 
-    document.body.appendChild(container);
+  //   document.body.appendChild(container);
 
-    try {
-      const canvas = await html2canvas(container, {
-        scale: 3,               // high-res render
-        useCORS: true,
-        backgroundColor: '#ffffff',
-        logging: false,
-        width: container.offsetWidth,
-        height: container.offsetHeight,
-      });
+  //   try {
+  //     const canvas = await html2canvas(container, {
+  //       scale: 3,               // high-res render
+  //       useCORS: true,
+  //       backgroundColor: '#ffffff',
+  //       logging: false,
+  //       width: container.offsetWidth,
+  //       height: container.offsetHeight,
+  //     });
 
-      const imgData = canvas.toDataURL('image/jpeg', 0.97);
+  //     const imgData = canvas.toDataURL('image/jpeg', 0.97);
 
-      // A4: 210 × 297 mm
-      const PAGE_W = 210;
-      const PAGE_H = 297;
-      const MARGIN = 7;   // mm each side
-      const usableW = PAGE_W - MARGIN * 2;
+  //     // A4: 210 × 297 mm
+  //     const PAGE_W = 210;
+  //     const PAGE_H = 297;
+  //     const MARGIN = 7;   // mm each side
+  //     const usableW = PAGE_W - MARGIN * 2;
 
-      // Scale image to usable width
-      const pxPerMm = canvas.width / container.offsetWidth;
-      const imgWmm  = usableW;
-      const imgHmm  = (canvas.height / pxPerMm) * (usableW / (container.offsetWidth));
-      // Simpler: keep aspect ratio
-      const ratio   = canvas.height / canvas.width;
-      const imgH    = imgWmm * ratio;
+  //     // Scale image to usable width
+  //     const pxPerMm = canvas.width / container.offsetWidth;
+  //     const imgWmm  = usableW;
+  //     const imgHmm  = (canvas.height / pxPerMm) * (usableW / (container.offsetWidth));
+  //     // Simpler: keep aspect ratio
+  //     const ratio   = canvas.height / canvas.width;
+  //     const imgH    = imgWmm * ratio;
 
-      const doc = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+  //     const doc = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
 
-      if (imgH <= PAGE_H - MARGIN * 2) {
-        // Everything fits on one page — centre vertically
-        doc.addImage(imgData, 'JPEG', MARGIN, MARGIN, imgWmm, imgH);
-      } else {
-        // Paginate: slice canvas row by row
-        const pageContentH = PAGE_H - MARGIN * 2;
-        let yOffset = 0;
-        while (yOffset < imgH) {
-          const sliceH = Math.min(pageContentH, imgH - yOffset);
-          doc.addImage(imgData, 'JPEG', MARGIN, MARGIN - yOffset, imgWmm, imgH);
-          yOffset += pageContentH;
-          if (yOffset < imgH) doc.addPage();
-        }
-      }
+  //     if (imgH <= PAGE_H - MARGIN * 2) {
+  //       // Everything fits on one page — centre vertically
+  //       doc.addImage(imgData, 'JPEG', MARGIN, MARGIN, imgWmm, imgH);
+  //     } else {
+  //       // Paginate: slice canvas row by row
+  //       const pageContentH = PAGE_H - MARGIN * 2;
+  //       let yOffset = 0;
+  //       while (yOffset < imgH) {
+  //         const sliceH = Math.min(pageContentH, imgH - yOffset);
+  //         doc.addImage(imgData, 'JPEG', MARGIN, MARGIN - yOffset, imgWmm, imgH);
+  //         yOffset += pageContentH;
+  //         if (yOffset < imgH) doc.addPage();
+  //       }
+  //     }
 
-      doc.save('Souvik-Ghosh-CV.pdf');
-    } finally {
-      document.body.removeChild(container);
-    }
-  }
+  //     doc.save('Souvik-Ghosh-CV.pdf');
+  //   } finally {
+  //     document.body.removeChild(container);
+  //   }
+  // }
+
+  /* ── Core: Vector HTML → Direct PDF Download ──────────────────── */
+async function generatePDF(mdText) {
+  await loadScript('https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js');
+  await loadScript('https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js');
+
+  const container = document.createElement('div');
+  container.style.cssText = `
+    width: 190mm;
+    padding: 6mm 7mm;
+    font-family: Segoe UI, Arial, sans-serif;
+    font-size: 7.8pt;
+    line-height: 1.32;
+    color: #000;
+    background: #fff;
+  `;
+
+  container.innerHTML = `<style>${CV_CSS}</style>` + mdToHtml(mdText);
+
+  const opt = {
+    margin:       7,
+    filename:     'Souvik-Ghosh-CV.pdf',
+    image:        { type: 'jpeg', quality: 0.98 },
+    html2canvas:  { scale: 2 },
+    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  };
+
+  // Generates selectable vector text layer over elements
+  await html2pdf().set(opt).from(container).save();
+}
 
   /* ── Fetch resume.md and trigger PDF ───────────────────── */
   async function downloadCV () {
