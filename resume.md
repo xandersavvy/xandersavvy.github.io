@@ -39,6 +39,7 @@ Automation QA Engineer with over 3 years of experience in designing and developi
 ### Johnson & Johnson (Salesforce Experience Cloud & Health Cloud)
 
 * Led the migration of the UI automation framework from Selenium to Playwright, improving execution speed, stability, and maintainability.
+* Architected Agentic QA workflows leveraging Playwright, Salesforce DX, and Figma MCP alongside custom tool and agent configurations in IBM BOB, GitHub Copilot, and Claude to drive intelligent test creation, design-to-code validation, and automated regression testing.
 * Automated **250+ end-to-end test cases** covering Salesforce Experience Cloud and Health Cloud workflows.
 * Developed reusable Salesforce automation utilities including **SOQL** and **SOSL** helpers, authentication modules, synchronization libraries, and reporting components.
 * Built internal engineering tools and Python utilities for referential integrity validation, execution summary generation, custom Microsoft Word report generation, and automation workflow improvements.
