@@ -1,0 +1,34 @@
+name: Generate Resume PDF
+on:
+  push:
+    paths:
+      - 'resume.md'
+      - 'resume.css'
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install md-to-pdf
+        run: npm install -g md-to-pdf
+
+      - name: Generate PDF
+        run: md-to-pdf resume.md --stylesheet resume.css --pdf-options '{ "format": "A4", "margin": { "top": "7mm", "right": "7mm", "bottom": "7mm", "left": "7mm" } }'
+
+      - name: Commit and Push
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "docs: update resume.pdf"
+          file_pattern: resume.pdf
